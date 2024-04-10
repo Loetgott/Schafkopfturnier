@@ -29,6 +29,12 @@ public class Gui {
         JPanel configPanel = new JPanel(new GridBagLayout());
         configFrame.add(configPanel);
         configFrame.setLocation(GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()[1].getDefaultConfiguration().getBounds().getLocation());
+        JMenuBar menuBar = new JMenuBar();
+        JMenu menu = new JMenu("test");
+        JMenu test = new JMenu("test1");
+        menuBar.add(menu);
+        menuBar.add(test);
+        configFrame.setJMenuBar(menuBar);
         configFrame.setVisible(true);
         System.out.println("configFrame generated!");
     }

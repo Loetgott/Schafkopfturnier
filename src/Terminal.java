@@ -18,8 +18,6 @@ public class Terminal{
             case "info":
                 System.out.println("hier müssen alle befehle eingetragen werden, damit das hier das info menü ist.");
                 break;
-
-
         }
     }
 }
