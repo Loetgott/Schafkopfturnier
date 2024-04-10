@@ -19,7 +19,9 @@ public class Gui {
         JPanel mainPanel = new JPanel(new GridBagLayout());
         mainFrame.add(mainPanel);
         mainFrame.setLocation(GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()[0].getDefaultConfiguration().getBounds().getLocation());
+        mainPanel.setBackground(new Color(255, 255, 255));
         mainFrame.setVisible(true);
+        System.out.println("mainFrame generated!");
 
         JFrame configFrame = new JFrame("Konfiguration");
         configFrame.setSize(new Dimension(1920,1080));
@@ -28,5 +30,7 @@ public class Gui {
         configFrame.add(configPanel);
         configFrame.setLocation(GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()[1].getDefaultConfiguration().getBounds().getLocation());
         configFrame.setVisible(true);
+        System.out.println("configFrame generated!");
     }
+
 }
