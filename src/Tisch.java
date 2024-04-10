@@ -1,6 +1,9 @@
+import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 
-public class Tisch {
+public class Tisch extends JComponent{
+    Dimension Size = new Dimension(75,75);
     ArrayList<Player> playerList = new ArrayList<>();
     public Tisch() {
 
@@ -11,4 +14,16 @@ public class Tisch {
     public ArrayList<Player> getPlayerList(){
         return playerList;
     }
+    @Override
+    public void paint(Graphics g){
+        g.setColor(new Color(93, 42, 0));
+        g.fillRect(0,0, (int) getSize().getWidth(), (int) getSize().getHeight());
+    }
+    public void setSize(int nSize){
+
+    }
+    public Dimension getSize(){
+        return Size;
+    }
+
 }

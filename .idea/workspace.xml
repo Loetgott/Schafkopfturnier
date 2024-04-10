@@ -9,11 +9,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bdf4d30b-1150-4e01-8031-276c41c2ea01" name="Changes" comment="first Frames">
+    <list default="true" id="bdf4d30b-1150-4e01-8031-276c41c2ea01" name="Changes" comment="updated color &amp; menu bar">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Gui.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Gui.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Terminal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Terminal.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Tisch.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Tisch.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -163,12 +162,21 @@
       <option name="project" value="LOCAL" />
       <updated>1712770191384</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="updated color &amp; menu bar">
+      <option name="closed" value="true" />
+      <created>1712772202066</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1712772202066</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="first Frames" />
-    <option name="LAST_COMMIT_MESSAGE" value="first Frames" />
+    <MESSAGE value="updated color &amp; menu bar" />
+    <option name="LAST_COMMIT_MESSAGE" value="updated color &amp; menu bar" />
   </component>
 </project>
