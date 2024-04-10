@@ -1,0 +1,32 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import com.formdev.flatlaf.*;
+
+
+public class Gui {
+    public Gui() {
+        try {
+            UIManager.setLookAndFeel(new FlatDarculaLaf());
+        } catch (UnsupportedLookAndFeelException e) {
+            throw new RuntimeException(e);
+        }
+        JFrame mainFrame = new JFrame("Plan");
+        mainFrame.setSize(new Dimension(1920,1080));
+        mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        mainFrame.setUndecorated(true);
+        JPanel mainPanel = new JPanel(new GridBagLayout());
+        mainFrame.add(mainPanel);
+        mainFrame.setLocation(GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()[0].getDefaultConfiguration().getBounds().getLocation());
+        mainFrame.setVisible(true);
+
+        JFrame configFrame = new JFrame("Konfiguration");
+        configFrame.setSize(new Dimension(1920,1080));
+        configFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        JPanel configPanel = new JPanel(new GridBagLayout());
+        configFrame.add(configPanel);
+        configFrame.setLocation(GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()[1].getDefaultConfiguration().getBounds().getLocation());
+        configFrame.setVisible(true);
+    }
+}
