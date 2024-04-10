@@ -16,8 +16,10 @@ public class Terminal{
     public void run(String input){
         switch(input){
             case "info":
-                System.out.println("hier müssen alle befehöe eingetragen werden, damit das hier das info menü ist.");
+                System.out.println("hier müssen alle befehle eingetragen werden, damit das hier das info menü ist.");
                 break;
+
+
         }
     }
 }
