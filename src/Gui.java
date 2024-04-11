@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.event.ListSelectionEvent;
@@ -58,18 +60,63 @@ public class Gui {
         gbc.gridy = 0;
         gbc.insets = new Insets(5, 5, 5, 5); // Abstand zwischen den Komponenten
 
-        JTextField vorname = new JTextField("vorname");
+        JLabel nameLabel = new JLabel("Nachname");
+        JLabel vornameLabel = new JLabel("Vorname");
+        gbc.gridx = 0;
+        addPanel.add(vornameLabel,gbc);
+        gbc.gridx ++;
+        addPanel.add(nameLabel,gbc);
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+
+        JTextField vorname = new JTextField();
         addPanel.add(vorname, gbc);
-        gbc.gridx++;
-        JTextField name = new JTextField("nachname");
+        gbc.gridx ++;
+        JTextField name = new JTextField();
         addPanel.add(name, gbc);
-        gbc.gridx++;
+        gbc.gridx ++;
         JButton saveButton = new JButton("save");
+        vorname.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                if(e.getKeyCode() == KeyEvent.VK_ENTER && !vorname.getText().isEmpty()){
+                    name.requestFocus();
+                }
+            }
+        });
+        name.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                if(e.getKeyCode() == KeyEvent.VK_ENTER && !vorname.getText().isEmpty()){
+                    if(!vorname.getText().isBlank() && !name.getText().isBlank()){
+                        Game.addPlayer(vorname.getText(),name.getText());
+                        vorname.setText("");
+                        name.setText("");
+                        vorname.requestFocus();
+                    }
+                }
+            }
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if ( e.getKeyCode() == KeyEvent.VK_SPACE && !vorname.getText().isEmpty()) {
+                    if (!vorname.getText().isBlank() && !name.getText().isBlank()) {
+                        Game.addPlayer(vorname.getText(), name.getText());
+                        vorname.setText("");
+                        name.setText("");
+                        vorname.requestFocus();
+                    }
+                }
+            }
+
+        });
         saveButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if(!vorname.getText().isBlank() && !name.getText().isBlank()){
                     Game.addPlayer(vorname.getText(),name.getText());
+                    vorname.setText("");
+                    name.setText("");
+                    vorname.requestFocus();
                 }
             }
         });
@@ -84,12 +131,21 @@ public class Gui {
         JScrollPane listScrollPane = new JScrollPane(playerList);
         listScrollPane.setFocusable(false);
         playerList.setFocusable(false);
-        listPanel.add(listScrollPane, BorderLayout.CENTER); // Embed playerList in a JScrollPane
-
+        listPanel.add(listScrollPane, BorderLayout.CENTER);
         playerPanel.add(addPanel, BorderLayout.NORTH);
-        playerPanel.add(listPanel, BorderLayout.CENTER); // Change to BorderLayout.CENTER
-
+        playerPanel.add(listPanel, BorderLayout.CENTER);
         configFrame.add(playerPanel, BorderLayout.WEST);
+
+        JButton changeNameButton = new JButton("change Name");
+        changeNameButton.setFocusable(false);
+        changeNameButton.setEnabled(false);
+        changeNameButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);//----------------------------------------------------hier weitermachen
+            }
+        });
+        rightPanel.add(changeNameButton);
         configFrame.add(rightPanel, BorderLayout.CENTER);
 
         JMenuBar menuBar = new JMenuBar();
