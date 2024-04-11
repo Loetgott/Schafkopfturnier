@@ -1,9 +1,11 @@
 public class Player {
     String name;
+    String vorname;
     int points;
 
-    public Player(String name) {
+    public Player(String name, String vorname) {
         this.name = name;
+        this.vorname = vorname;
     }
 
     public String getName() {
