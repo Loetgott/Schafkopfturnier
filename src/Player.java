@@ -10,7 +10,7 @@ public class Player {
 
     public String getName() {
 
-        return name;
+        return name + " " + vorname;
     }
 
     public void setName(String name) {
