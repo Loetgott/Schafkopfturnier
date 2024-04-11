@@ -1,6 +1,7 @@
 public class Player {
     String name;
     int points;
+    int nPoints;
 
     public Player(String name) {
         this.name = name;
@@ -21,5 +22,13 @@ public class Player {
 
     public void setPoints(int points) {
         this.points = points;
+    }
+
+    public int getnPoints() {
+        return nPoints;
+    }
+
+    public void setnPoints(int nPoints) {
+        this.nPoints = nPoints;
     }
 }
