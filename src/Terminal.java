@@ -1,7 +1,10 @@
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Terminal{
     private Scanner scanner;
+    public static Game game = new Game();
     public Terminal() {
         this.scanner = new Scanner(System.in);
     }
@@ -13,40 +16,27 @@ public class Terminal{
         }
     }
 
-    public void run(String input){
-
-        String[] parts = input.split(" ");
-        String command = parts[0];
-
-
-        switch(command){
+    public void run(String userInput){
+        String[] input1 =  userInput.split(" "); //aufspalten der wörter
+        ArrayList<String> input = new ArrayList<>(Arrays.asList(input1));//machen zu einer arraylist
+        switch(input.get(0)){
             case "info":
-                System.out.println("hier müssen alle befehle eingetragen werden, damit das hier das info menü ist.");
+                System.out.println("addplayer <name>");
                 break;
-
-            case "create" : //Spieler erstellen
-
-                String playerName = "";
-
-                if(parts.length == 2){
-                    playerName = parts[1];
-                } else if (parts.length > 2) {
-                    playerName = parts[1] + " " + parts[2];
-                }
-
-                if(playerName.isEmpty()){
-                    System.out.println("Man, gib doch den Namen ein!!!");
-                }else{
-                    System.out.println("Spieler "+playerName+" erstellt!");
-                    Player newPlayer = new Player(playerName);
+            case "addplayer":
+                input.remove(0);
+                if(!input.isEmpty()){
+                    String vorname = input.get(0);
+                    input.remove(0);
+                    if(!input.isEmpty()){
+                        String nachname = input.get(0);
+                        game.addPlayer(new Player(vorname,nachname));
+                        System.out.println("Spieler mit dem Namen " + vorname + " " + nachname + " hinzugefügt");
+                    }
                 }
                 break;
-
-
-
-
             default:
-                System.out.println("Ungültiger Befehl. Unter 'info' finden sie alle Befehle");
+                System.out.println("unbekannter befehl! bitte auf Rechtschreibung achten");
         }
     }
 }

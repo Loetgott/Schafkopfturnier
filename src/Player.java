@@ -1,15 +1,17 @@
 public class Player {
     String name;
+    String vorname;
     int points;
     int nPoints;
 
-    public Player(String name) {
+    public Player(String name, String vorname) {
         this.name = name;
+        this.vorname = vorname;
     }
 
     public String getName() {
 
-        return name;
+        return name + " " + vorname;
     }
 
     public void setName(String name) {

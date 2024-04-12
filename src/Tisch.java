@@ -1,6 +1,9 @@
+import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 
-public class Tisch {
+public class Tisch{
+    Dimension Size = new Dimension(75,75);
     ArrayList<Player> playerList = new ArrayList<>();
     public Tisch() {
 
@@ -11,4 +14,11 @@ public class Tisch {
     public ArrayList<Player> getPlayerList(){
         return playerList;
     }
+    public void setSize(int nSize){
+
+    }
+    public Dimension getSize(){
+        return Size;
+    }
+
 }

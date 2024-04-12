@@ -5,7 +5,6 @@ public class Main {
         Terminal terminal = new Terminal();
         while(true){
             terminal.checkForInput();
-
         }
     }
 }
