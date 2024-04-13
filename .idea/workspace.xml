@@ -9,11 +9,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bdf4d30b-1150-4e01-8031-276c41c2ea01" name="Changes" comment="finished the changeName Method in GUi">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Game.java" afterDir="false" />
+    <list default="true" id="bdf4d30b-1150-4e01-8031-276c41c2ea01" name="Changes" comment="finished the changePoints Method in GUi">
       <change beforePath="$PROJECT_DIR$/src/Gui.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Gui.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Player.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -244,7 +241,15 @@
       <option name="project" value="LOCAL" />
       <updated>1712995623277</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="finished the changePoints Method in GUi">
+      <option name="closed" value="true" />
+      <created>1713023368365</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1713023368366</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -265,6 +270,7 @@
     <MESSAGE value="erste Tisch versuche" />
     <MESSAGE value="updated the gui" />
     <MESSAGE value="finished the changeName Method in GUi" />
-    <option name="LAST_COMMIT_MESSAGE" value="finished the changeName Method in GUi" />
+    <MESSAGE value="finished the changePoints Method in GUi" />
+    <option name="LAST_COMMIT_MESSAGE" value="finished the changePoints Method in GUi" />
   </component>
 </project>

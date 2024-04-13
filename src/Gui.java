@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 import com.formdev.flatlaf.*;
+import org.jetbrains.annotations.NotNull;
 
 public class Gui {
     public static final String RESET = "\u001B[0m";
@@ -64,7 +65,7 @@ public class Gui {
         JPanel changePanel = new JPanel(new GridLayout(3,1));
         JPanel changePlayerNamePanel = new JPanel(new GridBagLayout());
         JPanel changePlayerPointsPanel = new JPanel(new GridBagLayout());
-        JPanel changePlayerTisch = new JPanel(new GridBagLayout());
+        JPanel changePlayerTischPanel = new JPanel(new GridBagLayout());
         changePlayerPointsPanel.setVisible(false);
 
         GridBagConstraints gbc = new GridBagConstraints();
@@ -163,8 +164,6 @@ public class Gui {
                         System.out.println(playerList.getSelectedValue());
                         System.out.println(playerList.getSelectedValue().split(" ")[0] + "|" + playerList.getSelectedValue().split(" ")[1]);
                         Game.setPlayerName(Objects.requireNonNull(Game.getPlayer(playerList.getSelectedValue().split(" ")[0], playerList.getSelectedValue().split(" ")[1])),changeVornameTextField.getText(), changeNachnameTextField.getText());
-                        changeVornameTextField.setText("");
-                        changeNachnameTextField.setText("");
                     }
                 }
             }
@@ -190,8 +189,6 @@ public class Gui {
                     System.out.println(playerList.getSelectedValue());
                     System.out.println(playerList.getSelectedValue().split(" ")[0] + "|" + playerList.getSelectedValue().split(" ")[1]);
                     Game.setPlayerName(Objects.requireNonNull(Game.getPlayer(playerList.getSelectedValue().split(" ")[0], playerList.getSelectedValue().split(" ")[1])),changeVornameTextField.getText(), changeNachnameTextField.getText());
-                    changeVornameTextField.setText("");
-                    changeNachnameTextField.setText("");
                 }
             }
         });
@@ -233,22 +230,22 @@ public class Gui {
         gbc.gridx = 0;
         changePanel.add(changePlayerPointsPanel);
 
+        changePanel.add(changePlayerTischPanel);
+
         JMenuBar menuBar = new JMenuBar();
         JMenu playerMenu = new JMenu("Spieler");
         JMenu mainMenu = new JMenu("Allgemein");
         menuBar.add(mainMenu);
         menuBar.add(playerMenu);
         configFrame.setJMenuBar(menuBar);
-        playerList.addListSelectionListener(new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent e) {
-                changePlayerNamePanel.setVisible(true);
-                changePlayerPointsPanel.setVisible(true);
-                changeVornameTextField.setText(playerList.getSelectedValue().split(" ")[0]);
-                changeNachnameTextField.setText(playerList.getSelectedValue().split(" ")[1]);
-                pointsTextField.setText(String.valueOf(Game.getPlayer(playerList.getSelectedValue().split(" ")[0],playerList.getSelectedValue().split(" ")[1]).getPoints()));
+        playerList.addListSelectionListener(e -> {
+            changePlayerNamePanel.setVisible(true);
+            changePlayerPointsPanel.setVisible(true);
+            changePlayerTischPanel.setVisible(true);
+            changeVornameTextField.setText(playerList.getSelectedValue().split(" ")[0]);
+            changeNachnameTextField.setText(playerList.getSelectedValue().split(" ")[1]);
+            pointsTextField.setText(String.valueOf(Objects.requireNonNull(Game.getPlayer(playerList.getSelectedValue().split(" ")[0], playerList.getSelectedValue().split(" ")[1])).getPoints()));
 
-            }
         });
         playerMenu.addMouseListener(new MouseAdapter() {
             @Override
@@ -272,14 +269,14 @@ public class Gui {
         System.out.println(GREEN + "configFrame generated!" + RESET);
     }
 
-    public static void addPlayerToList(Player nPlayer){
+    public static void addPlayerToList(@NotNull Player nPlayer){
         playerListModel.addElement(nPlayer.getName()[0] + " " + nPlayer.getName()[1]);
     }
-    public static void setPlayerName(Player oldPlayer, String newVorname, String newNachname) {
+    public static void setPlayerName(@NotNull Player oldPlayer, String newVorname, String newNachname) {
         String oldName = oldPlayer.getName()[0] + " " + oldPlayer.getName()[1];
         int index = playerListModel.indexOf(oldName);
         if (index != -1) {
-            playerListModel.setElementAt(newVorname + newNachname, index);
+            playerListModel.setElementAt(newVorname + " " + newNachname, index);
             oldPlayer.setName(newVorname, newNachname);
         }
     }
