@@ -3,6 +3,7 @@ import java.util.Objects;
 
 public class Game {
     public static ArrayList<Player> playerList = new ArrayList<>();
+    public static ArrayList<Tisch> tischList = new ArrayList<>();
     public Game() {
 
     }
@@ -17,7 +18,6 @@ public class Game {
         Gui.addPlayerToList(nPlayer);
     }
     public static Player getPlayer(String vorname, String nachname){
-        System.out.println("");
         for(Player player : playerList){
             if(Objects.equals(player.getName()[0], vorname) && Objects.equals(player.getName()[1], nachname)){
                 return player;

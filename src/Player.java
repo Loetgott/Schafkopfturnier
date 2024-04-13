@@ -2,6 +2,7 @@ public class Player {
     String nachname;
     String vorname;
     int points;
+    Tisch tisch;
 
     public Player(String vorname, String nachname) {
         this.nachname = nachname;
@@ -24,5 +25,11 @@ public class Player {
 
     public void setPoints(int points) {
         this.points = points;
+    }
+    public void setTisch(Tisch nTisch){
+        this.tisch = nTisch;
+    }
+    public Tisch getTisch(){
+        return this.tisch;
     }
 }
