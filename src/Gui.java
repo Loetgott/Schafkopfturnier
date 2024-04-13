@@ -169,6 +169,8 @@ public class Gui {
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 changePlayerNamePanel.setVisible(true);
+                changeVornameTextField.setText(playerList.getSelectedValue().split(" ")[0]);
+                changeNachnameTextField.setText(playerList.getSelectedValue().split(" ")[1]);
             }
         });
 
