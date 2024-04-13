@@ -3,14 +3,14 @@ public class Player {
     String vorname;
     int points;
 
-    public Player(String nachname, String vorname) {
+    public Player(String vorname, String nachname) {
         this.nachname = nachname;
         this.vorname = vorname;
     }
 
     public String[] getName() {
 
-        return new String[]{nachname, vorname};
+        return new String[]{vorname, nachname};
     }
 
     public void setName(String vorname, String nachname) {

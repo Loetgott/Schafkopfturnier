@@ -80,7 +80,10 @@ public class Gui {
         vorname.addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
-                if((e.getKeyCode() == KeyEvent.VK_ENTER || e.getKeyCode() == KeyEvent.VK_SPACE) && !vorname.getText().isEmpty()){
+                if(e.getKeyCode() == KeyEvent.VK_ENTER && !vorname.getText().isEmpty()){
+                    name.requestFocus();
+                }else if(e.getKeyCode() == KeyEvent.VK_SPACE && !vorname.getText().isEmpty()){
+                    vorname.setText(vorname.getText().split(" ")[0]);
                     name.requestFocus();
                 }
             }
@@ -88,7 +91,7 @@ public class Gui {
         name.addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
-                if((e.getKeyCode() == KeyEvent.VK_ENTER || e.getKeyCode() == KeyEvent.VK_SPACE) && !vorname.getText().isEmpty()){
+                if(e.getKeyCode() == KeyEvent.VK_ENTER && !vorname.getText().isEmpty()){
                     if(!vorname.getText().isBlank() && !name.getText().isBlank()){
                         Game.addPlayer(vorname.getText(),name.getText());
                         vorname.setText("");
@@ -96,8 +99,16 @@ public class Gui {
                         vorname.requestFocus();
                     }
                 }
+                if(e.getKeyCode() == KeyEvent.VK_SPACE && !vorname.getText().isEmpty()){
+                    if(!vorname.getText().isBlank() && !name.getText().isBlank()){
+                        name.setText(name.getText().split(" ")[0]);
+                        Game.addPlayer(vorname.getText(),name.getText());
+                        vorname.setText("");
+                        name.setText("");
+                        vorname.requestFocus();
+                    }
+                }
             }
-
         });
         saveButton.addMouseListener(new MouseAdapter() {
             @Override
@@ -135,6 +146,7 @@ public class Gui {
             public void keyReleased(KeyEvent e) {
                 if(e.getKeyCode() == KeyEvent.VK_ENTER || e.getKeyCode() == KeyEvent.VK_SPACE){
                     if(!changeNachnameTextField.getText().isBlank() && !changeNachnameTextField.getText().isBlank()){
+                        System.out.println(playerList.getSelectedValue());
                         System.out.println(playerList.getSelectedValue().split(" ")[0] + "|" + playerList.getSelectedValue().split(" ")[1]);
                         Game.setPlayerName(Objects.requireNonNull(Game.getPlayer(playerList.getSelectedValue().split(" ")[0], playerList.getSelectedValue().split(" ")[1])),changeVornameTextField.getText(), changeNachnameTextField.getText());
                         changeVornameTextField.setText("");
@@ -167,6 +179,8 @@ public class Gui {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if(!playerList.isSelectionEmpty() && !changeNachnameTextField.getText().isEmpty()){
+                    System.out.println(playerList.getSelectedValue());
+                    System.out.println(playerList.getSelectedValue().split(" ")[0] + "|" + playerList.getSelectedValue().split(" ")[1]);
                     Game.setPlayerName(Objects.requireNonNull(Game.getPlayer(playerList.getSelectedValue().split(" ")[0], playerList.getSelectedValue().split(" ")[1])),changeVornameTextField.getText(), changeNachnameTextField.getText());
                     changeVornameTextField.setText("");
                     changeNachnameTextField.setText("");
@@ -206,8 +220,8 @@ public class Gui {
     public static void setPlayerName(Player oldPlayer, String newVorname, String newNachname) {
         String oldName = oldPlayer.getName()[0] + " " + oldPlayer.getName()[1];
         int index = playerListModel.indexOf(oldName);
-        if (index != -1) { // Überprüfe, ob der Spieler in der Liste vorhanden ist
-            playerListModel.setElementAt(newVorname + " " + newNachname, index);
+        if (index != -1) {
+            playerListModel.setElementAt(newVorname + newNachname, index);
             oldPlayer.setName(newVorname, newNachname);
         }
     }
