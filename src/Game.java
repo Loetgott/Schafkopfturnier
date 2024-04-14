@@ -46,7 +46,7 @@ public class Game {
         int n = playerList.size();
         for (int i = 0; i < n - 1; i++)
             for (int j = 0; j < n - i - 1; j++)
-                if (playerList.get(j).getPoints() > playerList.get(j + 1).getPoints()){
+                if (playerList.get(j).getPoints() < playerList.get(j + 1).getPoints()){
                     // swap temp and arr[i]
                     Player temp = playerList.get(j);
                     playerList.set(j, playerList.get(j + 1));
@@ -54,5 +54,6 @@ public class Game {
                 }
 
         Gui.updateLeaderboard(playerList);
+        System.out.println(YELLOW + "updated the leaderboard" + RESET);
     }
 }

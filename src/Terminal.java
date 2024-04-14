@@ -34,6 +34,9 @@ public class Terminal{
                     }
                 }
                 break;
+            case "update":
+                Game.updateLeaderboard();
+                break;
             default:
                 System.out.println("unbekannter befehl! bitte auf Rechtschreibung achten");
         }

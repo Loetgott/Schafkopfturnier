@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.table.JTableHeader;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -14,9 +15,7 @@ public class Gui {
 
     public static DefaultListModel<String> configPlayerListModel = new DefaultListModel<>();
     public static JList<String> configPlayerList = new JList<>(configPlayerListModel);
-
-    public static DefaultListModel<String> leaderboardListModel = new DefaultListModel<>();
-    public static JList<String> leaderboardList = new JList<>(leaderboardListModel);
+    static JTable leaderboardTable = new JTable(10,3);
     public static final String RESET = "\u001B[0m";
     public static final String RED = "\u001B[31m";
     public static final String GREEN = "\u001B[32m";
@@ -30,26 +29,78 @@ public class Gui {
             throw new RuntimeException(e);
         }
         JFrame mainFrame = new JFrame("Plan");
-        mainFrame.setSize(new Dimension(1920,1080));
+        mainFrame.setSize(new Dimension(1920, 1080));
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainFrame.setUndecorated(true);
+
         JPanel mainPanel = new JPanel(new BorderLayout());
-        mainFrame.add(mainPanel);
-        mainFrame.setLocation(GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()[0].getDefaultConfiguration().getBounds().getLocation());
         mainPanel.setBackground(new Color(255, 255, 255));
-        mainFrame.setVisible(true);
-        System.out.println(GREEN + "mainFrame generated!" + RESET);
+
         JPanel leaderboardPanel = new JPanel();
         JPanel tischPanel = new JPanel();
-        mainPanel.add(leaderboardPanel,BorderLayout.WEST);
-        mainPanel.add(tischPanel, BorderLayout.EAST);
-        leaderboardPanel.setVisible(true);
-        tischPanel.setVisible(true);
+        JPanel pointsPanel = new JPanel(new BorderLayout());
 
-        mainPanel.setVisible(true);
+        mainPanel.add(tischPanel, BorderLayout.CENTER);
+        mainPanel.add(pointsPanel, BorderLayout.EAST);
+
+        leaderboardPanel.setBackground(new Color(255,255,255));
+        tischPanel.setBackground(new Color(255,255,255));
+        pointsPanel.setBackground(new Color(255,255,255));
+
+        JTable pointsTable = new JTable(8, 3);
+        pointsTable.setBackground(new Color(255,255,255));
+        pointsTable.setForeground(new Color(15, 117, 0));
+        pointsTable.setRowHeight(50);
+        pointsTable.getColumnModel().getColumn(0).setPreferredWidth(300);
+        pointsTable.getColumnModel().getColumn(1).setPreferredWidth(120);
+        pointsTable.getColumnModel().getColumn(2).setPreferredWidth(120);
+        Font tableFont = pointsTable.getFont();
+        pointsTable.setFont(tableFont.deriveFont(Font.BOLD, 22));
+        pointsTable.setValueAt("Punktewertung:", 0, 0);
+        pointsTable.setValueAt("Gewinner",0,1);
+        pointsTable.setValueAt("Verlierer",0,2);
+        pointsTable.setValueAt("Rufspiel:", 1, 0);
+        pointsTable.setValueAt("+ 1", 1, 1);
+        pointsTable.setValueAt("- 1", 1, 2);
+        pointsTable.setValueAt("Rufspiel Schneider:", 2, 0);
+        pointsTable.setValueAt("+ 2", 2, 1);
+        pointsTable.setValueAt("- 2", 2, 2);
+        pointsTable.setValueAt("Rufspiel Durch:", 3, 0);
+        pointsTable.setValueAt("+ 3", 3, 1);
+        pointsTable.setValueAt("- 3", 3, 2);
+        pointsTable.setValueAt("Solo/Wenz:", 4, 0);
+        pointsTable.setValueAt("+ 12", 4, 1);
+        pointsTable.setValueAt("- 4", 4, 2);
+        pointsTable.setValueAt("Solo/Wenz Schneider:", 5, 0);
+        pointsTable.setValueAt("+ 15", 5, 1);
+        pointsTable.setValueAt("- 5", 5, 2);
+        pointsTable.setValueAt("Solo/Wenz Durch:", 6, 0);
+        pointsTable.setValueAt("+ 18", 6, 1);
+        pointsTable.setValueAt("- 6", 6, 2);
+        pointsTable.setValueAt("Solo-/Wenz-Tout:", 7, 0);
+        pointsTable.setValueAt("+ 24", 7, 1);
+        pointsTable.setValueAt("- 8", 7, 2);
+        pointsTable.setShowGrid(true);
+        pointsTable.setShowHorizontalLines(true);
+        pointsTable.setShowVerticalLines(false);
+        pointsTable.setGridColor(pointsTable.getForeground());
+        pointsPanel.add(pointsTable, BorderLayout.CENTER);
+
+        leaderboardTable.setShowGrid(false);
+        leaderboardTable.setRowHeight(50);
+        leaderboardTable.getColumnModel().getColumn(0).setPreferredWidth(40);
+        leaderboardTable.getColumnModel().getColumn(1).setPreferredWidth(300);
+        leaderboardTable.getColumnModel().getColumn(2).setPreferredWidth(50);
+        tableFont = leaderboardTable.getFont();
+        leaderboardTable.setFont(tableFont.deriveFont(Font.BOLD, 22));
+        leaderboardPanel.add(leaderboardTable);
+        pointsPanel.add(leaderboardPanel,BorderLayout.SOUTH);
+
+        mainFrame.add(mainPanel);
+        mainFrame.setLocation(GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()[0].getDefaultConfiguration().getBounds().getLocation());
+        mainFrame.setVisible(true);
 
         //ab hier alles configFrame
-
         JFrame configFrame = new JFrame("");
         configFrame.setUndecorated(false);
         configFrame.setSize(new Dimension(800, 600));
@@ -229,6 +280,7 @@ public class Gui {
                     if(!pointsTextField.getText().isBlank()){
                         //TODO : fenster zur Bestätigung einbauen (Message Dialog, etc.)
                         Game.setPlayerPoints(Objects.requireNonNull(Game.getPlayer(configPlayerList.getSelectedValue().split(" ")[0], configPlayerList.getSelectedValue().split(" ")[1])),Integer.parseInt(pointsTextField.getText()));
+                        changePanel.requestFocusInWindow();
                     }
                 }
             }
@@ -245,6 +297,8 @@ public class Gui {
                         Game.addPlayerPoints(Objects.requireNonNull(Game.getPlayer(configPlayerList.getSelectedValue().split(" ")[0], configPlayerList.getSelectedValue().split(" ")[1])),Integer.parseInt(newPointsTextField.getText()));
                         pointsTextField.setText(String.valueOf(Objects.requireNonNull(Game.getPlayer(configPlayerList.getSelectedValue().split(" ")[0], configPlayerList.getSelectedValue().split(" ")[1])).getPoints()));
                         newPointsTextField.setText("");
+                        changePanel.requestFocusInWindow();
+
                     }
                 }
             }
@@ -257,6 +311,10 @@ public class Gui {
             @Override
             public void mouseClicked(MouseEvent e) {
                 Game.addPlayerPoints(Objects.requireNonNull(Game.getPlayer(configPlayerList.getSelectedValue().split(" ")[0], configPlayerList.getSelectedValue().split(" ")[1])),Integer.parseInt(newPointsTextField.getText()));
+                pointsTextField.setText(String.valueOf(Objects.requireNonNull(Game.getPlayer(configPlayerList.getSelectedValue().split(" ")[0], configPlayerList.getSelectedValue().split(" ")[1])).getPoints()));
+                newPointsTextField.setText("");
+                changePanel.requestFocusInWindow();
+
             }
         });
         changePlayerPointsPanel.add(changePointsButton,gbc);
@@ -291,8 +349,20 @@ public class Gui {
         JMenuBar menuBar = new JMenuBar();
         JMenu playerMenu = new JMenu("Spieler");
         JMenu mainMenu = new JMenu("Allgemein");
+        JMenu updateMenu = new JMenu("Update");
+        JMenuItem updateLeaderboard = new JMenuItem("update Leaderboard");
+        JMenuItem updateTische = new JMenuItem("update Tische");
+        updateMenu.add(updateLeaderboard);
+        updateLeaderboard.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                Game.updateLeaderboard();
+            }
+        });
+        updateMenu.add(updateTische);
         menuBar.add(mainMenu);
         menuBar.add(playerMenu);
+        menuBar.add(updateMenu);
         configFrame.setJMenuBar(menuBar);
         configPlayerList.addListSelectionListener(e -> {
             changePlayerNamePanel.setVisible(true);
@@ -343,8 +413,12 @@ public class Gui {
         }
     }
     public static void updateLeaderboard(ArrayList<Player> playerlist){
-        for(int i = 0; i < playerlist.size(); i++){
-            leaderboardListModel.setElementAt(String.valueOf(i + 1) + playerlist.get(i).getName()[0] +  " " + playerlist.get(i).getName()[1],i);
+        for(int i = 0; i < 10; i++){
+            if(playerlist.size() > i){
+                leaderboardTable.setValueAt(i + 1,i,0);
+                leaderboardTable.setValueAt(playerlist.get(i).getName()[0] + " " + playerlist.get(i).getName()[1].charAt(0) + ".",i,1);
+                leaderboardTable.setValueAt(playerlist.get(i).getPoints(),i,2);
+            }
         }
     }
 }
