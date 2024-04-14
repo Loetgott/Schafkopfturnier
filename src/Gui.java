@@ -13,13 +13,14 @@ import com.formdev.flatlaf.*;
 import org.jetbrains.annotations.NotNull;
 
 public class Gui {
+
+    public static DefaultListModel<String> playerListModel = new DefaultListModel<>();
+    public static JList<String> playerList = new JList<>(playerListModel);
     public static final String RESET = "\u001B[0m";
     public static final String RED = "\u001B[31m";
     public static final String GREEN = "\u001B[32m";
     public static final String YELLOW = "\u001B[33m";
     public static final String WHITE = "\u001B[37m";
-    public static DefaultListModel<String> playerListModel = new DefaultListModel<>();
-    public static JList<String> playerList = new JList<>(playerListModel);
 
     public Gui() {
         try {
@@ -186,7 +187,6 @@ public class Gui {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if(!playerList.isSelectionEmpty() && !changeNachnameTextField.getText().isEmpty()){
-                    System.out.println(playerList.getSelectedValue());
                     System.out.println(playerList.getSelectedValue().split(" ")[0] + "|" + playerList.getSelectedValue().split(" ")[1]);
                     Game.setPlayerName(Objects.requireNonNull(Game.getPlayer(playerList.getSelectedValue().split(" ")[0], playerList.getSelectedValue().split(" ")[1])),changeVornameTextField.getText(), changeNachnameTextField.getText());
                 }
@@ -278,6 +278,7 @@ public class Gui {
         if (index != -1) {
             playerListModel.setElementAt(newVorname + " " + newNachname, index);
             oldPlayer.setName(newVorname, newNachname);
+            System.out.println(GREEN + "Der Name des Spielers " + oldName + " wurde zu " + newVorname + " " + newNachname +" geändert");
         }
     }
 }

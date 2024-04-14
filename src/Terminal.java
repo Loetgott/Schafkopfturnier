@@ -31,7 +31,6 @@ public class Terminal{
                     if(!input.isEmpty()){
                         String nachname = input.get(0);
                         game.addPlayer(new Player(vorname,nachname));
-                        System.out.println("Spieler mit dem Namen " + vorname + " " + nachname + " hinzugefügt");
                     }
                 }
                 break;
