@@ -1,6 +1,4 @@
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -14,8 +12,11 @@ import org.jetbrains.annotations.NotNull;
 
 public class Gui {
 
-    public static DefaultListModel<String> playerListModel = new DefaultListModel<>();
-    public static JList<String> playerList = new JList<>(playerListModel);
+    public static DefaultListModel<String> configPlayerListModel = new DefaultListModel<>();
+    public static JList<String> configPlayerList = new JList<>(configPlayerListModel);
+
+    public static DefaultListModel<String> leaderboardListModel = new DefaultListModel<>();
+    public static JList<String> leaderboardList = new JList<>(leaderboardListModel);
     public static final String RESET = "\u001B[0m";
     public static final String RED = "\u001B[31m";
     public static final String GREEN = "\u001B[32m";
@@ -32,19 +33,22 @@ public class Gui {
         mainFrame.setSize(new Dimension(1920,1080));
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainFrame.setUndecorated(true);
-        JPanel mainPanel = new JPanel(new GridBagLayout());
+        JPanel mainPanel = new JPanel(new BorderLayout());
         mainFrame.add(mainPanel);
         mainFrame.setLocation(GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()[0].getDefaultConfiguration().getBounds().getLocation());
         mainPanel.setBackground(new Color(255, 255, 255));
-        mainPanel.setVisible(true);
         mainFrame.setVisible(true);
         System.out.println(GREEN + "mainFrame generated!" + RESET);
+        JPanel leaderboardPanel = new JPanel();
+        JPanel tischPanel = new JPanel();
+        mainPanel.add(leaderboardPanel,BorderLayout.WEST);
+        mainPanel.add(tischPanel, BorderLayout.EAST);
+        leaderboardPanel.setVisible(true);
+        tischPanel.setVisible(true);
 
-        try {
-            UIManager.setLookAndFeel(new FlatDarculaLaf());
-        } catch (UnsupportedLookAndFeelException e) {
-            throw new RuntimeException(e);
-        }
+        mainPanel.setVisible(true);
+
+        //ab hier alles configFrame
 
         JFrame configFrame = new JFrame("");
         configFrame.setUndecorated(false);
@@ -56,7 +60,9 @@ public class Gui {
         JButton button2 = new JButton();
         button2.setVisible(true);
         mainConfigPanel.add(button2,BorderLayout.NORTH);
+
         mainConfigPanel.setVisible(true);
+
 
         //ab hier alles Player Panel
         JPanel playerAddPanel = new JPanel(new BorderLayout());
@@ -139,15 +145,15 @@ public class Gui {
         saveButton.setFocusable(false);
         addPanel.add(saveButton, gbc);
 
-        playerList.setSelectionForeground(Color.WHITE);
-        playerList.setSelectionBackground(new Color(116, 116, 121));
-        playerList.setBackground(configFrame.getBackground());
-        playerList.setForeground(Color.WHITE);
-        playerList.setFont(configFrame.getFont());
-        playerList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        JScrollPane listScrollPane = new JScrollPane(playerList);
+        configPlayerList.setSelectionForeground(Color.WHITE);
+        configPlayerList.setSelectionBackground(new Color(116, 116, 121));
+        configPlayerList.setBackground(configFrame.getBackground());
+        configPlayerList.setForeground(Color.WHITE);
+        configPlayerList.setFont(configFrame.getFont());
+        configPlayerList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        JScrollPane listScrollPane = new JScrollPane(configPlayerList);
         listScrollPane.setFocusable(false);
-        playerList.setFocusable(false);
+        configPlayerList.setFocusable(false);
         listPanel.add(listScrollPane, BorderLayout.CENTER);
         playerAddPanel.add(addPanel, BorderLayout.NORTH);
         playerAddPanel.add(listPanel, BorderLayout.CENTER);
@@ -164,7 +170,7 @@ public class Gui {
             public void keyReleased(KeyEvent e) {
                 if(e.getKeyCode() == KeyEvent.VK_ENTER || e.getKeyCode() == KeyEvent.VK_SPACE){
                     if(!changeNachnameTextField.getText().isBlank() && !changeNachnameTextField.getText().isBlank()){
-                        Game.setPlayerName(Objects.requireNonNull(Game.getPlayer(playerList.getSelectedValue().split(" ")[0], playerList.getSelectedValue().split(" ")[1])),changeVornameTextField.getText(), changeNachnameTextField.getText());
+                        Game.setPlayerName(Objects.requireNonNull(Game.getPlayer(configPlayerList.getSelectedValue().split(" ")[0], configPlayerList.getSelectedValue().split(" ")[1])),changeVornameTextField.getText(), changeNachnameTextField.getText());
                     }
                 }
             }
@@ -186,8 +192,8 @@ public class Gui {
         changeNameButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                if(!playerList.isSelectionEmpty() && !changeNachnameTextField.getText().isEmpty()){
-                    Game.setPlayerName(Objects.requireNonNull(Game.getPlayer(playerList.getSelectedValue().split(" ")[0], playerList.getSelectedValue().split(" ")[1])),changeVornameTextField.getText(), changeNachnameTextField.getText());
+                if(!configPlayerList.isSelectionEmpty() && !changeNachnameTextField.getText().isEmpty()){
+                    Game.setPlayerName(Objects.requireNonNull(Game.getPlayer(configPlayerList.getSelectedValue().split(" ")[0], configPlayerList.getSelectedValue().split(" ")[1])),changeVornameTextField.getText(), changeNachnameTextField.getText());
                 }
             }
         });
@@ -222,7 +228,7 @@ public class Gui {
                 if(e.getKeyCode() == KeyEvent.VK_ENTER || e.getKeyCode() == KeyEvent.VK_SPACE){
                     if(!pointsTextField.getText().isBlank()){
                         //TODO : fenster zur Bestätigung einbauen (Message Dialog, etc.)
-                        Game.setPlayerPoints(Objects.requireNonNull(Game.getPlayer(playerList.getSelectedValue().split(" ")[0], playerList.getSelectedValue().split(" ")[1])),Integer.parseInt(pointsTextField.getText()));
+                        Game.setPlayerPoints(Objects.requireNonNull(Game.getPlayer(configPlayerList.getSelectedValue().split(" ")[0], configPlayerList.getSelectedValue().split(" ")[1])),Integer.parseInt(pointsTextField.getText()));
                     }
                 }
             }
@@ -236,8 +242,8 @@ public class Gui {
             public void keyReleased(KeyEvent e) {
                 if(e.getKeyCode() == KeyEvent.VK_ENTER || e.getKeyCode() == KeyEvent.VK_SPACE){
                     if(!pointsTextField.getText().isBlank()){
-                        Game.addPlayerPoints(Objects.requireNonNull(Game.getPlayer(playerList.getSelectedValue().split(" ")[0], playerList.getSelectedValue().split(" ")[1])),Integer.parseInt(newPointsTextField.getText()));
-                        pointsTextField.setText(String.valueOf(Objects.requireNonNull(Game.getPlayer(playerList.getSelectedValue().split(" ")[0], playerList.getSelectedValue().split(" ")[1])).getPoints()));
+                        Game.addPlayerPoints(Objects.requireNonNull(Game.getPlayer(configPlayerList.getSelectedValue().split(" ")[0], configPlayerList.getSelectedValue().split(" ")[1])),Integer.parseInt(newPointsTextField.getText()));
+                        pointsTextField.setText(String.valueOf(Objects.requireNonNull(Game.getPlayer(configPlayerList.getSelectedValue().split(" ")[0], configPlayerList.getSelectedValue().split(" ")[1])).getPoints()));
                         newPointsTextField.setText("");
                     }
                 }
@@ -250,7 +256,7 @@ public class Gui {
         changePointsButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                Game.addPlayerPoints(Objects.requireNonNull(Game.getPlayer(playerList.getSelectedValue().split(" ")[0], playerList.getSelectedValue().split(" ")[1])),Integer.parseInt(newPointsTextField.getText()));
+                Game.addPlayerPoints(Objects.requireNonNull(Game.getPlayer(configPlayerList.getSelectedValue().split(" ")[0], configPlayerList.getSelectedValue().split(" ")[1])),Integer.parseInt(newPointsTextField.getText()));
             }
         });
         changePlayerPointsPanel.add(changePointsButton,gbc);
@@ -288,16 +294,16 @@ public class Gui {
         menuBar.add(mainMenu);
         menuBar.add(playerMenu);
         configFrame.setJMenuBar(menuBar);
-        playerList.addListSelectionListener(e -> {
+        configPlayerList.addListSelectionListener(e -> {
             changePlayerNamePanel.setVisible(true);
             changePlayerPointsPanel.setVisible(true);
             changePlayerTischPanel.setVisible(true);
-            changeVornameTextField.setText(playerList.getSelectedValue().split(" ")[0]);
-            changeNachnameTextField.setText(playerList.getSelectedValue().split(" ")[1]);
-            pointsTextField.setText(String.valueOf(Objects.requireNonNull(Game.getPlayer(playerList.getSelectedValue().split(" ")[0], playerList.getSelectedValue().split(" ")[1])).getPoints()));
-            if(Game.getPlayer(playerList.getSelectedValue().split(" ")[0], playerList.getSelectedValue().split(" ")[1]).getTisch() != null){
-                TischLabelNow.setText(Game.getPlayer(playerList.getSelectedValue().split(" ")[0], playerList.getSelectedValue().split(" ")[1]).getTisch().getName());
-                newTischTextField.setText(Game.getPlayer(playerList.getSelectedValue().split(" ")[0], playerList.getSelectedValue().split(" ")[1]).getTisch().getName());
+            changeVornameTextField.setText(configPlayerList.getSelectedValue().split(" ")[0]);
+            changeNachnameTextField.setText(configPlayerList.getSelectedValue().split(" ")[1]);
+            pointsTextField.setText(String.valueOf(Objects.requireNonNull(Game.getPlayer(configPlayerList.getSelectedValue().split(" ")[0], configPlayerList.getSelectedValue().split(" ")[1])).getPoints()));
+            if(Game.getPlayer(configPlayerList.getSelectedValue().split(" ")[0], configPlayerList.getSelectedValue().split(" ")[1]).getTisch() != null){
+                TischLabelNow.setText(Game.getPlayer(configPlayerList.getSelectedValue().split(" ")[0], configPlayerList.getSelectedValue().split(" ")[1]).getTisch().getName());
+                newTischTextField.setText(Game.getPlayer(configPlayerList.getSelectedValue().split(" ")[0], configPlayerList.getSelectedValue().split(" ")[1]).getTisch().getName());
             }else{
                 TischLabelNow.setText("N/A");
             }
@@ -325,15 +331,20 @@ public class Gui {
     }
 
     public static void addPlayerToList(@NotNull Player nPlayer){
-        playerListModel.addElement(nPlayer.getName()[0] + " " + nPlayer.getName()[1]);
+        configPlayerListModel.addElement(nPlayer.getName()[0] + " " + nPlayer.getName()[1]);
     }
     public static void setPlayerName(@NotNull Player oldPlayer, String newVorname, String newNachname) {
         String oldName = oldPlayer.getName()[0] + " " + oldPlayer.getName()[1];
-        int index = playerListModel.indexOf(oldName);
+        int index = configPlayerListModel.indexOf(oldName);
         if (index != -1) {
-            playerListModel.setElementAt(newVorname + " " + newNachname, index);
+            configPlayerListModel.setElementAt(newVorname + " " + newNachname, index);
             oldPlayer.setName(newVorname, newNachname);
             System.out.println(GREEN + "Der Name des Spielers " + oldName + " wurde zu " + newVorname + " " + newNachname +" geändert");
+        }
+    }
+    public static void updateLeaderboard(ArrayList<Player> playerlist){
+        for(int i = 0; i < playerlist.size(); i++){
+            leaderboardListModel.setElementAt(String.valueOf(i + 1) + playerlist.get(i).getName()[0] +  " " + playerlist.get(i).getName()[1],i);
         }
     }
 }
