@@ -36,4 +36,10 @@ public class Game {
         Gui.setPlayerName(player,vorname, nachname);
         player.setName(vorname,nachname);
     }
+    public static void setPlayerPoints(Player player, int points){
+        player.setPoints(points);
+    }
+    public static void addPlayerPoints(Player player, int points){
+        player.setPoints(player.getPoints() + points);
+    }
 }

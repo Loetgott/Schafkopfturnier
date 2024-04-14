@@ -3,7 +3,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class Tisch{
-    Dimension Size = new Dimension(75,75);
+    int number;
     ArrayList<Player> playerList = new ArrayList<>();
     public Tisch() {
 
@@ -14,11 +14,10 @@ public class Tisch{
     public ArrayList<Player> getPlayerList(){
         return playerList;
     }
-    public void setSize(int nSize){
-
+    public String getName() {
+        return String.valueOf(this.number);
     }
-    public Dimension getSize(){
-        return Size;
+    public int getNumber(){
+        return this.number;
     }
-
 }

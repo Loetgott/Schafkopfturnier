@@ -63,7 +63,7 @@ public class Gui {
         playerAddPanel.setVisible(false);
         JPanel addPanel = new JPanel(new GridBagLayout());
         JPanel listPanel = new JPanel(new BorderLayout()); // Use BorderLayout
-        JPanel changePanel = new JPanel(new GridLayout(3,1));
+        JPanel changePanel = new JPanel(new GridBagLayout());
         JPanel changePlayerNamePanel = new JPanel(new GridBagLayout());
         JPanel changePlayerPointsPanel = new JPanel(new GridBagLayout());
         JPanel changePlayerTischPanel = new JPanel(new GridBagLayout());
@@ -153,6 +153,8 @@ public class Gui {
         playerAddPanel.add(listPanel, BorderLayout.CENTER);
         configFrame.add(playerAddPanel, BorderLayout.WEST);
 
+        // ab hier changePanel
+        gbc.anchor = GridBagConstraints.WEST; // Ausrichtung der Komponenten am linken Rand
         JTextField changeVornameTextField = new JTextField("");
         changeVornameTextField.setPreferredSize(new Dimension(90,25));
         JTextField changeNachnameTextField = new JTextField("");
@@ -162,8 +164,6 @@ public class Gui {
             public void keyReleased(KeyEvent e) {
                 if(e.getKeyCode() == KeyEvent.VK_ENTER || e.getKeyCode() == KeyEvent.VK_SPACE){
                     if(!changeNachnameTextField.getText().isBlank() && !changeNachnameTextField.getText().isBlank()){
-                        System.out.println(playerList.getSelectedValue());
-                        System.out.println(playerList.getSelectedValue().split(" ")[0] + "|" + playerList.getSelectedValue().split(" ")[1]);
                         Game.setPlayerName(Objects.requireNonNull(Game.getPlayer(playerList.getSelectedValue().split(" ")[0], playerList.getSelectedValue().split(" ")[1])),changeVornameTextField.getText(), changeNachnameTextField.getText());
                     }
                 }
@@ -187,7 +187,6 @@ public class Gui {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if(!playerList.isSelectionEmpty() && !changeNachnameTextField.getText().isEmpty()){
-                    System.out.println(playerList.getSelectedValue().split(" ")[0] + "|" + playerList.getSelectedValue().split(" ")[1]);
                     Game.setPlayerName(Objects.requireNonNull(Game.getPlayer(playerList.getSelectedValue().split(" ")[0], playerList.getSelectedValue().split(" ")[1])),changeVornameTextField.getText(), changeNachnameTextField.getText());
                 }
             }
@@ -208,8 +207,7 @@ public class Gui {
         configFrame.add(changePanel, BorderLayout.CENTER);
         gbc.gridx = 0;
         gbc.gridy = 0;
-        changePanel.add(changePlayerNamePanel);
-
+        changePanel.add(changePlayerNamePanel,gbc);
         JLabel pointsLabel = new JLabel("Punktestand");
         changePlayerPointsPanel.add(pointsLabel, gbc);
         gbc.gridx ++;
@@ -218,19 +216,71 @@ public class Gui {
         gbc.gridx = 0;
         gbc.gridy ++;
         JTextField pointsTextField = new JTextField();
+        pointsTextField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                if(e.getKeyCode() == KeyEvent.VK_ENTER || e.getKeyCode() == KeyEvent.VK_SPACE){
+                    if(!pointsTextField.getText().isBlank()){
+                        //TODO : fenster zur Bestätigung einbauen (Message Dialog, etc.)
+                        Game.setPlayerPoints(Objects.requireNonNull(Game.getPlayer(playerList.getSelectedValue().split(" ")[0], playerList.getSelectedValue().split(" ")[1])),Integer.parseInt(pointsTextField.getText()));
+                    }
+                }
+            }
+        });
         pointsTextField.setPreferredSize(new Dimension(90,25));
         changePlayerPointsPanel.add(pointsTextField,gbc);
         gbc.gridx ++;
         JTextField newPointsTextField = new JTextField();
+        newPointsTextField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                if(e.getKeyCode() == KeyEvent.VK_ENTER || e.getKeyCode() == KeyEvent.VK_SPACE){
+                    if(!pointsTextField.getText().isBlank()){
+                        Game.addPlayerPoints(Objects.requireNonNull(Game.getPlayer(playerList.getSelectedValue().split(" ")[0], playerList.getSelectedValue().split(" ")[1])),Integer.parseInt(newPointsTextField.getText()));
+                        pointsTextField.setText(String.valueOf(Objects.requireNonNull(Game.getPlayer(playerList.getSelectedValue().split(" ")[0], playerList.getSelectedValue().split(" ")[1])).getPoints()));
+                        newPointsTextField.setText("");
+                    }
+                }
+            }
+        });
         newPointsTextField.setPreferredSize(new Dimension(90,25));
         changePlayerPointsPanel.add(newPointsTextField,gbc);
         gbc.gridx ++;
         JButton changePointsButton = new JButton("Punkte ändern");
+        changePointsButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                Game.addPlayerPoints(Objects.requireNonNull(Game.getPlayer(playerList.getSelectedValue().split(" ")[0], playerList.getSelectedValue().split(" ")[1])),Integer.parseInt(newPointsTextField.getText()));
+            }
+        });
         changePlayerPointsPanel.add(changePointsButton,gbc);
         gbc.gridx = 0;
-        changePanel.add(changePlayerPointsPanel);
+        gbc.gridy = 1;
+        changePanel.add(changePlayerPointsPanel, gbc);
 
-        changePanel.add(changePlayerTischPanel);
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        JLabel TischLabel = new JLabel("Tisch");
+        TischLabel.setPreferredSize(new Dimension(90,25));
+        changePlayerTischPanel.add(TischLabel,gbc);
+        gbc.gridx ++;
+        JLabel newTischLabel = new JLabel("neuer Tisch");
+        changePlayerTischPanel.add(newTischLabel,gbc);
+        gbc.gridx = 0;
+        gbc.gridy ++;
+        JLabel TischLabelNow = new JLabel();
+        changePlayerTischPanel.add(TischLabelNow,gbc);
+        gbc.gridx ++;
+        JTextField newTischTextField = new JTextField();
+        newTischTextField.setPreferredSize(new Dimension(90,25));
+        changePlayerTischPanel.add(newTischTextField,gbc);
+        gbc.gridx ++;
+        JButton changePlayerTischButton = new JButton("ändern");
+        changePlayerTischPanel.add(changePlayerTischButton, gbc);
+        changePlayerTischPanel.setVisible(false);
+        gbc.gridy = 2;
+        gbc.gridx = 0;
+        changePanel.add(changePlayerTischPanel, gbc);
 
         JMenuBar menuBar = new JMenuBar();
         JMenu playerMenu = new JMenu("Spieler");
@@ -245,7 +295,12 @@ public class Gui {
             changeVornameTextField.setText(playerList.getSelectedValue().split(" ")[0]);
             changeNachnameTextField.setText(playerList.getSelectedValue().split(" ")[1]);
             pointsTextField.setText(String.valueOf(Objects.requireNonNull(Game.getPlayer(playerList.getSelectedValue().split(" ")[0], playerList.getSelectedValue().split(" ")[1])).getPoints()));
-
+            if(Game.getPlayer(playerList.getSelectedValue().split(" ")[0], playerList.getSelectedValue().split(" ")[1]).getTisch() != null){
+                TischLabelNow.setText(Game.getPlayer(playerList.getSelectedValue().split(" ")[0], playerList.getSelectedValue().split(" ")[1]).getTisch().getName());
+                newTischTextField.setText(Game.getPlayer(playerList.getSelectedValue().split(" ")[0], playerList.getSelectedValue().split(" ")[1]).getTisch().getName());
+            }else{
+                TischLabelNow.setText("N/A");
+            }
         });
         playerMenu.addMouseListener(new MouseAdapter() {
             @Override
