@@ -57,6 +57,10 @@ public class Game {
         Gui.updateLeaderboard(playerList);
     }
 
+    public static void updateTisch(){
+
+    }
+
     public static void spielerZuordnen(){
         if(playerList.size() % 4 != 0){ //Überprüfe, ob genug Spieler vorhanden sind und Platzhalter einfügen
             for(int i = 0; i < playerList.size() % 4 ; i++){
