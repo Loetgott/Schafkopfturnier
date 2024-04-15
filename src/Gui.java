@@ -11,6 +11,7 @@ import java.util.Objects;
 import com.formdev.flatlaf.*;
 import org.jetbrains.annotations.NotNull;
 
+
 public class Gui {
 
     public static DefaultListModel<String> configPlayerListModel = new DefaultListModel<>();
@@ -97,7 +98,7 @@ public class Gui {
         pointsPanel.add(leaderboardPanel,BorderLayout.SOUTH);
 
         mainFrame.add(mainPanel);
-        mainFrame.setLocation(GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()[0].getDefaultConfiguration().getBounds().getLocation());
+        mainFrame.setLocation(GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()[1].getDefaultConfiguration().getBounds().getLocation());
         mainFrame.setVisible(true);
 
         //ab hier alles configFrame
@@ -108,6 +109,7 @@ public class Gui {
 
         //ab hier alles Main configPanel
         JPanel mainConfigPanel =new JPanel(new BorderLayout());
+        configFrame.setLocation(GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()[1].getDefaultConfiguration().getBounds().getLocation());
         JButton button2 = new JButton();
         button2.setVisible(true);
         mainConfigPanel.add(button2,BorderLayout.NORTH);
@@ -420,5 +422,6 @@ public class Gui {
                 leaderboardTable.setValueAt(playerlist.get(i).getPoints(),i,2);
             }
         }
+        System.out.println(YELLOW + "updated the leaderboard" + RESET);
     }
 }

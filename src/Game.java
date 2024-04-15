@@ -54,6 +54,5 @@ public class Game {
                 }
 
         Gui.updateLeaderboard(playerList);
-        System.out.println(YELLOW + "updated the leaderboard" + RESET);
     }
 }
