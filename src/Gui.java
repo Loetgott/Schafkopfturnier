@@ -521,20 +521,30 @@ public class Gui {
                     textPanel.add(new JLabel("Bitte Wechselspieler auswählen"),gbc);
                     int number = Integer.parseInt(newTischTextField.getText());
                     gbc.gridy ++;
-                    JMenu playerMenu = new JMenu();
-                    ArrayList<Player> chnageTischPlayerList = Game.tischList.get(number).getPlayerList();
+                    JMenuBar playerBar = new JMenuBar();
+                    JMenu playerMenu = new JMenu("Tauschspieler");
+                    playerBar.add(playerMenu);
+                    ArrayList<Player> changePlayerList = Game.tischList.get(number).getPlayerList();
                     Player changePlayer1 = Game.getPlayer(configPlayerList.getSelectedValue().split(" ")[0],configPlayerList.getSelectedValue().split(" ")[1]);
                     final Player[] changePlayer2 = new Player[1];
-                    for (Player player : chnageTischPlayerList) {
+                    for (Player player : changePlayerList) {
                         JMenuItem playerItem = new JMenuItem(player.getName()[0] + " " + player.getName()[1]);
                         playerItem.addMouseListener(new MouseAdapter() {
                             @Override
                             public void mouseClicked(MouseEvent e) {
+                                System.out.println("ldkhvalsjvhsalönvaolöihgöao");
+                                changePlayer2[0] = player;
+                            }
+                            @Override
+                            public void mouseReleased(MouseEvent e){
+                                System.out.println("agvavsak,vnsakbvhjrlghergherkjghrj");
                                 changePlayer2[0] = player;
                             }
                         });
                         playerMenu.add(playerItem);
                     }
+                    playerMenu.setVisible(true);
+                    textPanel.add(playerBar);
 
                     tischChangeFrame.add(textPanel, BorderLayout.CENTER);
                     confirmButton.addKeyListener(new KeyAdapter() {
@@ -544,13 +554,15 @@ public class Gui {
                                 denyButton.requestFocus();
                             }else if(e.getKeyCode() == KeyEvent.VK_ENTER){
                                 Game.spielertausch(changePlayer1,changePlayer2[0]);
+                                tischChangeFrame.dispose();
                             }
                         }
                     });
                     confirmButton.addMouseListener(new MouseAdapter() {
                         @Override
                         public void mouseClicked(MouseEvent e) {
-                            //TODO Methode zum Tischtausch
+                            Game.spielertausch(changePlayer1,changePlayer2[0]);
+                            tischChangeFrame.dispose();
                         }
                     });
                     denyButton.addKeyListener(new KeyAdapter() {
@@ -585,9 +597,17 @@ public class Gui {
         JMenu playerMenu = new JMenu("Spieler");
         JMenu mainMenu = new JMenu("Allgemein");
         JMenu updateMenu = new JMenu("Update");
+        JMenuItem playerZuordnen = new JMenuItem("Spieler verteilen");
         JMenuItem updateLeaderboard = new JMenuItem("update Leaderboard");
         JMenuItem updateTische = new JMenuItem("update Tische");
+        updateMenu.add(playerZuordnen);
         updateMenu.add(updateLeaderboard);
+        playerZuordnen.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                Game.spielerZuordnen();
+            }
+        });
         updateLeaderboard.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseReleased(MouseEvent e) {
@@ -629,7 +649,7 @@ public class Gui {
                 mainConfigPanel.setVisible(true);
             }
         });
-        configFrame.add(new JLabel("©Lötgott && sesamoel all rights reserved"),BorderLayout.SOUTH);
+        configFrame.add(new JLabel("©Lötgott & Sesamoel all rights reserved"),BorderLayout.SOUTH);
         configFrame.setLocationRelativeTo(null);
         configFrame.setVisible(true);
         System.out.println(GREEN + "configFrame generated!" + RESET);
