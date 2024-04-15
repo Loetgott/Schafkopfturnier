@@ -1,21 +1,22 @@
 public class Player {
-    String name;
+    String nachname;
     String vorname;
     int points;
-    int nPoints;
+    Tisch tisch;
 
-    public Player(String name, String vorname) {
-        this.name = name;
+    public Player(String vorname, String nachname) {
+        this.nachname = nachname;
         this.vorname = vorname;
     }
 
-    public String getName() {
+    public String[] getName() {
 
-        return name + " " + vorname;
+        return new String[]{vorname, nachname};
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setName(String vorname, String nachname) {
+        this.nachname = nachname;
+        this.vorname = vorname;
     }
 
     public int getPoints() {
@@ -25,12 +26,10 @@ public class Player {
     public void setPoints(int points) {
         this.points = points;
     }
-
-    public int getnPoints() {
-        return nPoints;
+    public void setTisch(Tisch nTisch){
+        this.tisch = nTisch;
     }
-
-    public void setnPoints(int nPoints) {
-        this.nPoints = nPoints;
+    public Tisch getTisch(){
+        return this.tisch;
     }
 }
