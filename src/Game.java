@@ -69,8 +69,9 @@ public class Game {
         for(int i = 0; i < playerList.size() / 4 ; i++){//Tische hinzufügen
             Tisch nTisch = new Tisch(i);
             for(int ii = 0; ii < 4 ; ii++){
-                nTisch.playerList.add(zPlayerList.getFirst());
-                zPlayerList.removeFirst();
+                nTisch.playerList.add(zPlayerList.get(0));
+                zPlayerList.get(0).setTisch(nTisch);
+                zPlayerList.remove(0);
             }
             tischList.add(nTisch);
         }
@@ -78,10 +79,21 @@ public class Game {
 
     }
 
-    //ToDo Methode für Spielertausch zwischen Tisch
+    public static void spielertausch (Player player1 , Player player2){
+        Tisch tisch1 = player1.getTisch();      //Tische der Spieler zwischenspeichern
+        Tisch tisch2 = player2.getTisch();
+
+        tisch1.playerList.remove(player1);      //Spieler aus Ursprungstischen entfernen
+        tisch2.playerList.remove(player2);
+        tisch1.playerList.add(player2);         //Spieler in neue Tische hinzufügen
+        tisch2.playerList.add(player1);
+
+        player1.setTisch(tisch2);               //Attribut Tisch in Spieler ändern
+        player2.setTisch(tisch1);
+
+    }
 
     //ToDo Methode Wo ist Spieler?
-
 
 
 }
