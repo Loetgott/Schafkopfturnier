@@ -93,7 +93,5 @@ public class Game {
 
     }
 
-    //ToDo Methode Wo ist Spieler?
-
 
 }
