@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.Collections;
 
 public class Game {
     public static ArrayList<Player> playerList = new ArrayList<>();
@@ -55,4 +56,32 @@ public class Game {
 
         Gui.updateLeaderboard(playerList);
     }
+
+    public static void spielerZuordnen(){
+        if(playerList.size() % 4 != 0){ //Überprüfe, ob genug Spieler vorhanden sind und Platzhalter einfügen
+            for(int i = 0; i < playerList.size() % 4 ; i++){
+                addPlayer("Platzhalter", String.valueOf(i));
+            }
+            System.out.println(RED + "Nicht genug Spieler! " + playerList.size() % 4 + "Platzhalter hinzugefügt. Bitte umbenennen!" + RESET);
+        }
+        ArrayList<Player> zPlayerList = playerList;//Zwischenliste einfügen
+        Collections.shuffle(zPlayerList);//Zwischenliste Mischen
+        for(int i = 0; i < playerList.size() / 4 ; i++){//Tische hinzufügen
+            Tisch nTisch = new Tisch(i);
+            for(int ii = 0; ii < 4 ; ii++){
+                nTisch.playerList.add(zPlayerList.getFirst());
+                zPlayerList.removeFirst();
+            }
+            tischList.add(nTisch);
+        }
+
+
+    }
+
+    //ToDo Methode für Spielertausch zwischen Tisch
+
+    //ToDo Methode Wo ist Spieler?
+
+
+
 }

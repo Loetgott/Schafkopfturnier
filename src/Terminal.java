@@ -23,6 +23,7 @@ public class Terminal{
             case "info":
                 System.out.println("addplayer <name>");
                 break;
+
             case "addplayer":
                 input.remove(0);
                 if(!input.isEmpty()){
@@ -37,6 +38,13 @@ public class Terminal{
             case "update":
                 Game.updateLeaderboard();
                 break;
+
+            //ToDo Update Tisch seperat
+
+            //ToDo Methode tisch zuteilen implementieren
+
+            //ToDo Methode Spieler Tauschen implementieren
+
             default:
                 System.out.println("unbekannter befehl! bitte auf Rechtschreibung achten");
         }
