@@ -276,6 +276,15 @@ public class Gui {
         JTextField pointsTextField = new JTextField();
         pointsTextField.addKeyListener(new KeyAdapter() {
             @Override
+            public void keyTyped(KeyEvent e) {
+                char c = e.getKeyChar();
+                if (!(Character.isDigit(c) || (c == KeyEvent.VK_BACK_SPACE) || (c == KeyEvent.VK_DELETE))) {
+                    e.consume();
+                }
+            }
+        });
+        pointsTextField.addKeyListener(new KeyAdapter() {
+            @Override
             public void keyReleased(KeyEvent e) {
                 if(e.getKeyCode() == KeyEvent.VK_ENTER || e.getKeyCode() == KeyEvent.VK_SPACE){
                     if(!pointsTextField.getText().isBlank()){
@@ -356,6 +365,15 @@ public class Gui {
             }
         });
         newPointsTextField.setPreferredSize(new Dimension(90,25));
+        newPointsTextField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                char c = e.getKeyChar();
+                if (!(Character.isDigit(c) || (c == KeyEvent.VK_BACK_SPACE) || (c == KeyEvent.VK_DELETE))) {
+                    e.consume();
+                }
+            }
+        });
         changePlayerPointsPanel.add(newPointsTextField,gbc);
         gbc.gridx ++;
         JButton changePointsButton = new JButton("Punkte ändern");
@@ -393,6 +411,171 @@ public class Gui {
         gbc.gridx ++;
         JButton changePlayerTischButton = new JButton("ändern");
         changePlayerTischPanel.add(changePlayerTischButton, gbc);
+        newTischTextField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                char c = e.getKeyChar();
+                if (!(Character.isDigit(c) || (c == KeyEvent.VK_BACK_SPACE) || (c == KeyEvent.VK_DELETE))) {
+                    e.consume();
+                }
+            }
+        });
+        changePlayerTischButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if(!newTischTextField.getText().isBlank() && Game.tischList.size() > Integer.parseInt(newTischTextField.getText())){
+                    JDialog tischChangeFrame = new JDialog();
+                    JMenuBar buttonBar = new JMenuBar();
+                    JButton confirmButton = new JButton("ändern");
+                    JButton denyButton = new JButton("abbrechen");
+                    buttonBar.add(confirmButton);
+                    buttonBar.add(denyButton);
+                    buttonBar.setBorderPainted(false);
+                    buttonBar.setBackground(tischChangeFrame.getBackground());
+                    buttonBar.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
+                    tischChangeFrame.add(buttonBar, BorderLayout.SOUTH);
+                    tischChangeFrame.setSize(new Dimension(400, 100));
+                    JPanel textPanel = new JPanel(new GridBagLayout());
+                    GridBagConstraints gbc = new GridBagConstraints();
+                    gbc.gridx = 0;
+                    gbc.gridy = 0;
+                    gbc.anchor = GridBagConstraints.CENTER;
+                    textPanel.add(new JLabel("Bitte Wechselspieler auswählen"),gbc);
+                    int number = Integer.parseInt(newTischTextField.getText());
+                    gbc.gridy ++;
+                    JMenu playerMenu = new JMenu();
+                    ArrayList<Player> chnageTischPlayerList = Game.tischList.get(number).getPlayerList();
+                    Player changePlayer1 = Game.getPlayer(configPlayerList.getSelectedValue().split(" ")[0],configPlayerList.getSelectedValue().split(" ")[1]);
+                    final Player[] changePlayer2 = new Player[1];
+                    for (Player player : chnageTischPlayerList) {
+                        JMenuItem playerItem = new JMenuItem(player.getName()[0] + " " + player.getName()[1]);
+                        playerItem.addMouseListener(new MouseAdapter() {
+                            @Override
+                            public void mouseClicked(MouseEvent e) {
+                                changePlayer2[0] = player;
+                            }
+                        });
+                        playerMenu.add(playerItem);
+                    }
+
+                    tischChangeFrame.add(textPanel, BorderLayout.CENTER);
+                    confirmButton.addKeyListener(new KeyAdapter() {
+                        @Override
+                        public void keyReleased(KeyEvent e) {
+                            if(e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_TAB){
+                                denyButton.requestFocus();
+                            }else if(e.getKeyCode() == KeyEvent.VK_ENTER){
+                                //TODO Methode zu tischtausch changeTisch(changePlayer1,changePlayer2);
+                            }
+                        }
+                    });
+                    confirmButton.addMouseListener(new MouseAdapter() {
+                        @Override
+                        public void mouseClicked(MouseEvent e) {
+                            //TODO Methode zum Tischtausch
+                        }
+                    });
+                    denyButton.addKeyListener(new KeyAdapter() {
+                        @Override
+                        public void keyReleased(KeyEvent e) {
+                            if(e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_TAB){
+                                confirmButton.requestFocus();
+                            }else if(e.getKeyCode() == KeyEvent.VK_ENTER){
+                                tischChangeFrame.dispose();
+                            }
+                        }
+                    });
+                    denyButton.addMouseListener(new MouseAdapter() {
+                        @Override
+                        public void mouseClicked(MouseEvent e) {
+                            tischChangeFrame.dispose();
+                        }
+                    });
+                    confirmButton.requestFocus();
+                    tischChangeFrame.setVisible(true);
+                }else if(Integer.parseInt(newTischTextField.getText()) >= Game.tischList.size()){
+                    System.out.println(RED + "tisch number is too big!" + RESET);
+                }
+            }
+        });
+        newTischTextField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                if(!newTischTextField.getText().isBlank() && Game.tischList.size() > Integer.parseInt(newTischTextField.getText()) && e.getKeyCode() == KeyEvent.VK_ENTER){
+                    JDialog tischChangeFrame = new JDialog();
+                    JMenuBar buttonBar = new JMenuBar();
+                    JButton confirmButton = new JButton("ändern");
+                    JButton denyButton = new JButton("abbrechen");
+                    buttonBar.add(confirmButton);
+                    buttonBar.add(denyButton);
+                    buttonBar.setBorderPainted(false);
+                    buttonBar.setBackground(tischChangeFrame.getBackground());
+                    buttonBar.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
+                    tischChangeFrame.add(buttonBar, BorderLayout.SOUTH);
+                    tischChangeFrame.setSize(new Dimension(400, 100));
+                    JPanel textPanel = new JPanel(new GridBagLayout());
+                    GridBagConstraints gbc = new GridBagConstraints();
+                    gbc.gridx = 0;
+                    gbc.gridy = 0;
+                    gbc.anchor = GridBagConstraints.CENTER;
+                    textPanel.add(new JLabel("Bitte Wechselspieler auswählen"),gbc);
+                    int number = Integer.parseInt(newTischTextField.getText());
+                    gbc.gridy ++;
+                    JMenu playerMenu = new JMenu();
+                    ArrayList<Player> chnageTischPlayerList = Game.tischList.get(number).getPlayerList();
+                    Player changePlayer1 = Game.getPlayer(configPlayerList.getSelectedValue().split(" ")[0],configPlayerList.getSelectedValue().split(" ")[1]);
+                    final Player[] changePlayer2 = new Player[1];
+                    for (Player player : chnageTischPlayerList) {
+                        JMenuItem playerItem = new JMenuItem(player.getName()[0] + " " + player.getName()[1]);
+                        playerItem.addMouseListener(new MouseAdapter() {
+                            @Override
+                            public void mouseClicked(MouseEvent e) {
+                                changePlayer2[0] = player;
+                            }
+                        });
+                        playerMenu.add(playerItem);
+                    }
+
+                    tischChangeFrame.add(textPanel, BorderLayout.CENTER);
+                    confirmButton.addKeyListener(new KeyAdapter() {
+                        @Override
+                        public void keyReleased(KeyEvent e) {
+                            if(e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_TAB){
+                                denyButton.requestFocus();
+                            }else if(e.getKeyCode() == KeyEvent.VK_ENTER){
+                                //TODO Methode zu tischtausch changeTisch(changePlayer1,changePlayer2);
+                            }
+                        }
+                    });
+                    confirmButton.addMouseListener(new MouseAdapter() {
+                        @Override
+                        public void mouseClicked(MouseEvent e) {
+                            //TODO Methode zum Tischtausch
+                        }
+                    });
+                    denyButton.addKeyListener(new KeyAdapter() {
+                        @Override
+                        public void keyReleased(KeyEvent e) {
+                            if(e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_TAB){
+                                confirmButton.requestFocus();
+                            }else if(e.getKeyCode() == KeyEvent.VK_ENTER){
+                                tischChangeFrame.dispose();
+                            }
+                        }
+                    });
+                    denyButton.addMouseListener(new MouseAdapter() {
+                        @Override
+                        public void mouseClicked(MouseEvent e) {
+                            tischChangeFrame.dispose();
+                        }
+                    });
+                    confirmButton.requestFocus();
+                    tischChangeFrame.setVisible(true);
+                }else if(Integer.parseInt(newTischTextField.getText()) >= Game.tischList.size()){
+                    System.out.println(RED + "tisch number is too big!" + RESET);
+                }
+            }
+        });
         changePlayerTischPanel.setVisible(false);
         gbc.gridy = 2;
         gbc.gridx = 0;
@@ -446,7 +629,7 @@ public class Gui {
                 mainConfigPanel.setVisible(true);
             }
         });
-        configFrame.add(new JLabel("©Lötgott all rights reserved"),BorderLayout.SOUTH);
+        configFrame.add(new JLabel("©Lötgott && sesamoel all rights reserved"),BorderLayout.SOUTH);
         configFrame.setLocationRelativeTo(null);
         configFrame.setVisible(true);
         System.out.println(GREEN + "configFrame generated!" + RESET);
