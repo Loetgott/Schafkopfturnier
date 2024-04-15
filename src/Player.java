@@ -14,6 +14,14 @@ public class Player {
         return new String[]{vorname, nachname};
     }
 
+    public String getVorname(){
+        return vorname;
+    }
+
+    public String getNachname(){
+        return nachname;
+    }
+
     public void setName(String vorname, String nachname) {
         this.nachname = nachname;
         this.vorname = vorname;

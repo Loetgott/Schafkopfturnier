@@ -35,15 +35,22 @@ public class Terminal{
                     }
                 }
                 break;
-            case "update":
+            case "updateleaderboard":
                 Game.updateLeaderboard();
                 break;
 
-            //ToDo Update Tisch seperat
+            case "updatetisch":
+                Game.updateTisch();
+                break;
 
-            //ToDo Methode tisch zuteilen implementieren
+            case "tischezuteilen":
+                Game.spielerZuordnen();
+                break;
 
             //ToDo Methode Spieler Tauschen implementieren
+            case "spielertauschen":
+                input.remove(0);
+                if(Game.sucheSpieler())
 
             default:
                 System.out.println("unbekannter befehl! bitte auf Rechtschreibung achten");
