@@ -58,7 +58,7 @@ public class Game {
     }
 
     public static void updateTisch(){
-
+        Gui.updateTisch();
     }
 
     public static void spielerZuordnen(){
@@ -68,14 +68,12 @@ public class Game {
             }
             System.out.println(RED + "Nicht genug Spieler! " + playerList.size() % 4 + "Platzhalter hinzugefügt. Bitte umbenennen!" + RESET);
         }
-        ArrayList<Player> zPlayerList = playerList;//Zwischenliste einfügen
-        Collections.shuffle(zPlayerList);//Zwischenliste Mischen
-        for(int i = 0; i < playerList.size() / 4 ; i++){//Tische hinzufügen
+        Collections.shuffle(playerList);//playerList mischen
+        for(int i = 0; i <= playerList.size() / 4 ; i++){//Tische hinzufügen
             Tisch nTisch = new Tisch(i);
             for(int ii = 0; ii < 4 ; ii++){
-                nTisch.playerList.add(zPlayerList.get(0));
-                zPlayerList.get(0).setTisch(nTisch);
-                zPlayerList.remove(0);
+                nTisch.playerList.add(playerList.get( i * 4 +ii));
+                playerList.get( i * 4 + ii ).setTisch(nTisch);
             }
             tischList.add(nTisch);
         }
@@ -97,5 +95,13 @@ public class Game {
 
     }
 
+    public static Player sucheSpieler(String vorname, String nachname) {
+        for (Player player : playerList) {
+            if (player.getVorname().equals(vorname) && player.getNachname().equals(nachname)) {
+                return player; // Spieler gefunden
+            }
+        }
+        return null; // Spieler nicht gefunden
+    }
 
 }
