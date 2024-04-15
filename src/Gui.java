@@ -543,7 +543,7 @@ public class Gui {
                             if(e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_TAB){
                                 denyButton.requestFocus();
                             }else if(e.getKeyCode() == KeyEvent.VK_ENTER){
-                                //TODO Methode zu tischtausch changeTisch(changePlayer1,changePlayer2);
+                                Game.spielertausch(changePlayer1,changePlayer2[0]);
                             }
                         }
                     });
@@ -656,5 +656,8 @@ public class Gui {
             }
         }
         System.out.println(YELLOW + "updated the leaderboard" + RESET);
+    }
+    public static void updateTisch(){
+
     }
 }
