@@ -98,7 +98,7 @@ public class Gui {
         pointsPanel.add(leaderboardPanel,BorderLayout.SOUTH);
 
         mainFrame.add(mainPanel);
-        mainFrame.setLocation(GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()[1].getDefaultConfiguration().getBounds().getLocation());
+        mainFrame.setLocation(GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()[0].getDefaultConfiguration().getBounds().getLocation());
         mainFrame.setVisible(true);
 
         //ab hier alles configFrame
@@ -280,9 +280,60 @@ public class Gui {
             public void keyReleased(KeyEvent e) {
                 if(e.getKeyCode() == KeyEvent.VK_ENTER || e.getKeyCode() == KeyEvent.VK_SPACE){
                     if(!pointsTextField.getText().isBlank()){
-                        //TODO : fenster zur Bestätigung einbauen (Message Dialog, etc.)
-                        Game.setPlayerPoints(Objects.requireNonNull(Game.getPlayer(configPlayerList.getSelectedValue().split(" ")[0], configPlayerList.getSelectedValue().split(" ")[1])),Integer.parseInt(pointsTextField.getText()));
-                        changePanel.requestFocusInWindow();
+                        JDialog pointsChangeConfirmationFrame = new JDialog();
+                        JMenuBar buttonBar = new JMenuBar();
+                        JButton confirmButton = new JButton("ändern");
+                        JButton denyButton = new JButton("abbrechen");
+                        buttonBar.add(confirmButton);
+                        buttonBar.add(denyButton);
+                        buttonBar.setBorderPainted(false);
+                        buttonBar.setBackground(pointsChangeConfirmationFrame.getBackground());
+                        buttonBar.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
+                        pointsChangeConfirmationFrame.add(buttonBar, BorderLayout.SOUTH);
+                        pointsChangeConfirmationFrame.setSize(new Dimension(400, 100));
+                        JPanel textPanel = new JPanel(new GridBagLayout());
+                        GridBagConstraints gbc = new GridBagConstraints();
+                        gbc.gridx = 0;
+                        gbc.gridy = 0;
+                        gbc.anchor = GridBagConstraints.CENTER;
+                        textPanel.add(new JLabel("Achtung: Soll wirklich der Punktestand geändert werden?"), gbc);
+                        pointsChangeConfirmationFrame.add(textPanel, BorderLayout.CENTER);
+                        confirmButton.addKeyListener(new KeyAdapter() {
+                            @Override
+                            public void keyReleased(KeyEvent e) {
+                                if(e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_TAB){
+                                    denyButton.requestFocus();
+                                }else if(e.getKeyCode() == KeyEvent.VK_ENTER){
+                                    Game.setPlayerPoints(Objects.requireNonNull(Game.getPlayer(configPlayerList.getSelectedValue().split(" ")[0], configPlayerList.getSelectedValue().split(" ")[1])),Integer.parseInt(pointsTextField.getText()));
+                                    pointsChangeConfirmationFrame.dispose();
+                                }
+                            }
+                        });
+                        confirmButton.addMouseListener(new MouseAdapter() {
+                            @Override
+                            public void mouseClicked(MouseEvent e) {
+                                Game.setPlayerPoints(Objects.requireNonNull(Game.getPlayer(configPlayerList.getSelectedValue().split(" ")[0], configPlayerList.getSelectedValue().split(" ")[1])),Integer.parseInt(pointsTextField.getText()));
+                                pointsChangeConfirmationFrame.dispose();                            }
+                        });
+                        denyButton.addKeyListener(new KeyAdapter() {
+                            @Override
+                            public void keyReleased(KeyEvent e) {
+                                if(e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_TAB){
+                                    confirmButton.requestFocus();
+                                }else if(e.getKeyCode() == KeyEvent.VK_ENTER){
+                                    pointsChangeConfirmationFrame.dispose();
+                                }
+                            }
+                        });
+                        denyButton.addMouseListener(new MouseAdapter() {
+                            @Override
+                            public void mouseClicked(MouseEvent e) {
+                                pointsChangeConfirmationFrame.dispose();
+                            }
+                        });
+                        confirmButton.requestFocus();
+                        pointsChangeConfirmationFrame.setVisible(true);
+
                     }
                 }
             }
