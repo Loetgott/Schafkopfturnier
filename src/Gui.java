@@ -369,7 +369,7 @@ public class Gui {
             @Override
             public void keyTyped(KeyEvent e) {
                 char c = e.getKeyChar();
-                if (!(Character.isDigit(c) || (c == KeyEvent.VK_BACK_SPACE) || (c == KeyEvent.VK_DELETE))) {
+                if ((Character.isLetter(c))){
                     e.consume();
                 }
             }
@@ -415,7 +415,7 @@ public class Gui {
             @Override
             public void keyTyped(KeyEvent e) {
                 char c = e.getKeyChar();
-                if (!(Character.isDigit(c) || (c == KeyEvent.VK_BACK_SPACE))) {
+                if ((Character.isLetter(c))) {
                     e.consume();
                 }
             }
