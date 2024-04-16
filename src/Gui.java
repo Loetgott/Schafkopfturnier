@@ -512,7 +512,7 @@ public class Gui {
                     buttonBar.setBackground(tischChangeFrame.getBackground());
                     buttonBar.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
                     tischChangeFrame.add(buttonBar, BorderLayout.SOUTH);
-                    tischChangeFrame.setSize(new Dimension(400, 100));
+                    tischChangeFrame.setSize(new Dimension(400, 150));
                     JPanel textPanel = new JPanel(new GridBagLayout());
                     GridBagConstraints gbc = new GridBagConstraints();
                     gbc.gridx = 0;
@@ -520,10 +520,8 @@ public class Gui {
                     gbc.anchor = GridBagConstraints.CENTER;
                     textPanel.add(new JLabel("Bitte Wechselspieler auswählen"),gbc);
                     int number = Integer.parseInt(newTischTextField.getText());
-                    gbc.gridy ++;
                     JMenuBar playerBar = new JMenuBar();
                     JMenu playerMenu = new JMenu("Tauschspieler");
-                    playerBar.add(playerMenu);
                     ArrayList<Player> changePlayerList = Game.tischList.get(number).getPlayerList();
                     Player changePlayer1 = Game.getPlayer(configPlayerList.getSelectedValue().split(" ")[0],configPlayerList.getSelectedValue().split(" ")[1]);
                     final Player[] changePlayer2 = new Player[1];
@@ -531,21 +529,18 @@ public class Gui {
                         JMenuItem playerItem = new JMenuItem(player.getName()[0] + " " + player.getName()[1]);
                         playerItem.addMouseListener(new MouseAdapter() {
                             @Override
-                            public void mouseClicked(MouseEvent e) {
-                                System.out.println("ldkhvalsjvhsalönvaolöihgöao");
-                                changePlayer2[0] = player;
-                            }
-                            @Override
                             public void mouseReleased(MouseEvent e){
-                                System.out.println("agvavsak,vnsakbvhjrlghergherkjghrj");
                                 changePlayer2[0] = player;
+                                playerMenu.setText(player.getVorname() + " " + player.getNachname());
                             }
                         });
                         playerMenu.add(playerItem);
                     }
                     playerMenu.setVisible(true);
-                    textPanel.add(playerBar);
-
+                    gbc.gridy = 1;
+                    gbc.gridx = 0;
+                    playerBar.add(playerMenu);
+                    textPanel.add(playerBar, gbc);
                     tischChangeFrame.add(textPanel, BorderLayout.CENTER);
                     confirmButton.addKeyListener(new KeyAdapter() {
                         @Override
@@ -604,7 +599,7 @@ public class Gui {
         updateMenu.add(updateLeaderboard);
         playerZuordnen.addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseClicked(MouseEvent e) {
+            public void mouseReleased(MouseEvent e) {
                 Game.spielerZuordnen();
             }
         });

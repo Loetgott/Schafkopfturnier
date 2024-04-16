@@ -21,10 +21,10 @@ public class Terminal{
         ArrayList<String> input = new ArrayList<>(Arrays.asList(input1));//machen zu einer arraylist
         switch(input.get(0)){
             case "info":
-                System.out.println("addplayer <name>");
+                System.out.println("spielerhinzufügen <name>");
                 break;
 
-            case "addplayer":
+            case "spielerhinzufügen":
                 input.remove(0);
                 if(!input.isEmpty()){
                     String vorname = input.get(0);

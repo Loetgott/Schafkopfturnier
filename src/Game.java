@@ -66,7 +66,7 @@ public class Game {
             for(int i = 0; i < playerList.size() % 4 ; i++){
                 addPlayer("Platzhalter", String.valueOf(i));
             }
-            System.out.println(RED + "Nicht genug Spieler! " + playerList.size() % 4 + "Platzhalter hinzugefügt. Bitte umbenennen!" + RESET);
+            System.out.println(RED + "Nicht genug Spieler! " + playerList.size() % 4 + " Platzhalter hinzugefügt. Bitte umbenennen!" + RESET);
         }
         Collections.shuffle(playerList);//playerList mischen
         for(int i = 0; i < playerList.size() / 4 ; i++){//Tische hinzufügen
