@@ -36,7 +36,9 @@ public class Terminal{
                 }
                 break;
             case "updateleaderboard":
-                Game.updateLeaderboard();
+                System.out.println("playerList vor Tausch" + Game.playerList.size());
+                Game.spielerZuordnen();
+                System.out.println(" Tisch list nach atsuch" + Game.tischList.size());
                 break;
 
             case "updatetisch":
@@ -50,8 +52,8 @@ public class Terminal{
             //ToDo Methode Spieler Tauschen implementieren
             case "spielertauschen":
                 input.remove(0);
-                if(Game.sucheSpieler())
-
+                //if(Game.sucheSpieler())
+                break;
             default:
                 System.out.println("unbekannter befehl! bitte auf Rechtschreibung achten");
         }

@@ -69,10 +69,10 @@ public class Game {
             System.out.println(RED + "Nicht genug Spieler! " + playerList.size() % 4 + "Platzhalter hinzugefügt. Bitte umbenennen!" + RESET);
         }
         Collections.shuffle(playerList);//playerList mischen
-        for(int i = 0; i <= playerList.size() / 4 ; i++){//Tische hinzufügen
+        for(int i = 0; i < playerList.size() / 4 ; i++){//Tische hinzufügen
             Tisch nTisch = new Tisch(i);
             for(int ii = 0; ii < 4 ; ii++){
-                nTisch.playerList.add(playerList.get( i * 4 +ii));
+                nTisch.playerList.add(playerList.get(i * 4 + ii));
                 playerList.get( i * 4 + ii ).setTisch(nTisch);
             }
             tischList.add(nTisch);
@@ -82,6 +82,7 @@ public class Game {
     }
 
     public static void spielertausch (Player player1 , Player player2){
+        System.out.println("getauscht!");
         Tisch tisch1 = player1.getTisch();      //Tische der Spieler zwischenspeichern
         Tisch tisch2 = player2.getTisch();
 
@@ -103,5 +104,6 @@ public class Game {
         }
         return null; // Spieler nicht gefunden
     }
+
 
 }

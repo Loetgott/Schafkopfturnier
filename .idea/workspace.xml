@@ -9,11 +9,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bdf4d30b-1150-4e01-8031-276c41c2ea01" name="Changes" comment="Beginn mainFrame">
+    <list default="true" id="bdf4d30b-1150-4e01-8031-276c41c2ea01" name="Changes" comment="tisch tauschen geht jetzt">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Gui.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Gui.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Terminal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Terminal.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -292,7 +291,55 @@
       <option name="project" value="LOCAL" />
       <updated>1713120909024</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="p Seminar vorbei">
+      <option name="closed" value="true" />
+      <created>1713186400650</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1713186400650</updated>
+    </task>
+    <task id="LOCAL-00022" summary="confirmationFrame bei changePoints">
+      <option name="closed" value="true" />
+      <created>1713197462415</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1713197462415</updated>
+    </task>
+    <task id="LOCAL-00023" summary="confirmationFrame bei changePoints">
+      <option name="closed" value="true" />
+      <created>1713202284644</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1713202284644</updated>
+    </task>
+    <task id="LOCAL-00024" summary="tisch taushc anfang">
+      <option name="closed" value="true" />
+      <created>1713206927024</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1713206927024</updated>
+    </task>
+    <task id="LOCAL-00025" summary="tisch taushc anfang">
+      <option name="closed" value="true" />
+      <created>1713207056988</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1713207056988</updated>
+    </task>
+    <task id="LOCAL-00026" summary="tisch tauschen geht jetzt">
+      <option name="closed" value="true" />
+      <created>1713210813559</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1713210813559</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -316,6 +363,10 @@
     <MESSAGE value="finished the changePoints Method in GUi" />
     <MESSAGE value="began the change Tisch panel + change Points fertig" />
     <MESSAGE value="Beginn mainFrame" />
-    <option name="LAST_COMMIT_MESSAGE" value="Beginn mainFrame" />
+    <MESSAGE value="p Seminar vorbei" />
+    <MESSAGE value="confirmationFrame bei changePoints" />
+    <MESSAGE value="tisch taushc anfang" />
+    <MESSAGE value="tisch tauschen geht jetzt" />
+    <option name="LAST_COMMIT_MESSAGE" value="tisch tauschen geht jetzt" />
   </component>
 </project>
