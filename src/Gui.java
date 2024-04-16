@@ -415,7 +415,7 @@ public class Gui {
             @Override
             public void keyTyped(KeyEvent e) {
                 char c = e.getKeyChar();
-                if (!(Character.isDigit(c) || (c == KeyEvent.VK_BACK_SPACE) || (c == KeyEvent.VK_DELETE))) {
+                if (!(Character.isDigit(c) || (c == KeyEvent.VK_BACK_SPACE))) {
                     e.consume();
                 }
             }
@@ -519,7 +519,7 @@ public class Gui {
                     gbc.gridy = 0;
                     gbc.anchor = GridBagConstraints.CENTER;
                     textPanel.add(new JLabel("Bitte Wechselspieler auswählen"),gbc);
-                    int number = Integer.parseInt(newTischTextField.getText());
+                    int number = Integer.parseInt(newTischTextField.getText()) - 1;
                     JMenuBar playerBar = new JMenuBar();
                     JMenu playerMenu = new JMenu("Tauschspieler");
                     ArrayList<Player> changePlayerList = Game.tischList.get(number).getPlayerList();

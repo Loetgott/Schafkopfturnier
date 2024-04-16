@@ -63,14 +63,15 @@ public class Game {
 
     public static void spielerZuordnen(){
         if(playerList.size() % 4 != 0){ //Überprüfe, ob genug Spieler vorhanden sind und Platzhalter einfügen
+            int newPlayerCount = 4 - (playerList.size() % 4);
             for(int i = 0; i < playerList.size() % 4 ; i++){
                 addPlayer("Platzhalter", String.valueOf(i));
             }
-            System.out.println(RED + "Nicht genug Spieler! " + playerList.size() % 4 + " Platzhalter hinzugefügt. Bitte umbenennen!" + RESET);
+            System.out.println(RED + "Nicht genug Spieler! " + newPlayerCount + " Platzhalter hinzugefügt. Bitte umbenennen!" + RESET);
         }
         Collections.shuffle(playerList);//playerList mischen
         for(int i = 0; i < playerList.size() / 4 ; i++){//Tische hinzufügen
-            Tisch nTisch = new Tisch(i);
+            Tisch nTisch = new Tisch(i + 1);
             for(int ii = 0; ii < 4 ; ii++){
                 nTisch.playerList.add(playerList.get(i * 4 + ii));
                 playerList.get( i * 4 + ii ).setTisch(nTisch);

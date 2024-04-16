@@ -9,11 +9,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bdf4d30b-1150-4e01-8031-276c41c2ea01" name="Changes" comment="tisch tauschen geht jetzt">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="bdf4d30b-1150-4e01-8031-276c41c2ea01" name="Changes" comment="frame bei Tischtausch upgedated">
       <change beforePath="$PROJECT_DIR$/src/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Game.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Gui.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Gui.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Terminal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Terminal.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -348,7 +346,15 @@
       <option name="project" value="LOCAL" />
       <updated>1713276981810</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="frame bei Tischtausch upgedated">
+      <option name="closed" value="true" />
+      <created>1713279529153</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1713279529153</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -376,6 +382,7 @@
     <MESSAGE value="confirmationFrame bei changePoints" />
     <MESSAGE value="tisch taushc anfang" />
     <MESSAGE value="tisch tauschen geht jetzt" />
-    <option name="LAST_COMMIT_MESSAGE" value="tisch tauschen geht jetzt" />
+    <MESSAGE value="frame bei Tischtausch upgedated" />
+    <option name="LAST_COMMIT_MESSAGE" value="frame bei Tischtausch upgedated" />
   </component>
 </project>
