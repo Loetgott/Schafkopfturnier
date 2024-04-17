@@ -37,7 +37,7 @@ public class Gui {
         mainPanel.setBackground(new Color(255, 255, 255));
 
         JPanel leaderboardPanel = new JPanel();
-        JPanel tischPanel = new JPanel();
+        JPanel tischPanel = new JPanel(new GridBagLayout());
         JPanel pointsPanel = new JPanel(new BorderLayout());
 
         mainPanel.add(tischPanel, BorderLayout.CENTER);
@@ -45,6 +45,9 @@ public class Gui {
 
         leaderboardPanel.setBackground(new Color(255,255,255));
         tischPanel.setBackground(new Color(255,255,255));
+
+        tischPanel.add(new JTisch());
+
         pointsPanel.setBackground(new Color(255,255,255));
 
         JTable pointsTable = new JTable(8, 3);

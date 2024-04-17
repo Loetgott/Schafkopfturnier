@@ -9,10 +9,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bdf4d30b-1150-4e01-8031-276c41c2ea01" name="Changes" comment="erste vercueh mit web app">
+    <list default="true" id="bdf4d30b-1150-4e01-8031-276c41c2ea01" name="Changes" comment="errors beim tischetauschen behoben">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Gui.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Gui.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/JavaServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/JavaServer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/JTisch.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/JTisch.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -381,7 +381,15 @@
       <option name="project" value="LOCAL" />
       <updated>1713295108337</updated>
     </task>
-    <option name="localTasksCounter" value="31" />
+    <task id="LOCAL-00031" summary="errors beim tischetauschen behoben">
+      <option name="closed" value="true" />
+      <created>1713379265370</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1713379265370</updated>
+    </task>
+    <option name="localTasksCounter" value="32" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -411,6 +419,7 @@
     <MESSAGE value="tisch tauschen geht jetzt" />
     <MESSAGE value="frame bei Tischtausch upgedated" />
     <MESSAGE value="erste vercueh mit web app" />
-    <option name="LAST_COMMIT_MESSAGE" value="erste vercueh mit web app" />
+    <MESSAGE value="errors beim tischetauschen behoben" />
+    <option name="LAST_COMMIT_MESSAGE" value="errors beim tischetauschen behoben" />
   </component>
 </project>
