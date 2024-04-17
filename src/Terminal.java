@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class Terminal{
@@ -49,11 +50,15 @@ public class Terminal{
                 Game.spielerZuordnen();
                 break;
 
-            //ToDo Methode Spieler Tauschen implementieren
             case "spielertauschen":
                 input.remove(0);
-                //if(Game.sucheSpieler())
+                if(Game.sucheSpieler( input.get(0) , input.get(1))==null || Game.sucheSpieler( input.get(2) , input.get(3))==null){
+                    System.out.println("Ein Name wird nicht gefunden. Bitte auf Rechtschreibung achten!");
+                }else{
+                    Game.spielertausch(Objects.requireNonNull(Game.sucheSpieler(input.get(0), input.get(1))), Objects.requireNonNull(Game.sucheSpieler(input.get(2), input.get(3))));
+                }
                 break;
+
             default:
                 System.out.println("unbekannter befehl! bitte auf Rechtschreibung achten");
         }
