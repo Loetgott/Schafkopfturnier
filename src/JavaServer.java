@@ -14,23 +14,16 @@ public class JavaServer {
                 Socket socket = serverSocket.accept();
                 System.out.println("Verbindung hergestellt.");
 
+                // Lese die IP-Adresse des Clients
+                String clientIP = socket.getInetAddress().getHostAddress();
+                System.out.println("Anfrage von IP-Adresse: " + clientIP);
+
                 // Lese die Anforderung des Clients
                 BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 String request = input.readLine();
                 System.out.println("Anfrage: " + request);
 
-                // Extrahiere den Text aus der URL
-                String[] parts = request.split("\\?");
-                String text = "";
-                if (parts.length > 1) {
-                    String[] params = parts[1].split("=");
-                    if (params.length > 1 && params[0].equals("text")) {
-                        text = params[1];
-                    }
-                }
-
-                // Verarbeite den empfangenen Text
-                System.out.println("Empfangener Text: " + text);
+                // Verarbeite die Anfrage ...
 
                 // Sende eine Antwort zurück zum Client
                 // (In diesem Beispiel wird keine Antwort gesendet)
