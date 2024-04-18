@@ -58,7 +58,7 @@ public class Game {
     }
 
     public static void updateTisch(){
-        Gui.updateTisch();
+        Gui.updateTisch(tischList);
     }
 
     public static void spielerZuordnen(){

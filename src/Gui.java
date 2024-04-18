@@ -21,6 +21,7 @@ public class Gui {
     public static final String GREEN = "\u001B[32m";
     public static final String YELLOW = "\u001B[33m";
     public static final String WHITE = "\u001B[37m";
+    public static ArrayList<JTisch> tischList = new ArrayList<JTisch>();
 
     public Gui() {
         try {
@@ -56,6 +57,7 @@ public class Gui {
                 tischNumber ++;
                 gbc.gridx = ii;
                 gbc.gridy = i;
+                tischList.add(tisch);
                 tischPanel.add(tisch, gbc);
             }
         }
@@ -643,6 +645,13 @@ public class Gui {
                 Game.updateLeaderboard();
             }
         });
+        updateTische.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                System.out.println("1");
+                Game.updateTisch();
+            }
+        });
         updateMenu.add(updateTische);
         menuBar.add(mainMenu);
         menuBar.add(playerMenu);
@@ -706,7 +715,11 @@ public class Gui {
         }
         System.out.println(YELLOW + "updated the leaderboard" + RESET);
     }
-    public static void updateTisch(){
-
+    public static void updateTisch(ArrayList<Tisch> tische){
+        for(int i = 0; i < tische.size(); i ++){
+            for(int ii = 0; ii < 4; ii ++){
+                tischList.get(i).setPlayer(tische.get(i).getPlayerList().get(ii),ii);
+            }
+        }
     }
 }

@@ -9,6 +9,7 @@ public class JTisch extends JComponent {
     int height = 200;
     String name;
     ArrayList<Player> playerList = new ArrayList<>();
+    JTable table = new JTable(4,3);
     public JTisch() {
         setPreferredSize(new Dimension(width, height));
     }
@@ -42,9 +43,25 @@ public class JTisch extends JComponent {
             int x = (width - stringWidth) / 2;
             g.drawString("Tisch " + name, x, 30); // Vertikale Position in der Mitte der Höhe
         }
+        add(table);
+        table.setBounds(15, 50, 300, 140);
+        table.setBackground(backgroundColor);
+        table.setForeground(linesColor);
+        table.setFont(table.getFont().deriveFont(Font.BOLD, 23));
+        table.getColumnModel().getColumn(1).setPreferredWidth(200);
+        table.getColumnModel().getColumn(0).setPreferredWidth(35);
+        table.setRowHeight(30);
+        for(int i = 0; i < playerList.size(); i ++){
+            table.setValueAt(i + 1 , i,0);
+            table.setValueAt(playerList.get(i).getName()[0] + " " + playerList.get(i).getNachname().charAt(0) + ".", i,1);
+        }
     }
     public void setPlayer(Player player, int position){
-        playerList.set(position,player);
-        
+        if (playerList.size() > position && !playerList.isEmpty()) {
+            playerList.set(position,player);
+        } else {
+            playerList.add(position,player);
+        }
+        repaint();
     }
 }
