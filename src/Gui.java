@@ -28,6 +28,7 @@ public class Gui {
         } catch (UnsupportedLookAndFeelException e) {
             throw new RuntimeException(e);
         }
+        GridBagConstraints gbc = new GridBagConstraints();
         JFrame mainFrame = new JFrame("Plan");
         mainFrame.setSize(new Dimension(1920, 1080));
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -46,7 +47,17 @@ public class Gui {
         leaderboardPanel.setBackground(new Color(255,255,255));
         tischPanel.setBackground(new Color(255,255,255));
 
+        gbc.insets = new Insets(5, 5, 5, 5);
         tischPanel.add(new JTisch());
+        for(int i = 0; i < 4; i ++){
+            for(int ii = 0; ii < 5; ii ++){
+                JTisch tisch = new JTisch();
+                gbc.gridx = i;
+                gbc.gridy = ii;
+                tischPanel.add(tisch, gbc);
+            }
+        }
+        gbc.insets = new Insets(0, 0, 0, 0);
 
         pointsPanel.setBackground(new Color(255,255,255));
 
@@ -102,6 +113,7 @@ public class Gui {
         mainFrame.add(mainPanel);
         mainFrame.setLocation(GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()[0].getDefaultConfiguration().getBounds().getLocation());
         mainFrame.setVisible(true);
+        System.out.println(GREEN + "MainFrame generated" + RESET);
 
         //ab hier alles configFrame
         JFrame configFrame = new JFrame("");
@@ -130,10 +142,10 @@ public class Gui {
         JPanel changePlayerTischPanel = new JPanel(new GridBagLayout());
         changePlayerPointsPanel.setVisible(false);
 
-        GridBagConstraints gbc = new GridBagConstraints();
+
         gbc.gridx = 0;
         gbc.gridy = 0;
-        gbc.insets = new Insets(5, 2, 5, 2); // Abstand zwischen den Komponenten
+        gbc.insets = new Insets(5, 2, 5, 2);
 
         JLabel nameLabel = new JLabel("Nachname");
         JLabel vornameLabel = new JLabel("Vorname");
