@@ -62,6 +62,7 @@ public class Game {
     }
 
     public static void spielerZuordnen(){
+        tischList.clear();
         if(playerList.size() % 4 != 0){ //Überprüfe, ob genug Spieler vorhanden sind und Platzhalter einfügen
             int newPlayerCount = 4 - (playerList.size() % 4);
             for(int i = 0; i < playerList.size() % 4 ; i++){
@@ -74,9 +75,10 @@ public class Game {
             Tisch nTisch = new Tisch(i + 1);
             for(int ii = 0; ii < 4 ; ii++){
                 nTisch.playerList.add(playerList.get(i * 4 + ii));
-                playerList.get( i * 4 + ii ).setTisch(nTisch);
+                playerList.get(i * 4 + ii).setTisch(nTisch);
             }
             tischList.add(nTisch);
+            System.out.println(tischList.size());
         }
 
 
