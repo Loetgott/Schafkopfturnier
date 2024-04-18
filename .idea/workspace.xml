@@ -9,7 +9,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bdf4d30b-1150-4e01-8031-276c41c2ea01" name="Changes" comment="errors beim tischetauschen behoben">
+    <list default="true" id="bdf4d30b-1150-4e01-8031-276c41c2ea01" name="Changes" comment="erste tisch versuche im gui">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Gui.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Gui.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/JTisch.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/JTisch.java" afterDir="false" />
@@ -397,7 +397,15 @@
       <option name="project" value="LOCAL" />
       <updated>1713380226266</updated>
     </task>
-    <option name="localTasksCounter" value="33" />
+    <task id="LOCAL-00033" summary="erste tisch versuche im gui">
+      <option name="closed" value="true" />
+      <created>1713451875753</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1713451875753</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -428,6 +436,7 @@
     <MESSAGE value="frame bei Tischtausch upgedated" />
     <MESSAGE value="erste vercueh mit web app" />
     <MESSAGE value="errors beim tischetauschen behoben" />
-    <option name="LAST_COMMIT_MESSAGE" value="errors beim tischetauschen behoben" />
+    <MESSAGE value="erste tisch versuche im gui" />
+    <option name="LAST_COMMIT_MESSAGE" value="erste tisch versuche im gui" />
   </component>
 </project>

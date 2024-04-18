@@ -48,12 +48,14 @@ public class Gui {
         tischPanel.setBackground(new Color(255,255,255));
 
         gbc.insets = new Insets(5, 5, 5, 5);
-        tischPanel.add(new JTisch());
-        for(int i = 0; i < 4; i ++){
-            for(int ii = 0; ii < 5; ii ++){
+        int tischNumber = 1;
+        for(int i = 0; i < 5; i ++){
+            for(int ii = 0; ii < 4; ii ++){
                 JTisch tisch = new JTisch();
-                gbc.gridx = i;
-                gbc.gridy = ii;
+                tisch.setName(String.valueOf(tischNumber));
+                tischNumber ++;
+                gbc.gridx = ii;
+                gbc.gridy = i;
                 tischPanel.add(tisch, gbc);
             }
         }
