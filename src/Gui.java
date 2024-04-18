@@ -117,7 +117,7 @@ public class Gui {
         mainFrame.add(mainPanel);
         mainFrame.setLocation(GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()[0].getDefaultConfiguration().getBounds().getLocation());
         mainFrame.setVisible(true);
-        System.out.println(GREEN + "MainFrame generated" + RESET);
+        System.out.println(GREEN + "mainFrame generated" + RESET);
 
         //ab hier alles configFrame
         JFrame configFrame = new JFrame("");

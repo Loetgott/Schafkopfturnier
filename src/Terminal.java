@@ -18,7 +18,7 @@ public class Terminal{
     }
 
     public void run(String userInput){
-        String[] input1 =  userInput.split(" "); //aufspalten der wörter
+        String[] input1 = userInput.split(" "); //aufspalten der wörter
         ArrayList<String> input = new ArrayList<>(Arrays.asList(input1));//machen zu einer arraylist
         switch(input.get(0)){
             case "info":

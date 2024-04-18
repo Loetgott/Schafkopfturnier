@@ -59,6 +59,7 @@ public class Game {
 
     public static void updateTisch(){
         Gui.updateTisch(tischList);
+        System.out.println(GREEN + "Tische wurden geupdated!" + RESET);
     }
 
     public static void spielerZuordnen(){

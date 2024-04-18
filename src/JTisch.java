@@ -27,12 +27,9 @@ public class JTisch extends JComponent {
     @Override
     public void paintComponent(Graphics g){
         super.paintComponent(g);
-        // Zeichne den Hintergrund
+
         g.setColor(backgroundColor);
         g.fillRoundRect(0, 0, width, height,20,20);
-
-        // Zeichne die Linien oder weitere Inhalte hier
-        // Beispiel:
         g.setColor(linesColor);
         g.drawRoundRect(0,0,width - 1,height - 1,20,20);
         g.setFont(g.getFont().deriveFont(Font.BOLD, 20));
