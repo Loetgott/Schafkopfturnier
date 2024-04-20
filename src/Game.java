@@ -86,7 +86,7 @@ public class Game {
 
     }
     public static void saveBackup(String path){
-        xmlMaker.saveBackup(tischList);
+        xmlMaker.saveBackup(tischList,path);
     }
     public static void importSavegame(String path){
 

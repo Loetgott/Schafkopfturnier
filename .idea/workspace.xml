@@ -9,16 +9,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bdf4d30b-1150-4e01-8031-276c41c2ea01" name="Changes" comment="terminal info update">
-      <change afterPath="$PROJECT_DIR$/lib/javax.faces-api-2.3.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/XMLMaker.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/folder.png" afterDir="false" />
+    <list default="true" id="bdf4d30b-1150-4e01-8031-276c41c2ea01" name="Changes" comment="reste backup versuche">
+      <change afterPath="$PROJECT_DIR$/0.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Schafkopfturnier.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Schafkopfturnier.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Game.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Gui.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Gui.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/JavaServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/JavaServer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Terminal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Terminal.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/XMLMaker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/XMLMaker.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -457,7 +453,15 @@
       <option name="project" value="LOCAL" />
       <updated>1713471265449</updated>
     </task>
-    <option name="localTasksCounter" value="39" />
+    <task id="LOCAL-00039" summary="reste backup versuche">
+      <option name="closed" value="true" />
+      <created>1713641319915</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1713641319915</updated>
+    </task>
+    <option name="localTasksCounter" value="40" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -493,6 +497,7 @@
     <MESSAGE value="Spieler können jetzt auch im Nachinein zugeordnet werden" />
     <MESSAGE value="tische im gui v1 fertig" />
     <MESSAGE value="terminal info update" />
-    <option name="LAST_COMMIT_MESSAGE" value="terminal info update" />
+    <MESSAGE value="reste backup versuche" />
+    <option name="LAST_COMMIT_MESSAGE" value="reste backup versuche" />
   </component>
 </project>

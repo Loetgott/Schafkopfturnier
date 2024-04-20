@@ -143,9 +143,13 @@ public class Gui {
         configFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         configFrame.setLocation(GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()[1].getDefaultConfiguration().getBounds().getLocation());
 
+        JTabbedPane tabbedPane = new JTabbedPane();
+        JPanel mainTab = new JPanel();
+        JPanel playerTab = new JPanel(new BorderLayout());
+        tabbedPane.addTab("Allgemein", mainTab);
+        tabbedPane.addTab("Spieler", playerTab);
 
-        //ab hier alles Main configPanel
-
+        configFrame.add(tabbedPane);
 
         //ab hier alles Player Panel
         JPanel playerAddPanel = new JPanel(new BorderLayout());
@@ -156,7 +160,7 @@ public class Gui {
         JPanel changePlayerNamePanel = new JPanel(new GridBagLayout());
         JPanel changePlayerPointsPanel = new JPanel(new GridBagLayout());
         JPanel changePlayerTischPanel = new JPanel(new GridBagLayout());
-        changePlayerPointsPanel.setVisible(false);
+        changePlayerPointsPanel.setVisible(true);
 
 
         gbc.gridx = 0;
@@ -227,7 +231,6 @@ public class Gui {
         });
         saveButton.setFocusable(false);
         addPanel.add(saveButton, gbc);
-
         configPlayerList.setSelectionForeground(Color.WHITE);
         configPlayerList.setSelectionBackground(new Color(116, 116, 121));
         configPlayerList.setBackground(configFrame.getBackground());
@@ -236,11 +239,11 @@ public class Gui {
         configPlayerList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         JScrollPane listScrollPane = new JScrollPane(configPlayerList);
         listScrollPane.setFocusable(false);
+        listScrollPane.setVisible(true);
         configPlayerList.setFocusable(false);
         listPanel.add(listScrollPane, BorderLayout.CENTER);
         playerAddPanel.add(addPanel, BorderLayout.NORTH);
-        playerAddPanel.add(listPanel, BorderLayout.CENTER);
-        configFrame.add(playerAddPanel, BorderLayout.WEST);
+        //playerAddPanel.add(listPanel, BorderLayout.CENTER);
 
         // ab hier changePanel
         gbc.anchor = GridBagConstraints.WEST; // Ausrichtung der Komponenten am linken Rand
@@ -282,7 +285,7 @@ public class Gui {
         });
         gbc.gridx = 0;
         gbc.gridy = 0;
-        changePlayerNamePanel.setVisible(false);
+        changePlayerNamePanel.setVisible(true);
         changePlayerNamePanel.add(new JLabel("neuer Vorname"),gbc);
         gbc.gridx ++;
         changePlayerNamePanel.add(new JLabel("neuer Nachname"),gbc);
@@ -293,7 +296,6 @@ public class Gui {
         changePlayerNamePanel.add(changeNachnameTextField,gbc);
         gbc.gridx++;
         changePlayerNamePanel.add(changeNameButton,gbc);
-        configFrame.add(changePanel, BorderLayout.CENTER);
         gbc.gridx = 0;
         gbc.gridy = 0;
         changePanel.add(changePlayerNamePanel,gbc);
@@ -372,7 +374,6 @@ public class Gui {
                         });
                         confirmButton.requestFocus();
                         pointsChangeConfirmationFrame.setVisible(true);
-
                     }
                 }
             }
@@ -422,7 +423,6 @@ public class Gui {
         gbc.gridx = 0;
         gbc.gridy = 1;
         changePanel.add(changePlayerPointsPanel, gbc);
-
         gbc.gridx = 0;
         gbc.gridy = 0;
         JLabel TischLabel = new JLabel("Tisch");
@@ -631,14 +631,26 @@ public class Gui {
                 }
             }
         });
-        changePlayerTischPanel.setVisible(false);
+        configPlayerList.addListSelectionListener(e -> {
+            changePlayerNamePanel.setVisible(true);
+            changePlayerPointsPanel.setVisible(true);
+            changePlayerTischPanel.setVisible(true);
+            changeVornameTextField.setText(configPlayerList.getSelectedValue().split(" ")[0]);
+            changeNachnameTextField.setText(configPlayerList.getSelectedValue().split(" ")[1]);
+            pointsTextField.setText(String.valueOf(Objects.requireNonNull(Game.getPlayer(configPlayerList.getSelectedValue().split(" ")[0], configPlayerList.getSelectedValue().split(" ")[1])).getPoints()));
+            if(Game.getPlayer(configPlayerList.getSelectedValue().split(" ")[0], configPlayerList.getSelectedValue().split(" ")[1]).getTisch() != null){
+                TischLabelNow.setText(Game.getPlayer(configPlayerList.getSelectedValue().split(" ")[0], configPlayerList.getSelectedValue().split(" ")[1]).getTisch().getName());
+                newTischTextField.setText(Game.getPlayer(configPlayerList.getSelectedValue().split(" ")[0], configPlayerList.getSelectedValue().split(" ")[1]).getTisch().getName());
+            }else{
+                TischLabelNow.setText("N/A");
+            }
+        });
+        changePlayerTischPanel.setVisible(true);
         gbc.gridy = 2;
         gbc.gridx = 0;
         changePanel.add(changePlayerTischPanel, gbc);
 
         JMenuBar menuBar = new JMenuBar();
-        JMenu playerMenu = new JMenu("Spieler");
-        JMenu mainMenu = new JMenu("Allgemein");
         JMenu updateMenu = new JMenu("Update");
         JMenuItem playerZuordnen = new JMenuItem("Spieler verteilen");
         JMenuItem updateLeaderboard = new JMenuItem("update Leaderboard");
@@ -664,30 +676,16 @@ public class Gui {
             }
         });
         updateMenu.add(updateTische);
-        menuBar.add(mainMenu);
-        menuBar.add(playerMenu);
         menuBar.add(updateMenu);
         configFrame.setJMenuBar(menuBar);
-        configPlayerList.addListSelectionListener(e -> {
-            changePlayerNamePanel.setVisible(true);
-            changePlayerPointsPanel.setVisible(true);
-            changePlayerTischPanel.setVisible(true);
-            changeVornameTextField.setText(configPlayerList.getSelectedValue().split(" ")[0]);
-            changeNachnameTextField.setText(configPlayerList.getSelectedValue().split(" ")[1]);
-            pointsTextField.setText(String.valueOf(Objects.requireNonNull(Game.getPlayer(configPlayerList.getSelectedValue().split(" ")[0], configPlayerList.getSelectedValue().split(" ")[1])).getPoints()));
-            if(Game.getPlayer(configPlayerList.getSelectedValue().split(" ")[0], configPlayerList.getSelectedValue().split(" ")[1]).getTisch() != null){
-                TischLabelNow.setText(Game.getPlayer(configPlayerList.getSelectedValue().split(" ")[0], configPlayerList.getSelectedValue().split(" ")[1]).getTisch().getName());
-                newTischTextField.setText(Game.getPlayer(configPlayerList.getSelectedValue().split(" ")[0], configPlayerList.getSelectedValue().split(" ")[1]).getTisch().getName());
-            }else{
-                TischLabelNow.setText("N/A");
-            }
-        });
+
+        //ab hier mainConfigPanel
+
         JPanel mainConfigPanel =new JPanel(new BorderLayout());
         JPanel backupPathPanel = new JPanel();
         JPanel backupPanel = new JPanel(new FlowLayout());
         gbc.gridy = 0;
         gbc.gridx = 0;
-
         JTextField backupPathTextfield = new JTextField(backupPath);
         backupPathPanel.add(backupPathTextfield);
         ImageIcon fileIcon = new ImageIcon("src/folder.png");
@@ -700,11 +698,9 @@ public class Gui {
         gbc.gridx ++;
         JButton importButton = new JButton("importieren");
         backupPanel.add(importButton);
-        backupPanel.setVisible(true);
         mainConfigPanel.add(backupPathPanel, BorderLayout.NORTH);
         mainConfigPanel.add(backupPanel, BorderLayout.CENTER);
-        configFrame.add(mainConfigPanel);
-        mainConfigPanel.setVisible(true);
+        mainTab.add(mainConfigPanel);
         backupButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -721,24 +717,15 @@ public class Gui {
                 }
             }
         });
-        playerMenu.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-                mainConfigPanel.setVisible(false);
-                changePanel.setVisible(true);
-                playerAddPanel.setVisible(true);
-            }
-        });
-        mainMenu.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-                playerAddPanel.setVisible(false);
-                changePanel.setVisible(false);
-                mainConfigPanel.setVisible(true);
-                backupPanel.setVisible(true);
-            }
-
-        });
+        JPanel playerPanel = new JPanel(new BorderLayout());
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        JPanel playerInfoPanel = new JPanel(new BorderLayout());
+        playerInfoPanel.add(addPanel, BorderLayout.NORTH);
+        playerInfoPanel.add(listPanel, BorderLayout.CENTER);
+        playerPanel.add(playerInfoPanel, BorderLayout.CENTER);
+        playerPanel.add(changePanel, BorderLayout.EAST);
+        playerTab.add(playerPanel, BorderLayout.CENTER);
         configFrame.add(new JLabel("©Lötgott & Sesamoel all rights reserved"),BorderLayout.SOUTH);
         configFrame.setLocationRelativeTo(null);
         configFrame.setVisible(true);
