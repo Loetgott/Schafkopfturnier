@@ -35,7 +35,7 @@ public class XMLMaker {
                 Element tischElement = doc.createElement("Tisch" + tisch.getName());
                 tischElement.setAttribute("number", tisch.getName());
                 for(int i = 0; i < 4; i++){
-                    Element playerElement = doc.createElement("Player1");
+                    Element playerElement = doc.createElement("Player" + String.valueOf(i + 1));
                     playerElement.setAttribute("vorname",tisch.getPlayerList().get(i).getVorname());
                     playerElement.setAttribute("nachname",tisch.getPlayerList().get(i).getNachname());
                     playerElement.setAttribute("punkte",String.valueOf(tisch.getPlayerList().get(i).getPoints()));
