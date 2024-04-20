@@ -27,7 +27,6 @@ public class JavaServer {
 
                 // Sende eine Antwort zurück zum Client
                 // (In diesem Beispiel wird keine Antwort gesendet)
-
                 // Schließe die Verbindung
                 socket.close();
             }

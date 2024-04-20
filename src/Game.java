@@ -10,8 +10,10 @@ public class Game {
     public static final String GREEN = "\u001B[32m";
     public static final String YELLOW = "\u001B[33m";
     public static final String WHITE = "\u001B[37m";
+    public static XMLMaker xmlMaker = new XMLMaker();
+    public static int round;
     public Game() {
-
+        xmlMaker = new XMLMaker();
     }
     public static void addPlayer(Player nPlayer){
         playerList.add(nPlayer);
@@ -79,25 +81,30 @@ public class Game {
                 playerList.get(i * 4 + ii).setTisch(nTisch);
             }
             tischList.add(nTisch);
-            System.out.println(tischList.size());
         }
 
 
     }
+    public static void saveBackup(String path){
+        xmlMaker.saveBackup(tischList);
+    }
+    public static void importSavegame(String path){
+
+    }
 
     public static void spielertausch (Player player1 , Player player2){
-        System.out.println("getauscht!");
-        Tisch tisch1 = player1.getTisch();      //Tische der Spieler zwischenspeichern
+        Tisch tisch1 = player1.getTisch();
         Tisch tisch2 = player2.getTisch();
-
-        tisch1.playerList.remove(player1);      //Spieler aus Ursprungstischen entfernen
-        tisch2.playerList.remove(player2);
-        tisch1.playerList.add(player2);         //Spieler in neue Tische hinzufügen
-        tisch2.playerList.add(player1);
-
-        player1.setTisch(tisch2);               //Attribut Tisch in Spieler ändern
+        int player1Position = tisch1.playerList.indexOf(player1);
+        int player2Position = tisch2.playerList.indexOf(player2);
+        tisch1.playerList.set(player1Position, player2);
+        tisch2.playerList.set(player2Position, player1);
+        player1.setTisch(tisch2);
         player2.setTisch(tisch1);
-
+        for(int i = 0; i < Gui.tischList.size(); i ++){
+            Gui.tischList.get(i).repaint();
+        }
+        System.out.println(GREEN + player1.getName()[0] + " " + player1.getName()[1] + player2.getName()[0] + " " + player2.getName()[1] + RESET);
     }
 
     public static Player sucheSpieler(String vorname, String nachname) {

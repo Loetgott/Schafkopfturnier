@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -22,10 +23,16 @@ public class Gui {
     public static final String YELLOW = "\u001B[33m";
     public static final String WHITE = "\u001B[37m";
     public static ArrayList<JTisch> tischList = new ArrayList<JTisch>();
+    public static JLabel leaderboardLabel = new JLabel("<html><u>Leaderboard:</u></html>");
+    public static String backupPath = "C:/Users/nnaml/OneDrive/Schule/P-Seminar-Schafkopfen/Backups";
+
 
     public Gui() {
         try {
             UIManager.setLookAndFeel(new FlatDarculaLaf());
+            UIManager.put( "Component.focusWidth", 1 );
+            UIManager.put( "ScrollBar.thumbArc", 999 );
+            UIManager.put( "ScrollBar.thumbInsets", new Insets( 2, 2, 2, 2 ) );
         } catch (UnsupportedLookAndFeelException e) {
             throw new RuntimeException(e);
         }
@@ -38,7 +45,7 @@ public class Gui {
         JPanel mainPanel = new JPanel(new BorderLayout());
         mainPanel.setBackground(new Color(255, 255, 255));
 
-        JPanel leaderboardPanel = new JPanel();
+        JPanel leaderboardPanel = new JPanel(new BorderLayout());
         JPanel tischPanel = new JPanel(new GridBagLayout());
         JPanel pointsPanel = new JPanel(new BorderLayout());
 
@@ -65,11 +72,11 @@ public class Gui {
 
         pointsPanel.setBackground(new Color(255,255,255));
 
-        JTable pointsTable = new JTable(8, 3);
+        JTable pointsTable = new JTable(9, 3);
         pointsTable.setBackground(new Color(255,255,255));
         pointsTable.setForeground(new Color(15, 117, 0));
         pointsTable.setRowHeight(50);
-        pointsTable.getColumnModel().getColumn(0).setPreferredWidth(300);
+        pointsTable.getColumnModel().getColumn(0).setPreferredWidth(325);
         pointsTable.getColumnModel().getColumn(1).setPreferredWidth(120);
         pointsTable.getColumnModel().getColumn(2).setPreferredWidth(120);
         Font tableFont = pointsTable.getFont();
@@ -83,21 +90,24 @@ public class Gui {
         pointsTable.setValueAt("Rufspiel Schneider:", 2, 0);
         pointsTable.setValueAt("+ 2", 2, 1);
         pointsTable.setValueAt("- 2", 2, 2);
-        pointsTable.setValueAt("Rufspiel Durch:", 3, 0);
+        pointsTable.setValueAt("Rufspiel Schneider Schwarz:", 3, 0);
         pointsTable.setValueAt("+ 3", 3, 1);
         pointsTable.setValueAt("- 3", 3, 2);
         pointsTable.setValueAt("Solo/Wenz:", 4, 0);
-        pointsTable.setValueAt("+ 12", 4, 1);
-        pointsTable.setValueAt("- 4", 4, 2);
+        pointsTable.setValueAt("+ 6", 4, 1);
+        pointsTable.setValueAt("- 2", 4, 2);
         pointsTable.setValueAt("Solo/Wenz Schneider:", 5, 0);
-        pointsTable.setValueAt("+ 15", 5, 1);
-        pointsTable.setValueAt("- 5", 5, 2);
-        pointsTable.setValueAt("Solo/Wenz Durch:", 6, 0);
-        pointsTable.setValueAt("+ 18", 6, 1);
-        pointsTable.setValueAt("- 6", 6, 2);
+        pointsTable.setValueAt("+ 9", 5, 1);
+        pointsTable.setValueAt("- 3", 5, 2);
+        pointsTable.setValueAt("Solo/Wenz Schneider Schwarz:", 6, 0);
+        pointsTable.setValueAt("+ 12", 6, 1);
+        pointsTable.setValueAt("- 4", 6, 2);
         pointsTable.setValueAt("Solo-/Wenz-Tout:", 7, 0);
-        pointsTable.setValueAt("+ 24", 7, 1);
-        pointsTable.setValueAt("- 8", 7, 2);
+        pointsTable.setValueAt("+ 18", 7, 1);
+        pointsTable.setValueAt("- 6", 7, 2);
+        pointsTable.setValueAt("Sie", 8,0);
+        pointsTable.setValueAt("+ 24",8,1);
+        pointsTable.setValueAt("- 8",8,2);
         pointsTable.setShowGrid(true);
         pointsTable.setShowHorizontalLines(true);
         pointsTable.setShowVerticalLines(false);
@@ -110,8 +120,15 @@ public class Gui {
         leaderboardTable.getColumnModel().getColumn(1).setPreferredWidth(300);
         leaderboardTable.getColumnModel().getColumn(2).setPreferredWidth(50);
         tableFont = leaderboardTable.getFont();
+        leaderboardLabel.setForeground(pointsTable.getForeground());
+        leaderboardLabel.setFont(leaderboardLabel.getFont().deriveFont(Font.BOLD,30));
+        leaderboardLabel.setPreferredSize(new Dimension(400,100));
+        leaderboardLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        leaderboardLabel.setVisible(false);
         leaderboardTable.setFont(tableFont.deriveFont(Font.BOLD, 22));
-        leaderboardPanel.add(leaderboardTable);
+        leaderboardTable.setForeground(pointsTable.getForeground());
+        leaderboardPanel.add(leaderboardLabel, BorderLayout.NORTH);
+        leaderboardPanel.add(leaderboardTable,BorderLayout.CENTER);
         pointsPanel.add(leaderboardPanel,BorderLayout.SOUTH);
 
         mainFrame.add(mainPanel);
@@ -124,15 +141,10 @@ public class Gui {
         configFrame.setUndecorated(false);
         configFrame.setSize(new Dimension(800, 600));
         configFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        configFrame.setLocation(GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()[1].getDefaultConfiguration().getBounds().getLocation());
+
 
         //ab hier alles Main configPanel
-        JPanel mainConfigPanel =new JPanel(new BorderLayout());
-        configFrame.setLocation(GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()[1].getDefaultConfiguration().getBounds().getLocation());
-        JButton button2 = new JButton();
-        button2.setVisible(true);
-        mainConfigPanel.add(button2,BorderLayout.NORTH);
-
-        mainConfigPanel.setVisible(true);
 
 
         //ab hier alles Player Panel
@@ -174,7 +186,7 @@ public class Gui {
             public void keyReleased(KeyEvent e) {
                 if(e.getKeyCode() == KeyEvent.VK_ENTER && !vorname.getText().isEmpty()){
                     name.requestFocus();
-                }else if(e.getKeyCode() == KeyEvent.VK_SPACE && !vorname.getText().isEmpty()){
+                }else if(e.getKeyCode() == KeyEvent.VK_SPACE && !vorname.getText().isEmpty() && !(Objects.equals(vorname.getText(), " "))){
                     vorname.setText(vorname.getText().split(" ")[0]);
                     name.requestFocus();
                 }
@@ -648,7 +660,6 @@ public class Gui {
         updateTische.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseReleased(MouseEvent e) {
-                System.out.println("1");
                 Game.updateTisch();
             }
         });
@@ -671,9 +682,48 @@ public class Gui {
                 TischLabelNow.setText("N/A");
             }
         });
+        JPanel mainConfigPanel =new JPanel(new BorderLayout());
+        JPanel backupPathPanel = new JPanel();
+        JPanel backupPanel = new JPanel(new FlowLayout());
+        gbc.gridy = 0;
+        gbc.gridx = 0;
+
+        JTextField backupPathTextfield = new JTextField(backupPath);
+        backupPathPanel.add(backupPathTextfield);
+        ImageIcon fileIcon = new ImageIcon("src/folder.png");
+        fileIcon.setImage(fileIcon.getImage().getScaledInstance(15,15, Image.SCALE_SMOOTH));
+        JButton fileButton = new JButton(fileIcon);
+        backupPathPanel.add(fileButton);
+        gbc.gridy ++;
+        JButton backupButton = new JButton("sichern");
+        backupPanel.add(backupButton, gbc);
+        gbc.gridx ++;
+        JButton importButton = new JButton("importieren");
+        backupPanel.add(importButton);
+        backupPanel.setVisible(true);
+        mainConfigPanel.add(backupPathPanel, BorderLayout.NORTH);
+        mainConfigPanel.add(backupPanel, BorderLayout.CENTER);
+        configFrame.add(mainConfigPanel);
+        mainConfigPanel.setVisible(true);
+        backupButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                if(!backupPathTextfield.getText().isEmpty()){
+                    Game.saveBackup(backupPathTextfield.getText());
+                }
+            }
+        });
+        importButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                if(!backupPathTextfield.getText().isEmpty()){
+                    Game.importSavegame(backupPathTextfield.getText());
+                }
+            }
+        });
         playerMenu.addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseClicked(MouseEvent e) {
+            public void mousePressed(MouseEvent e) {
                 mainConfigPanel.setVisible(false);
                 changePanel.setVisible(true);
                 playerAddPanel.setVisible(true);
@@ -681,11 +731,13 @@ public class Gui {
         });
         mainMenu.addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseClicked(MouseEvent e) {
+            public void mousePressed(MouseEvent e) {
                 playerAddPanel.setVisible(false);
                 changePanel.setVisible(false);
                 mainConfigPanel.setVisible(true);
+                backupPanel.setVisible(true);
             }
+
         });
         configFrame.add(new JLabel("©Lötgott & Sesamoel all rights reserved"),BorderLayout.SOUTH);
         configFrame.setLocationRelativeTo(null);
@@ -706,6 +758,7 @@ public class Gui {
         }
     }
     public static void updateLeaderboard(ArrayList<Player> playerlist){
+        leaderboardLabel.setVisible(true);
         for(int i = 0; i < 10; i++){
             if(playerlist.size() > i){
                 leaderboardTable.setValueAt(i + 1,i,0);

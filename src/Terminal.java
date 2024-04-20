@@ -22,9 +22,12 @@ public class Terminal{
         ArrayList<String> input = new ArrayList<>(Arrays.asList(input1));//machen zu einer arraylist
         switch(input.get(0)){
             case "info":
-                System.out.println("spielerhinzufügen <name>");
+                System.out.println("spielerhinzufügen <name> \n" +
+                                    "updateleaderboard <> \n" +
+                                    "updatetisch <> \n" +
+                                    "tischezuteilen <> \n" +
+                                    "spielertauschen <player1> <player2>");
                 break;
-
             case "spielerhinzufügen":
                 input.remove(0);
                 if(!input.isEmpty()){
@@ -58,7 +61,6 @@ public class Terminal{
                     Game.spielertausch(Objects.requireNonNull(Game.sucheSpieler(input.get(0), input.get(1))), Objects.requireNonNull(Game.sucheSpieler(input.get(2), input.get(3))));
                 }
                 break;
-
             default:
                 System.out.println("unbekannter befehl! bitte auf Rechtschreibung achten");
         }
