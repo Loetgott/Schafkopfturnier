@@ -89,7 +89,8 @@ public class Game {
         xmlMaker.saveBackup(tischList,path);
     }
     public static void importSavegame(String path){
-
+        System.out.println(path);
+        xmlMaker.importBackup(path,round);
     }
 
     public static void spielertausch (Player player1 , Player player2){

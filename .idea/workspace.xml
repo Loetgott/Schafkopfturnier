@@ -10,6 +10,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bdf4d30b-1150-4e01-8031-276c41c2ea01" name="Changes" comment="Backups exportieren funktioniert und bessere Tab umschaltung">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Game.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Gui.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Gui.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/XMLMaker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/XMLMaker.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -465,7 +468,15 @@
       <option name="project" value="LOCAL" />
       <updated>1713645846750</updated>
     </task>
-    <option name="localTasksCounter" value="41" />
+    <task id="LOCAL-00041" summary="Backups exportieren funktioniert und bessere Tab umschaltung">
+      <option name="closed" value="true" />
+      <created>1713646341152</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1713646341152</updated>
+    </task>
+    <option name="localTasksCounter" value="42" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

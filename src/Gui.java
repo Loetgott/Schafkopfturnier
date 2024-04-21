@@ -24,7 +24,7 @@ public class Gui {
     public static final String WHITE = "\u001B[37m";
     public static ArrayList<JTisch> tischList = new ArrayList<JTisch>();
     public static JLabel leaderboardLabel = new JLabel("<html><u>Leaderboard:</u></html>");
-    public static String backupPath = "C:/Users/nnaml/OneDrive/Schule/P-Seminar-Schafkopfen/Backups";
+    public static String backupPath = "C:/Users/nnaml/OneDrive/Schule/P-Seminar-Schafkopfen/";
 
 
     public Gui() {
