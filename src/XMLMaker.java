@@ -62,6 +62,7 @@ public class XMLMaker {
     public void importBackup(String path, int round){
         Game.tischList.clear();
         Game.playerList.clear();
+        Gui.configPlayerListModel.clear();
         try {
             File xmlFile = new File(path + String.valueOf(round) + ".xml");
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -81,6 +82,7 @@ public class XMLMaker {
                             Game.tischList.get(i).playerList.get(ii).setTisch(Game.tischList.get(i));
                             Game.tischList.get(i).playerList.get(ii).setPoints(Integer.parseInt(((Element) playerNodes.item(ii)).getAttribute("punkte")));
                             Game.playerList.add(Game.tischList.get(i).playerList.get(ii));
+                            Gui.configPlayerListModel.add(i * ii,((Element) playerNodes.item(ii)).getAttribute("vorname") + " " + ((Element) playerNodes.item(ii)).getAttribute("nachname"));
                         }
                     }
                 }
