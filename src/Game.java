@@ -89,7 +89,6 @@ public class Game {
         xmlMaker.saveBackup(tischList,path);
     }
     public static void importSavegame(String path){
-        System.out.println(path);
         xmlMaker.importBackup(path,round);
     }
 

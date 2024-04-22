@@ -28,10 +28,10 @@ public class XMLMaker {
             doc.appendChild(game);
 
             for(Tisch tisch : tischList){
-                Element tischElement = doc.createElement("Tisch" + tisch.getName());
+                Element tischElement = doc.createElement("Tisch");
                 tischElement.setAttribute("number", tisch.getName());
                 for(int i = 0; i < 4; i++){
-                    Element playerElement = doc.createElement("Player" + String.valueOf(i + 1));
+                    Element playerElement = doc.createElement("Player");
                     playerElement.setAttribute("vorname",tisch.getPlayerList().get(i).getVorname());
                     playerElement.setAttribute("nachname",tisch.getPlayerList().get(i).getNachname());
                     playerElement.setAttribute("punkte",String.valueOf(tisch.getPlayerList().get(i).getPoints()));
@@ -60,37 +60,34 @@ public class XMLMaker {
         }
     }
     public void importBackup(String path, int round){
-        //Game.tischList.clear();
-        //try {
-        //    File xmlFile = new File(path + String.valueOf(round) + ".xml");
-        //    DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        //    DocumentBuilder builder = factory.newDocumentBuilder();
-        //    Document doc = builder.parse(xmlFile);
-        //    Element root = doc.getDocumentElement();
-        //    NodeList gameNodes = root.getChildNodes();
-//
-        //    for (int i = 0; i < gameNodes.getLength(); i++) {
-        //        Element gameElement = (Element) gameNodes.item(i);
-        //        NodeList tischNodes = gameElement.getElementsByTagName("Tisch" + String.valueOf(i + 1));
-        //        for (int ii = 0; ii < tischNodes.getLength(); ii++){
-        //            Element tischElement = (Element) tischNodes.item(ii);
-        //            Game.tischList.add(new Tisch(Integer.parseInt(tischElement.getAttribute("number"))));
-        //            for (int iii = 0; iii < 4; iii++) {
-        //                NodeList playerNodes = tischElement.getElementsByTagName("Player" + iii);
-        //                Element playerElement = (Element) playerNodes.item(iii);
-        //                String vorname = playerElement.getAttribute("vorname");
-        //                String nachname = playerElement.getAttribute("nachname");
-        //                String points = playerElement.getAttribute("punkte");
-        //                Game.tischList.get(ii).playerList.add(new Player(vorname,nachname));
-        //                Game.tischList.get(ii).playerList.get(iii).setPoints(Integer.parseInt(points));
-        //                Game.tischList.get(ii).playerList.get(iii).setTisch(Game.tischList.get(ii));
-        //                System.out.println(Game.tischList.get(ii).playerList.get(iii).getName());
-        //            }
-        //        }
-        //    }
-        //} catch (Exception e) {
-        //    e.printStackTrace();
-        //}
+        Game.tischList.clear();
+        Game.playerList.clear();
+        try {
+            File xmlFile = new File(path + String.valueOf(round) + ".xml");
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder builder = factory.newDocumentBuilder();
+            Document doc = builder.parse(xmlFile);
+            Element root = doc.getDocumentElement();
+            NodeList tischNodes = root.getElementsByTagName("Tisch");
+
+            for (int i = 0; i < tischNodes.getLength(); i++) {
+                if (tischNodes.item(i) instanceof Element) {
+                    Element tisch = (Element) tischNodes.item(i);
+                    Game.tischList.add(new Tisch(Integer.parseInt(tisch.getAttribute("number"))));
+                    NodeList playerNodes = tisch.getElementsByTagName("Player");
+                    for (int ii = 0; ii < playerNodes.getLength(); ii++) {
+                        if (playerNodes.item(ii) instanceof Element) {
+                            Game.tischList.get(i).playerList.add(new Player(((Element) playerNodes.item(ii)).getAttribute("vorname"),((Element) playerNodes.item(ii)).getAttribute("nachname")));
+                            Game.tischList.get(i).playerList.get(ii).setTisch(Game.tischList.get(i));
+                            Game.tischList.get(i).playerList.get(ii).setPoints(Integer.parseInt(((Element) playerNodes.item(ii)).getAttribute("punkte")));
+                            Game.playerList.add(Game.tischList.get(i).playerList.get(ii));
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }

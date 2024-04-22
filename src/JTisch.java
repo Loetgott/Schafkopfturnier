@@ -50,7 +50,7 @@ public class JTisch extends JComponent {
         table.getColumnModel().getColumn(2).setPreferredWidth(40);
         table.setRowHeight(30);
         for(int i = 0; i < playerList.size(); i ++){
-            table.setValueAt(i + 1 , i,0);
+            //table.setValueAt(i + 1 , i,0);
             table.setValueAt(playerList.get(i).getName()[0] + " " + playerList.get(i).getNachname().charAt(0) + ".", i,1);
             table.setValueAt(playerList.get(i).getPoints(),i ,2);
         }
