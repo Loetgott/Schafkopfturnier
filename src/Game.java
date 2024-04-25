@@ -35,6 +35,14 @@ public class Game {
         }
         return null;
     }
+    public static Tisch getTisch(String name){
+        for(Tisch tisch : tischList){
+            if(Objects.equals(tisch.getName(), name)){
+                return tisch;
+            }
+        }
+        return null;
+    }
     public static void setPlayerName(Player player, String vorname, String nachname){
         Gui.setPlayerName(player,vorname, nachname);
         player.setName(vorname,nachname);
@@ -110,10 +118,10 @@ public class Game {
     public static Player sucheSpieler(String vorname, String nachname) {
         for (Player player : playerList) {
             if (player.getVorname().equals(vorname) && player.getNachname().equals(nachname)) {
-                return player; // Spieler gefunden
+                return player;
             }
         }
-        return null; // Spieler nicht gefunden
+        return null;
     }
 
 

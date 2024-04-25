@@ -63,6 +63,7 @@ public class XMLMaker {
         Game.tischList.clear();
         Game.playerList.clear();
         Gui.configPlayerListModel.clear();
+        Gui.configTischlistModel.clear();
         try {
             File xmlFile = new File(path + String.valueOf(round) + ".xml");
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -75,6 +76,7 @@ public class XMLMaker {
                 if (tischNodes.item(i) instanceof Element) {
                     Element tisch = (Element) tischNodes.item(i);
                     Game.tischList.add(new Tisch(Integer.parseInt(tisch.getAttribute("number"))));
+                    Gui.configTischlistModel.add(i,"Tisch " + tisch.getAttribute("number"));
                     NodeList playerNodes = tisch.getElementsByTagName("Player");
                     for (int ii = 0; ii < playerNodes.getLength(); ii++) {
                         if (playerNodes.item(ii) instanceof Element) {
