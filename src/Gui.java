@@ -8,6 +8,7 @@ import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.*;
 import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
 import java.io.File;
@@ -249,15 +250,24 @@ public class Gui {
         configPlayerList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         JScrollPane listScrollPane = new JScrollPane(configPlayerList);
         listScrollPane.setFocusable(false);
-        listScrollPane.setPreferredSize(new Dimension(400, (int) (configFrame.getSize().getHeight() - 150)));//TODO größe dynamisch ändern
+        configFrame.addComponentListener(new ComponentAdapter() {
+            public void componentResized(ComponentEvent e) {
+                System.out.println(configFrame.getHeight());
+                listScrollPane.setPreferredSize(new Dimension(300,(configFrame.getHeight() - 160)));
+                listScrollPane.repaint();
+                configPlayerList.repaint();
+                listScrollPane.getHorizontalScrollBar().revalidate();
+                listScrollPane.revalidate();
+                configPlayerList.revalidate();
+            }
+        });
         listScrollPane.setVisible(true);
         configPlayerList.setFocusable(false);
         listPanel.add(listScrollPane);
         playerAddPanel.add(addPanel, BorderLayout.NORTH);
-        //playerAddPanel.add(listPanel, BorderLayout.CENTER);
 
         // ab hier changePanel
-        gbc.anchor = GridBagConstraints.WEST; // Ausrichtung der Komponenten am linken Rand
+        gbc.anchor = GridBagConstraints.WEST;
         JTextField changeVornameTextField = new JTextField("");
         changeVornameTextField.setPreferredSize(new Dimension(90,25));
         JTextField changeNachnameTextField = new JTextField("");
@@ -773,28 +783,38 @@ public class Gui {
         configTischList.addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
-                configTischPlayerListModel.clear();
-                 if(configTischPlayerListModel.size() == 3){
-                     for(int i = 0; i < 4; i ++){
-                         configTischPlayerListModel.setElementAt(Game.getTisch(configTischList.getSelectedValue().split(" ")[1]).getPlayerList().get(i).getVorname() + " " + Game.getTisch(configTischList.getSelectedValue().split(" ")[1]).getPlayerList().get(i).getNachname(),i);
-                     }
-                 }else{
-                     for(int i = 0; i < 4; i ++){
-                         configTischPlayerListModel.addElement(Game.getTisch(configTischList.getSelectedValue().split(" ")[1]).getPlayerList().get(i).getVorname() + " " + Game.getTisch(configTischList.getSelectedValue().split(" ")[1]).getPlayerList().get(i).getNachname());
-                     }
-                 }
+                if(!configTischList.isSelectionEmpty()){
+                    configTischPlayerListModel.clear();
+                    if(configTischPlayerListModel.size() == 3){
+                        for(int i = 0; i < 4; i ++){
+                            configTischPlayerListModel.setElementAt(Game.getTisch(configTischList.getSelectedValue().split(" ")[1]).getPlayerList().get(i).getVorname() + " " + Game.getTisch(configTischList.getSelectedValue().split(" ")[1]).getPlayerList().get(i).getNachname(),i);
+                        }
+                    }else{
+                        for(int i = 0; i < 4; i ++){
+                            configTischPlayerListModel.addElement(Game.getTisch(configTischList.getSelectedValue().split(" ")[1]).getPlayerList().get(i).getVorname() + " " + Game.getTisch(configTischList.getSelectedValue().split(" ")[1]).getPlayerList().get(i).getNachname());
+                        }
+                    }
+                }
             }
         });
+        configTischPlayerList.setFocusable(false);
+        configTischPlayerList.setBackground(configPlayerList.getBackground());
+        configTischPlayerList.setForeground(configPlayerList.getForeground());
+        configTischPlayerList.setFont(configPlayerList.getFont());
+        configTischPlayerList.setSelectionBackground(configPlayerList.getSelectionBackground());
+        configTischPlayerList.setSelectionForeground(configPlayerList.getSelectionForeground());
         configTischPlayerList.addListSelectionListener(e -> {
-            changePlayer = Game.getPlayer(configTischPlayerList.getSelectedValue().split(" ")[0],configPlayerList.getSelectedValue().split(" ")[1]);
-            changeVornameTextField.setText(changePlayer.getVorname());
-            changeNachnameTextField.setText(changePlayer.getNachname());
-            pointsTextField.setText(String.valueOf(Objects.requireNonNull(changePlayer).getPoints()));
-            if(changePlayer.getTisch() != null){
-            //    TischLabelNow.setText(changePlayer.getTisch().getName());
-            //    newTischTextField.setText(changePlayer.getTisch().getName());
-            //}else{
-            //    TischLabelNow.setText("N/A");
+            if(!configTischPlayerList.isSelectionEmpty()){
+                changePlayer = Game.getPlayer(configTischPlayerList.getSelectedValue().split(" ")[0],configTischPlayerList.getSelectedValue().split(" ")[1]);
+                changeVornameTextField.setText(changePlayer.getVorname());
+                changeNachnameTextField.setText(changePlayer.getNachname());
+                pointsTextField.setText(String.valueOf(Objects.requireNonNull(changePlayer).getPoints()));
+                if(changePlayer.getTisch() != null){
+                    TischLabelNow.setText(changePlayer.getTisch().getName());
+                    newTischTextField.setText(changePlayer.getTisch().getName());
+                }else{
+                    TischLabelNow.setText("N/A");
+                }
             }
         });
         tischListPanel.add(tischListScrollPane, BorderLayout.CENTER);
@@ -808,14 +828,11 @@ public class Gui {
             public void stateChanged(ChangeEvent e) {
                 if(tabbedPane.getSelectedIndex() == 1){
                     playerPanel.add(changePanel);
-                    System.out.println("player");
                 }else if(tabbedPane.getSelectedIndex() == 2){
                     tischConfigPanel.add(changePanel);
-                    System.out.println("tisch");
                 }
             }
         });
-
         configFrame.add(new JLabel("©Lötgott & Sesamoel all rights reserved"),BorderLayout.SOUTH);
         configFrame.setLocationRelativeTo(null);
         configFrame.setVisible(true);
