@@ -9,9 +9,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bdf4d30b-1150-4e01-8031-276c41c2ea01" name="Changes" comment="tisch panel geupdated">
+    <list default="true" id="bdf4d30b-1150-4e01-8031-276c41c2ea01" name="Changes" comment="cugfix bei tischTab">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Gui.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Gui.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -506,7 +507,15 @@
       <option name="project" value="LOCAL" />
       <updated>1714080281456</updated>
     </task>
-    <option name="localTasksCounter" value="46" />
+    <task id="LOCAL-00046" summary="cugfix bei tischTab">
+      <option name="closed" value="true" />
+      <created>1714138587640</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1714138587640</updated>
+    </task>
+    <option name="localTasksCounter" value="47" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -522,7 +531,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="first Frames" />
     <MESSAGE value="updated color &amp; menu bar" />
     <MESSAGE value="erste Tisch versuche" />
     <MESSAGE value="updated the gui" />
@@ -547,6 +555,7 @@
     <MESSAGE value="Importfunktion von Backups funktioniert" />
     <MESSAGE value="erts eversuche tisch tab" />
     <MESSAGE value="tisch panel geupdated" />
-    <option name="LAST_COMMIT_MESSAGE" value="tisch panel geupdated" />
+    <MESSAGE value="cugfix bei tischTab" />
+    <option name="LAST_COMMIT_MESSAGE" value="cugfix bei tischTab" />
   </component>
 </project>

@@ -25,6 +25,8 @@ public class Gui {
     public static JList<String> configPlayerList = new JList<>(configPlayerListModel);
     public static DefaultListModel<String> configTischlistModel = new DefaultListModel<>();
     public static JList<String> configTischList = new JList<>(configTischlistModel);
+    public static DefaultListModel<String> configTischPlayerListModel = new DefaultListModel<>();
+    public static JList<String> configTischPlayerList = new JList<>(configTischPlayerListModel);
     static JTable leaderboardTable = new JTable(10,3);
     public static final String RESET = "\u001B[0m";
     public static final String RED = "\u001B[31m";
@@ -653,18 +655,20 @@ public class Gui {
             }
         });
         configPlayerList.addListSelectionListener(e -> {
-            changePlayer = Game.getPlayer(configPlayerList.getSelectedValue().split(" ")[0],configPlayerList.getSelectedValue().split(" ")[1]);
-            changePlayerNamePanel.setVisible(true);
-            changePlayerPointsPanel.setVisible(true);
-            changePlayerTischPanel.setVisible(true);
-            changeVornameTextField.setText(changePlayer.getVorname());
-            changeNachnameTextField.setText(changePlayer.getNachname());
-            pointsTextField.setText(String.valueOf(Objects.requireNonNull(changePlayer).getPoints()));
-            if(changePlayer.getTisch() != null){
-                TischLabelNow.setText(changePlayer.getTisch().getName());
-                newTischTextField.setText(changePlayer.getTisch().getName());
-            }else{
-                TischLabelNow.setText("N/A");
+            if(!configPlayerList.isSelectionEmpty()){
+                changePlayer = Game.getPlayer(configPlayerList.getSelectedValue().split(" ")[0],configPlayerList.getSelectedValue().split(" ")[1]);
+                changePlayerNamePanel.setVisible(true);
+                changePlayerPointsPanel.setVisible(true);
+                changePlayerTischPanel.setVisible(true);
+                changeVornameTextField.setText(changePlayer.getVorname());
+                changeNachnameTextField.setText(changePlayer.getNachname());
+                pointsTextField.setText(String.valueOf(Objects.requireNonNull(changePlayer).getPoints()));
+                if(changePlayer.getTisch() != null){
+                    TischLabelNow.setText(changePlayer.getTisch().getName());
+                    newTischTextField.setText(changePlayer.getTisch().getName());
+                }else{
+                    TischLabelNow.setText("N/A");
+                }
             }
         });
         changePlayerTischPanel.setVisible(true);
@@ -778,8 +782,6 @@ public class Gui {
         JScrollPane tischListScrollPane = new JScrollPane(configTischList);
         tischListScrollPane.setPreferredSize(new Dimension(120,370));
         tischListScrollPane.setFocusable(false);
-        DefaultListModel<String> configTischPlayerListModel = new DefaultListModel<>();
-        JList<String> configTischPlayerList = new JList<>(configTischPlayerListModel);
         configTischList.addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
@@ -847,6 +849,12 @@ public class Gui {
         int index = configPlayerListModel.indexOf(oldName);
         if (index != -1) {
             configPlayerListModel.setElementAt(newVorname + " " + newNachname, index);
+            oldPlayer.setName(newVorname, newNachname);
+            System.out.println(GREEN + "Der Name des Spielers " + oldName + " wurde zu " + newVorname + " " + newNachname +" geändert");
+        }
+        index = configTischPlayerListModel.indexOf(oldName);
+        if (index != -1) {
+            configTischPlayerListModel.setElementAt(newVorname + " " + newNachname, index);
             oldPlayer.setName(newVorname, newNachname);
             System.out.println(GREEN + "Der Name des Spielers " + oldName + " wurde zu " + newVorname + " " + newNachname +" geändert");
         }
