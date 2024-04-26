@@ -439,7 +439,6 @@ public class Gui {
                 pointsTextField.setText(String.valueOf(Objects.requireNonNull(changePlayer).getPoints()));
                 newPointsTextField.setText("");
                 changePanel.requestFocusInWindow();
-
             }
         });
         changePlayerPointsPanel.add(changePointsButton,gbc);
@@ -681,6 +680,7 @@ public class Gui {
         JMenuItem playerZuordnen = new JMenuItem("Spieler verteilen");
         JMenuItem updateLeaderboard = new JMenuItem("update Leaderboard");
         JMenuItem updateTische = new JMenuItem("update Tische");
+        JMenuItem nextRoundItem = new JMenuItem("nächste Runde");
         updateMenu.add(playerZuordnen);
         updateMenu.add(updateLeaderboard);
         playerZuordnen.addMouseListener(new MouseAdapter() {
@@ -702,6 +702,92 @@ public class Gui {
             }
         });
         updateMenu.add(updateTische);
+        nextRoundItem.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                if(Game.nextRoundChangedPlayers().isEmpty()){
+                    Game.nextRound();
+                }else{
+                    JDialog tischChangeFrame = new JDialog();
+                    JMenuBar buttonBar = new JMenuBar();
+                    JButton confirmButton = new JButton("weiter");
+                    JButton denyButton = new JButton("abbrechen");
+                    buttonBar.add(confirmButton);
+                    buttonBar.add(denyButton);
+                    buttonBar.setBorderPainted(false);
+                    buttonBar.setBackground(tischChangeFrame.getBackground());
+                    buttonBar.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
+                    tischChangeFrame.add(buttonBar, BorderLayout.SOUTH);
+                    tischChangeFrame.setSize(new Dimension(250, 150));
+                    tischChangeFrame.setLocation(configFrame.getLocationOnScreen());
+                    JPanel textPanel = new JPanel(new GridBagLayout());
+                    GridBagConstraints gbc = new GridBagConstraints();
+                    gbc.gridx = 0;
+                    gbc.gridy = 0;
+                    gbc.anchor = GridBagConstraints.CENTER;
+                    textPanel.add(new JLabel("Folgende Spieler haben keine neuen Punkte. wirklich nächste Runde beginnen?"),gbc);
+                    JMenuBar playerBar = new JMenuBar();
+                    JMenu playerMenu = new JMenu("Tauschspieler");
+                    ArrayList<Player> changePlayerList = Game.nextRoundChangedPlayers();
+                    Player changePlayer1 = changePlayer;
+                    final Player[] changePlayer2 = new Player[1];
+                    for (Player player : changePlayerList) {
+                        JMenuItem playerItem = new JMenuItem(player.getName()[0] + " " + player.getName()[1]);
+                        playerItem.addMouseListener(new MouseAdapter() {
+                            @Override
+                            public void mouseReleased(MouseEvent e){
+                                changePlayer2[0] = player;
+                                playerMenu.setText(player.getVorname() + " " + player.getNachname());
+                            }
+                        });
+                        playerMenu.add(playerItem);
+                    }
+                    playerMenu.setVisible(true);
+                    gbc.gridy = 1;
+                    gbc.gridx = 0;
+                    playerBar.add(playerMenu);
+                    textPanel.add(playerBar, gbc);
+                    tischChangeFrame.add(textPanel, BorderLayout.CENTER);
+                    confirmButton.addKeyListener(new KeyAdapter() {
+                        @Override
+                        public void keyReleased(KeyEvent e) {
+                            if(e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_TAB){
+                                denyButton.requestFocus();
+                            }else if(e.getKeyCode() == KeyEvent.VK_ENTER){
+                                Game.nextRound();
+                                tischChangeFrame.dispose();
+                            }
+                        }
+                    });
+                    confirmButton.addMouseListener(new MouseAdapter() {
+                        @Override
+                        public void mouseClicked(MouseEvent e) {
+                            Game.nextRound();
+                            tischChangeFrame.dispose();
+                        }
+                    });
+                    denyButton.addKeyListener(new KeyAdapter() {
+                        @Override
+                        public void keyReleased(KeyEvent e) {
+                            if(e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_TAB){
+                                confirmButton.requestFocus();
+                            }else if(e.getKeyCode() == KeyEvent.VK_ENTER){
+                                tischChangeFrame.dispose();
+                            }
+                        }
+                    });
+                    denyButton.addMouseListener(new MouseAdapter() {
+                        @Override
+                        public void mouseClicked(MouseEvent e) {
+                            tischChangeFrame.dispose();
+                        }
+                    });
+                    confirmButton.requestFocus();
+                    tischChangeFrame.setVisible(true);
+                }
+            }
+        });
+        updateMenu.add(nextRoundItem);
         menuBar.add(updateMenu);
         configFrame.setJMenuBar(menuBar);
 

@@ -51,7 +51,7 @@ public class Game {
         player.setPoints(points);
     }
     public static void addPlayerPoints(Player player, int points){
-        player.setPoints(player.getPoints() + points);
+        player.addRoundPoints(points);
     }
     public static void updateLeaderboard(){
         int n = playerList.size();
@@ -123,6 +123,19 @@ public class Game {
         }
         return null;
     }
+    public static ArrayList<Player> nextRoundChangedPlayers(){
+        ArrayList<Player> notChangedPlayersList = new ArrayList<>();
+        for(Player player : playerList){
+            if(player.hasRoundPoints == true){
+                player.nextRound();
+            }else{
+                notChangedPlayersList.add(player);
+            }
+        }
+        return notChangedPlayersList;
+    }
 
-
+    public static void nextRound() {
+        round ++;
+    }
 }

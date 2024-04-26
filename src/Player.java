@@ -3,6 +3,8 @@ public class Player {
     String vorname;
     int points;
     Tisch tisch;
+    int roundPoints;
+    public boolean hasRoundPoints = false;
 
     public Player(String vorname, String nachname) {
         this.nachname = nachname;
@@ -32,6 +34,7 @@ public class Player {
     }
 
     public void setPoints(int points) {
+        hasRoundPoints = true;
         this.points = points;
     }
     public void setTisch(Tisch nTisch){
@@ -39,5 +42,14 @@ public class Player {
     }
     public Tisch getTisch(){
         return this.tisch;
+    }
+    public void addRoundPoints(int nRoundPoints){
+        hasRoundPoints = true;
+        roundPoints = roundPoints + nRoundPoints;
+
+    }
+    public void nextRound(){
+        hasRoundPoints = false;
+        points = points + roundPoints;
     }
 }
