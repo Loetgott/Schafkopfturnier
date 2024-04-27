@@ -52,7 +52,7 @@ public class JTisch extends JComponent {
         for(int i = 0; i < playerList.size(); i ++){
             //table.setValueAt(i + 1 , i,0);
             table.setValueAt(playerList.get(i).getName()[0] + " " + playerList.get(i).getNachname().charAt(0) + ".", i,1);
-            table.setValueAt(playerList.get(i).getPoints(),i ,2);
+            table.setValueAt(playerList.get(i).getOldPoints(),i ,2);
         }
     }
     public void setPlayer(Player player, int position){

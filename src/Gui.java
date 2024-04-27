@@ -254,7 +254,6 @@ public class Gui {
         listScrollPane.setFocusable(false);
         configFrame.addComponentListener(new ComponentAdapter() {
             public void componentResized(ComponentEvent e) {
-                System.out.println(configFrame.getHeight());
                 listScrollPane.setPreferredSize(new Dimension(300,(configFrame.getHeight() - 160)));
                 listScrollPane.repaint();
                 configPlayerList.repaint();

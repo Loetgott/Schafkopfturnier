@@ -30,7 +30,13 @@ public class Player {
     }
 
     public int getPoints() {
+        return points + roundPoints;
+    }
+    public int getOldPoints(){
         return points;
+    }
+    public int getRoundPoints(){
+        return roundPoints;
     }
 
     public void setPoints(int points) {

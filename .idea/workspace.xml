@@ -9,10 +9,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bdf4d30b-1150-4e01-8031-276c41c2ea01" name="Changes" comment="v 1.2">
+    <list default="true" id="bdf4d30b-1150-4e01-8031-276c41c2ea01" name="Changes" comment="anfang der nextRound Methode">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Gui.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Gui.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/JTisch.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/JTisch.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Player.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -524,7 +523,15 @@
       <option name="project" value="LOCAL" />
       <updated>1714157057949</updated>
     </task>
-    <option name="localTasksCounter" value="48" />
+    <task id="LOCAL-00048" summary="anfang der nextRound Methode">
+      <option name="closed" value="true" />
+      <created>1714160045421</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1714160045421</updated>
+    </task>
+    <option name="localTasksCounter" value="49" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -540,7 +547,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="erste Tisch versuche" />
     <MESSAGE value="updated the gui" />
     <MESSAGE value="finished the changeName Method in GUi" />
     <MESSAGE value="finished the changePoints Method in GUi" />
@@ -565,6 +571,7 @@
     <MESSAGE value="tisch panel geupdated" />
     <MESSAGE value="cugfix bei tischTab" />
     <MESSAGE value="v 1.2" />
-    <option name="LAST_COMMIT_MESSAGE" value="v 1.2" />
+    <MESSAGE value="anfang der nextRound Methode" />
+    <option name="LAST_COMMIT_MESSAGE" value="anfang der nextRound Methode" />
   </component>
 </project>
