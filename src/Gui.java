@@ -739,7 +739,7 @@ public class Gui {
         listIcon.setImage(listIcon.getImage().getScaledInstance(15,15, Image.SCALE_SMOOTH));
         updateLeaderboard.setIcon(listIcon);
         JMenuItem updateTische = new JMenuItem("update Tische");
-        ImageIcon tischIcon = new ImageIcon("src/export.png");
+        ImageIcon tischIcon = new ImageIcon("src/table.png");
         tischIcon.setImage(tischIcon.getImage().getScaledInstance(15,15, Image.SCALE_SMOOTH));
         updateTische.setIcon(tischIcon);
         JMenuItem nextRoundItem = new JMenuItem("nächste Runde");
@@ -928,6 +928,9 @@ public class Gui {
         ImageIcon playerIcon = new ImageIcon("src/people.png");
         playerIcon.setImage(playerIcon.getImage().getScaledInstance(20,20, Image.SCALE_SMOOTH));
         tabbedPane.setIconAt(1,playerIcon);
+        tischIcon.setImage(tischIcon.getImage().getScaledInstance(20,20, Image.SCALE_SMOOTH));
+        tabbedPane.setIconAt(2,tischIcon);
+
 
         tabbedPane.addChangeListener(new ChangeListener() {
             @Override
