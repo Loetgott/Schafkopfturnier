@@ -699,6 +699,7 @@ public class Gui {
                         return "XML files (*.xml)";
                     }
                 });
+                fileChooser.setCurrentDirectory(new File("C:/Users/nnaml/OneDrive/Schule/P-Seminar-Schafkopfen/"));
                 int returnValue = fileChooser.showOpenDialog(null);
                 if (returnValue == JFileChooser.APPROVE_OPTION) {
                     java.io.File selectedFile = fileChooser.getSelectedFile();
@@ -715,6 +716,7 @@ public class Gui {
             public void mouseReleased(MouseEvent e) {
                 JFileChooser fileChooser = new JFileChooser();
                 fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+                fileChooser.setCurrentDirectory(new File("C:/Users/nnaml/OneDrive/Schule/P-Seminar-Schafkopfen/"));
                 int returnValue = fileChooser.showOpenDialog(null);
                 if (returnValue == JFileChooser.APPROVE_OPTION) {
                     java.io.File selectedFile = fileChooser.getSelectedFile();
