@@ -59,13 +59,13 @@ public class XMLMaker {
             System.out.println(Game.RED + "Fehler beim Erstellen des Backups, unbedingt prüfen!");
         }
     }
-    public void importBackup(String path, int round){
+    public void importBackup(String path){
         Game.tischList.clear();
         Game.playerList.clear();
         Gui.configPlayerListModel.clear();
         Gui.configTischlistModel.clear();
         try {
-            File xmlFile = new File(path + String.valueOf(round) + ".xml");
+            File xmlFile = new File(path);
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
             Document doc = builder.parse(xmlFile);

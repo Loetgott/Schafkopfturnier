@@ -5,6 +5,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.filechooser.FileFilter;
 import java.awt.*;
 import java.awt.event.*;
 import java.beans.PropertyChangeEvent;
@@ -822,8 +823,22 @@ public class Gui {
         importButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                if(!backupPathTextfield.getText().isEmpty()){
-                    Game.importSavegame(backupPathTextfield.getText());
+                JFileChooser fileChooser = new JFileChooser();
+                fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+                fileChooser.setFileFilter(new FileFilter() {
+                    public boolean accept(File file) {
+                        return file.isDirectory() || file.getName().toLowerCase().endsWith(".xml");
+                    }
+
+                    @Override
+                    public String getDescription() {
+                        return "XML files (*.xml)";
+                    }
+                });
+                int returnValue = fileChooser.showOpenDialog(null);
+                if (returnValue == JFileChooser.APPROVE_OPTION) {
+                    java.io.File selectedFile = fileChooser.getSelectedFile();
+                    Game.xmlMaker.importBackup(selectedFile.getAbsolutePath());
                 }
             }
         });
