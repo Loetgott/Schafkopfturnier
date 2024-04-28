@@ -57,5 +57,6 @@ public class Player {
     public void nextRound(){
         hasRoundPoints = false;
         points = points + roundPoints;
+        roundPoints = 0;
     }
 }

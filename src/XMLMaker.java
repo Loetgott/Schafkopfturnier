@@ -50,10 +50,10 @@ public class XMLMaker {
             Transformer transformer = transformerFactory.newTransformer();
             transformer.setOutputProperty(OutputKeys.INDENT, "yes");
             DOMSource source = new DOMSource(doc);
-            StreamResult result = new StreamResult(new File( path + String.valueOf(Game.round) + ".xml"));
+            StreamResult result = new StreamResult(new File( path + "\\" + String.valueOf(Game.round) + ".xml"));
             transformer.transform(source, result);
 
-            System.out.println("XML-Datei erfolgreich erstellt.");
+            System.out.println("XML-Datei erfolgreich unter " + path + "\\" + String.valueOf(Game.round) + ".xml");
         } catch (ParserConfigurationException | TransformerException e) {
             e.printStackTrace();
             System.out.println(Game.RED + "Fehler beim Erstellen des Backups, unbedingt prüfen!");

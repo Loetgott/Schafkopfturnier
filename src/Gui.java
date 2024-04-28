@@ -676,6 +676,47 @@ public class Gui {
         changePanel.add(changePlayerTischPanel, gbc);
 
         JMenuBar menuBar = new JMenuBar();
+        JMenu fileMenu = new JMenu("File");
+        JMenuItem importMenuItem = new JMenuItem("import");
+        importMenuItem.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                JFileChooser fileChooser = new JFileChooser();
+                fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+                fileChooser.setFileFilter(new FileFilter() {
+                    public boolean accept(File file) {
+                        return file.isDirectory() || file.getName().toLowerCase().endsWith(".xml");
+                    }
+
+                    @Override
+                    public String getDescription() {
+                        return "XML files (*.xml)";
+                    }
+                });
+                int returnValue = fileChooser.showOpenDialog(null);
+                if (returnValue == JFileChooser.APPROVE_OPTION) {
+                    java.io.File selectedFile = fileChooser.getSelectedFile();
+                    Game.xmlMaker.importBackup(selectedFile.getAbsolutePath());
+                }
+            }
+        });
+        JMenuItem exportMenuItem = new JMenuItem("export");
+        exportMenuItem.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                JFileChooser fileChooser = new JFileChooser();
+                fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+                int returnValue = fileChooser.showOpenDialog(null);
+                if (returnValue == JFileChooser.APPROVE_OPTION) {
+                    java.io.File selectedFile = fileChooser.getSelectedFile();
+                    backupPath = selectedFile.getAbsolutePath();
+                    Game.saveBackup(backupPath);
+                }
+            }
+        });
+        fileMenu.add(importMenuItem);
+        fileMenu.add(exportMenuItem);
+        menuBar.add(fileMenu);
         JMenu updateMenu = new JMenu("Update");
         JMenuItem playerZuordnen = new JMenuItem("Spieler verteilen");
         JMenuItem updateLeaderboard = new JMenuItem("update Leaderboard");
@@ -792,70 +833,6 @@ public class Gui {
         configFrame.setJMenuBar(menuBar);
 
         //ab hier playerConfigpanel
-        JPanel playerConfigpanel =new JPanel(new BorderLayout());
-        JPanel backupPathPanel = new JPanel();
-        JPanel backupPanel = new JPanel(new FlowLayout());
-        gbc.gridy = 0;
-        gbc.gridx = 0;
-        JTextField backupPathTextfield = new JTextField(backupPath);
-        backupPathPanel.add(backupPathTextfield);
-        ImageIcon fileIcon = new ImageIcon("src/folder.png");
-        fileIcon.setImage(fileIcon.getImage().getScaledInstance(15,15, Image.SCALE_SMOOTH));
-        JButton fileButton = new JButton(fileIcon);
-        backupPathPanel.add(fileButton);
-        gbc.gridy ++;
-        JButton backupButton = new JButton("sichern");
-        backupPanel.add(backupButton, gbc);
-        gbc.gridx ++;
-        JButton importButton = new JButton("importieren");
-        backupPanel.add(importButton);
-        playerConfigpanel.add(backupPathPanel, BorderLayout.NORTH);
-        playerConfigpanel.add(backupPanel, BorderLayout.CENTER);
-        mainTab.add(playerConfigpanel);
-        backupButton.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-                if(!backupPathTextfield.getText().isEmpty()){
-                    Game.saveBackup(backupPathTextfield.getText());
-                }
-            }
-        });
-        importButton.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-                JFileChooser fileChooser = new JFileChooser();
-                fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-                fileChooser.setFileFilter(new FileFilter() {
-                    public boolean accept(File file) {
-                        return file.isDirectory() || file.getName().toLowerCase().endsWith(".xml");
-                    }
-
-                    @Override
-                    public String getDescription() {
-                        return "XML files (*.xml)";
-                    }
-                });
-                int returnValue = fileChooser.showOpenDialog(null);
-                if (returnValue == JFileChooser.APPROVE_OPTION) {
-                    java.io.File selectedFile = fileChooser.getSelectedFile();
-                    Game.xmlMaker.importBackup(selectedFile.getAbsolutePath());
-                }
-            }
-        });
-        fileButton.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-                JFileChooser fileChooser = new JFileChooser();
-                fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-                int returnValue = fileChooser.showOpenDialog(null);
-                fileChooser.setCurrentDirectory(new File(backupPathTextfield.getText()));
-                if (returnValue == JFileChooser.APPROVE_OPTION) {
-                    java.io.File selectedFile = fileChooser.getSelectedFile();
-                    backupPath = selectedFile.getAbsolutePath();
-                    backupPathTextfield.setText(selectedFile.getAbsolutePath() + "\\");
-                }
-            }
-        });
         JPanel playerPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         gbc.gridx = 0;
         gbc.gridy = 2;
