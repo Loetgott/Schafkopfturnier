@@ -677,7 +677,13 @@ public class Gui {
 
         JMenuBar menuBar = new JMenuBar();
         JMenu fileMenu = new JMenu("File");
+        ImageIcon fileIcon = new ImageIcon("src/folder.png");
+        fileIcon.setImage(fileIcon.getImage().getScaledInstance(15,15, Image.SCALE_SMOOTH));
+        fileMenu.setIcon(fileIcon);
         JMenuItem importMenuItem = new JMenuItem("import");
+        ImageIcon importIcon = new ImageIcon("src/import.png");
+        importIcon.setImage(importIcon.getImage().getScaledInstance(15,15, Image.SCALE_SMOOTH));
+        importMenuItem.setIcon(importIcon);
         importMenuItem.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseReleased(MouseEvent e) {
@@ -701,6 +707,9 @@ public class Gui {
             }
         });
         JMenuItem exportMenuItem = new JMenuItem("export");
+        ImageIcon exportIcon = new ImageIcon("src/export.png");
+        exportIcon.setImage(exportIcon.getImage().getScaledInstance(15,15, Image.SCALE_SMOOTH));
+        exportMenuItem.setIcon(exportIcon);
         exportMenuItem.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseReleased(MouseEvent e) {
@@ -718,10 +727,25 @@ public class Gui {
         fileMenu.add(exportMenuItem);
         menuBar.add(fileMenu);
         JMenu updateMenu = new JMenu("Update");
+        ImageIcon updateIcon = new ImageIcon("src/updating.png");
+        updateIcon.setImage(updateIcon.getImage().getScaledInstance(15,15, Image.SCALE_SMOOTH));
+        updateMenu.setIcon(updateIcon);
         JMenuItem playerZuordnen = new JMenuItem("Spieler verteilen");
+        ImageIcon distributeIcon = new ImageIcon("src/population.png");
+        distributeIcon.setImage(distributeIcon.getImage().getScaledInstance(15,15, Image.SCALE_SMOOTH));
+        playerZuordnen.setIcon(distributeIcon);
         JMenuItem updateLeaderboard = new JMenuItem("update Leaderboard");
+        ImageIcon listIcon = new ImageIcon("src/list.png");
+        listIcon.setImage(listIcon.getImage().getScaledInstance(15,15, Image.SCALE_SMOOTH));
+        updateLeaderboard.setIcon(listIcon);
         JMenuItem updateTische = new JMenuItem("update Tische");
+        ImageIcon tischIcon = new ImageIcon("src/export.png");
+        tischIcon.setImage(tischIcon.getImage().getScaledInstance(15,15, Image.SCALE_SMOOTH));
+        updateTische.setIcon(tischIcon);
         JMenuItem nextRoundItem = new JMenuItem("nächste Runde");
+        ImageIcon nextRoundIcon = new ImageIcon("src/next.png");
+        nextRoundIcon.setImage(nextRoundIcon.getImage().getScaledInstance(15,15, Image.SCALE_SMOOTH));
+        nextRoundItem.setIcon(nextRoundIcon);
         updateMenu.add(playerZuordnen);
         updateMenu.add(updateLeaderboard);
         playerZuordnen.addMouseListener(new MouseAdapter() {
@@ -901,6 +925,9 @@ public class Gui {
         tischPlayerListScrollPane.setPreferredSize(new Dimension(200,90));
         tischPlayerListScrollPane.setFocusable(false);
         tischPlayerListPanel.add(tischPlayerListScrollPane,BorderLayout.CENTER);
+        ImageIcon playerIcon = new ImageIcon("src/people.png");
+        playerIcon.setImage(playerIcon.getImage().getScaledInstance(20,20, Image.SCALE_SMOOTH));
+        tabbedPane.setIconAt(1,playerIcon);
 
         tabbedPane.addChangeListener(new ChangeListener() {
             @Override
