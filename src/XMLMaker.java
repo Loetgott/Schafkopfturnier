@@ -15,6 +15,7 @@ import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
 
 public class XMLMaker {
+    int backupVersion = 0;
     public XMLMaker(){
 
     }
@@ -50,10 +51,10 @@ public class XMLMaker {
             Transformer transformer = transformerFactory.newTransformer();
             transformer.setOutputProperty(OutputKeys.INDENT, "yes");
             DOMSource source = new DOMSource(doc);
-            StreamResult result = new StreamResult(new File( path + "\\" + String.valueOf(Game.round) + ".xml"));
+            StreamResult result = new StreamResult(new File( path + "\\" + String.valueOf(Game.round) + "_" + backupVersion + ".xml"));
+            backupVersion ++;
             transformer.transform(source, result);
-
-            System.out.println("XML-Datei erfolgreich unter " + path + "\\" + String.valueOf(Game.round) + ".xml");
+            System.out.println("XML-Datei erfolgreich unter " + path + "\\" + String.valueOf(Game.round) + "_" + backupVersion + ".xml");
         } catch (ParserConfigurationException | TransformerException e) {
             e.printStackTrace();
             System.out.println(Game.RED + "Fehler beim Erstellen des Backups, unbedingt prüfen!");
@@ -93,5 +94,7 @@ public class XMLMaker {
             e.printStackTrace();
         }
     }
-
+    public void nextRound(){
+        backupVersion = 0;
+    }
 }

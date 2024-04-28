@@ -136,6 +136,7 @@ public class Game {
     }
 
     public static void nextRound() {
+        xmlMaker.nextRound();
         round ++;
     }
 }

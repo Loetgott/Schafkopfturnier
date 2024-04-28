@@ -9,7 +9,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bdf4d30b-1150-4e01-8031-276c41c2ea01" name="Changes" comment="icond für die verschiedenen menüs" />
+    <list default="true" id="bdf4d30b-1150-4e01-8031-276c41c2ea01" name="Changes" comment="standart dateipfad">
+      <change beforePath="$PROJECT_DIR$/src/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Game.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/XMLMaker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/XMLMaker.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -142,14 +145,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1712598295900</updated>
-    </task>
-    <task id="LOCAL-00005" summary="first Frames">
-      <option name="closed" value="true" />
-      <created>1712770054377</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1712770054377</updated>
     </task>
     <task id="LOCAL-00006" summary="first Frames">
       <option name="closed" value="true" />
@@ -535,7 +530,15 @@
       <option name="project" value="LOCAL" />
       <updated>1714305845405</updated>
     </task>
-    <option name="localTasksCounter" value="54" />
+    <task id="LOCAL-00054" summary="standart dateipfad">
+      <option name="closed" value="true" />
+      <created>1714306071078</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1714306071078</updated>
+    </task>
+    <option name="localTasksCounter" value="55" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -551,7 +554,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="began the change Tisch panel + change Points fertig" />
     <MESSAGE value="Beginn mainFrame" />
     <MESSAGE value="p Seminar vorbei" />
     <MESSAGE value="confirmationFrame bei changePoints" />
@@ -576,6 +578,7 @@
     <MESSAGE value="update von import methid" />
     <MESSAGE value="import und export methode jetzt unter file in menubar" />
     <MESSAGE value="icond für die verschiedenen menüs" />
-    <option name="LAST_COMMIT_MESSAGE" value="icond für die verschiedenen menüs" />
+    <MESSAGE value="standart dateipfad" />
+    <option name="LAST_COMMIT_MESSAGE" value="standart dateipfad" />
   </component>
 </project>
