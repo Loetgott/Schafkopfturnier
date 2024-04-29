@@ -1,6 +1,5 @@
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -12,7 +11,6 @@ import org.w3c.dom.NodeList;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.xml.sax.SAXException;
 
 public class XMLMaker {
     int backupVersion = 0;
@@ -51,12 +49,11 @@ public class XMLMaker {
             Transformer transformer = transformerFactory.newTransformer();
             transformer.setOutputProperty(OutputKeys.INDENT, "yes");
             DOMSource source = new DOMSource(doc);
-            StreamResult result = new StreamResult(new File( path + "\\" + String.valueOf(Game.round) + "_" + backupVersion + ".xml"));
+            StreamResult result = new StreamResult(new File( path + "\\" + Game.round + "_" + backupVersion + ".xml"));
             backupVersion ++;
             transformer.transform(source, result);
-            System.out.println("XML-Datei erfolgreich unter " + path + "\\" + String.valueOf(Game.round) + "_" + backupVersion + ".xml");
+            System.out.println("XML-Datei erfolgreich unter " + path + "\\" + Game.round + "_" + backupVersion + ".xml");
         } catch (ParserConfigurationException | TransformerException e) {
-            e.printStackTrace();
             System.out.println(Game.RED + "Fehler beim Erstellen des Backups, unbedingt prüfen!");
         }
     }
@@ -74,8 +71,7 @@ public class XMLMaker {
             NodeList tischNodes = root.getElementsByTagName("Tisch");
 
             for (int i = 0; i < tischNodes.getLength(); i++) {
-                if (tischNodes.item(i) instanceof Element) {
-                    Element tisch = (Element) tischNodes.item(i);
+                if (tischNodes.item(i) instanceof Element tisch) {
                     Game.tischList.add(new Tisch(Integer.parseInt(tisch.getAttribute("number"))));
                     Gui.configTischlistModel.add(i,"Tisch " + tisch.getAttribute("number"));
                     NodeList playerNodes = tisch.getElementsByTagName("Player");
@@ -91,7 +87,7 @@ public class XMLMaker {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(Game.RED + "Fehler beim importieren des Backups! unbedingt prüfen");
         }
     }
     public void nextRound(){

@@ -31,7 +31,7 @@ public class JTisch extends JComponent {
         g.setColor(backgroundColor);
         g.fillRoundRect(0, 0, width, height,20,20);
         g.setColor(linesColor);
-        g.drawRoundRect(0,0,width - 1,height - 1,20,20);
+        g.drawRoundRect(0,0,width - 1,height - 1,30,30);
         g.setFont(g.getFont().deriveFont(Font.BOLD, 20));
         g.setColor(linesColor);
         if(!(name == null)){
@@ -44,9 +44,9 @@ public class JTisch extends JComponent {
         table.setBounds(15, 50, 300, 140);
         table.setBackground(backgroundColor);
         table.setForeground(linesColor);
-        table.setFont(table.getFont().deriveFont(Font.BOLD, 23));
-        table.getColumnModel().getColumn(1).setPreferredWidth(200);
-        table.getColumnModel().getColumn(0).setPreferredWidth(35);
+        table.setFont(table.getFont().deriveFont(Font.BOLD, 26));
+        table.getColumnModel().getColumn(1).setPreferredWidth(220);
+        table.getColumnModel().getColumn(0).setPreferredWidth(0);
         table.getColumnModel().getColumn(2).setPreferredWidth(40);
         table.setRowHeight(30);
         for(int i = 0; i < playerList.size(); i ++){

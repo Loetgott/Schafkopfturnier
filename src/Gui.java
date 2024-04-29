@@ -1,17 +1,7 @@
-import javax.faces.flow.Flow;
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileFilter;
 import java.awt.*;
 import java.awt.event.*;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyVetoException;
-import java.beans.VetoableChangeListener;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -33,8 +23,7 @@ public class Gui {
     public static final String RED = "\u001B[31m";
     public static final String GREEN = "\u001B[32m";
     public static final String YELLOW = "\u001B[33m";
-    public static final String WHITE = "\u001B[37m";
-    public static ArrayList<JTisch> tischList = new ArrayList<JTisch>();
+    public static ArrayList<JTisch> tischList = new ArrayList<>();
     public static JLabel leaderboardLabel = new JLabel("<html><u>Leaderboard:</u></html>");
     public static String backupPath = "C:/Users/nnaml/OneDrive/Schule/P-Seminar-Schafkopfen/";
     public static Player changePlayer;
@@ -95,32 +84,32 @@ public class Gui {
         Font tableFont = pointsTable.getFont();
         pointsTable.setFont(tableFont.deriveFont(Font.BOLD, 22));
         pointsTable.setValueAt("Punktewertung:", 0, 0);
-        pointsTable.setValueAt("Gewinner",0,1);
-        pointsTable.setValueAt("Verlierer",0,2);
+        pointsTable.setValueAt("Spieler",0,1);
+        pointsTable.setValueAt("Spieler",0,2);
         pointsTable.setValueAt("Rufspiel:", 1, 0);
-        pointsTable.setValueAt("+ 1", 1, 1);
-        pointsTable.setValueAt("- 1", 1, 2);
+        pointsTable.setValueAt("1", 1, 1);
+        pointsTable.setValueAt("1", 1, 2);
         pointsTable.setValueAt("Rufspiel Schneider:", 2, 0);
-        pointsTable.setValueAt("+ 2", 2, 1);
-        pointsTable.setValueAt("- 2", 2, 2);
+        pointsTable.setValueAt("2", 2, 1);
+        pointsTable.setValueAt("2", 2, 2);
         pointsTable.setValueAt("Rufspiel Schneider Schwarz:", 3, 0);
-        pointsTable.setValueAt("+ 3", 3, 1);
-        pointsTable.setValueAt("- 3", 3, 2);
+        pointsTable.setValueAt("3", 3, 1);
+        pointsTable.setValueAt("3", 3, 2);
         pointsTable.setValueAt("Solo/Wenz:", 4, 0);
-        pointsTable.setValueAt("+ 6", 4, 1);
-        pointsTable.setValueAt("- 2", 4, 2);
+        pointsTable.setValueAt("6", 4, 1);
+        pointsTable.setValueAt("2", 4, 2);
         pointsTable.setValueAt("Solo/Wenz Schneider:", 5, 0);
-        pointsTable.setValueAt("+ 9", 5, 1);
-        pointsTable.setValueAt("- 3", 5, 2);
+        pointsTable.setValueAt("9", 5, 1);
+        pointsTable.setValueAt("3", 5, 2);
         pointsTable.setValueAt("Solo/Wenz Schneider Schwarz:", 6, 0);
-        pointsTable.setValueAt("+ 12", 6, 1);
-        pointsTable.setValueAt("- 4", 6, 2);
+        pointsTable.setValueAt("12", 6, 1);
+        pointsTable.setValueAt("4", 6, 2);
         pointsTable.setValueAt("Solo-/Wenz-Tout:", 7, 0);
-        pointsTable.setValueAt("+ 18", 7, 1);
-        pointsTable.setValueAt("- 6", 7, 2);
+        pointsTable.setValueAt("18", 7, 1);
+        pointsTable.setValueAt("6", 7, 2);
         pointsTable.setValueAt("Sie", 8,0);
-        pointsTable.setValueAt("+ 24",8,1);
-        pointsTable.setValueAt("- 8",8,2);
+        pointsTable.setValueAt("24",8,1);
+        pointsTable.setValueAt("8",8,2);
         pointsTable.setShowGrid(true);
         pointsTable.setShowHorizontalLines(true);
         pointsTable.setShowVerticalLines(false);
@@ -154,8 +143,7 @@ public class Gui {
         configFrame.setUndecorated(false);
         configFrame.setSize(new Dimension(800, 600));
         configFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        configFrame.setLocation(GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()[1].getDefaultConfiguration().getBounds().getLocation());
-
+        configFrame.setLocation(GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()[0].getDefaultConfiguration().getBounds().getLocation());
         JTabbedPane tabbedPane = new JTabbedPane();
         JPanel mainTab = new JPanel();
         JPanel playerTab = new JPanel(new BorderLayout());
@@ -535,7 +523,7 @@ public class Gui {
                         public void mouseClicked(MouseEvent e) {
                             Game.spielertausch(changePlayer1,changePlayer2[0]);
                             tischChangeFrame.dispose();
-                            TischLabelNow.setText(changePlayer.getTisch().getName());;
+                            TischLabelNow.setText(changePlayer.getTisch().getName());
                         }
                     });
                     denyButton.addKeyListener(new KeyAdapter() {
@@ -616,7 +604,7 @@ public class Gui {
                             }else if(e.getKeyCode() == KeyEvent.VK_ENTER){
                                 Game.spielertausch(changePlayer1,changePlayer2[0]);
                                 tischChangeFrame.dispose();
-                                TischLabelNow.setText(changePlayer.getTisch().getName());;
+                                TischLabelNow.setText(changePlayer.getTisch().getName());
                             }
                         }
                     });
@@ -625,7 +613,7 @@ public class Gui {
                         public void mouseClicked(MouseEvent e) {
                             Game.spielertausch(changePlayer1,changePlayer2[0]);
                             tischChangeFrame.dispose();
-                            TischLabelNow.setText(changePlayer.getTisch().getName());;
+                            TischLabelNow.setText(changePlayer.getTisch().getName());
                         }
                     });
                     denyButton.addKeyListener(new KeyAdapter() {
@@ -677,11 +665,11 @@ public class Gui {
 
         JMenuBar menuBar = new JMenuBar();
         JMenu fileMenu = new JMenu("File");
-        ImageIcon fileIcon = new ImageIcon("src/folder.png");
+        ImageIcon fileIcon = new ImageIcon("C:\\Users\\nnaml\\IdeaProjects\\Schafkopfturnier\\src\\folder.png");
         fileIcon.setImage(fileIcon.getImage().getScaledInstance(15,15, Image.SCALE_SMOOTH));
         fileMenu.setIcon(fileIcon);
         JMenuItem importMenuItem = new JMenuItem("import");
-        ImageIcon importIcon = new ImageIcon("src/import.png");
+        ImageIcon importIcon = new ImageIcon("C:\\Users\\nnaml\\IdeaProjects\\Schafkopfturnier\\src\\import.png");
         importIcon.setImage(importIcon.getImage().getScaledInstance(15,15, Image.SCALE_SMOOTH));
         importMenuItem.setIcon(importIcon);
         importMenuItem.addMouseListener(new MouseAdapter() {
@@ -708,7 +696,7 @@ public class Gui {
             }
         });
         JMenuItem exportMenuItem = new JMenuItem("export");
-        ImageIcon exportIcon = new ImageIcon("src/export.png");
+        ImageIcon exportIcon = new ImageIcon("C:\\Users\\nnaml\\IdeaProjects\\Schafkopfturnier\\src\\export.png");
         exportIcon.setImage(exportIcon.getImage().getScaledInstance(15,15, Image.SCALE_SMOOTH));
         exportMenuItem.setIcon(exportIcon);
         exportMenuItem.addMouseListener(new MouseAdapter() {
@@ -729,23 +717,23 @@ public class Gui {
         fileMenu.add(exportMenuItem);
         menuBar.add(fileMenu);
         JMenu updateMenu = new JMenu("Update");
-        ImageIcon updateIcon = new ImageIcon("src/updating.png");
+        ImageIcon updateIcon = new ImageIcon("C:\\Users\\nnaml\\IdeaProjects\\Schafkopfturnier\\src\\updating.png");
         updateIcon.setImage(updateIcon.getImage().getScaledInstance(15,15, Image.SCALE_SMOOTH));
         updateMenu.setIcon(updateIcon);
         JMenuItem playerZuordnen = new JMenuItem("Spieler verteilen");
-        ImageIcon distributeIcon = new ImageIcon("src/population.png");
+        ImageIcon distributeIcon = new ImageIcon("C:\\Users\\nnaml\\IdeaProjects\\Schafkopfturnier\\src\\population.png");
         distributeIcon.setImage(distributeIcon.getImage().getScaledInstance(15,15, Image.SCALE_SMOOTH));
         playerZuordnen.setIcon(distributeIcon);
         JMenuItem updateLeaderboard = new JMenuItem("update Leaderboard");
-        ImageIcon listIcon = new ImageIcon("src/list.png");
+        ImageIcon listIcon = new ImageIcon("C:\\Users\\nnaml\\IdeaProjects\\Schafkopfturnier\\src\\list.png");
         listIcon.setImage(listIcon.getImage().getScaledInstance(15,15, Image.SCALE_SMOOTH));
         updateLeaderboard.setIcon(listIcon);
         JMenuItem updateTische = new JMenuItem("update Tische");
-        ImageIcon tischIcon = new ImageIcon("src/table.png");
+        ImageIcon tischIcon = new ImageIcon("C:\\Users\\nnaml\\IdeaProjects\\Schafkopfturnier\\src\\table.png");
         tischIcon.setImage(tischIcon.getImage().getScaledInstance(15,15, Image.SCALE_SMOOTH));
         updateTische.setIcon(tischIcon);
         JMenuItem nextRoundItem = new JMenuItem("nächste Runde");
-        ImageIcon nextRoundIcon = new ImageIcon("src/next.png");
+        ImageIcon nextRoundIcon = new ImageIcon("C:\\Users\\nnaml\\IdeaProjects\\Schafkopfturnier\\src\\next.png");
         nextRoundIcon.setImage(nextRoundIcon.getImage().getScaledInstance(15,15, Image.SCALE_SMOOTH));
         nextRoundItem.setIcon(nextRoundIcon);
         updateMenu.add(playerZuordnen);
@@ -796,7 +784,6 @@ public class Gui {
                     JMenuBar playerBar = new JMenuBar();
                     JMenu playerMenu = new JMenu("Tauschspieler");
                     ArrayList<Player> changePlayerList = Game.nextRoundChangedPlayers();
-                    Player changePlayer1 = changePlayer;
                     final Player[] changePlayer2 = new Player[1];
                     for (Player player : changePlayerList) {
                         JMenuItem playerItem = new JMenuItem(player.getName()[0] + " " + player.getName()[1]);
@@ -856,6 +843,57 @@ public class Gui {
         });
         updateMenu.add(nextRoundItem);
         menuBar.add(updateMenu);
+        JMenu displayMenu = new JMenu("Anzeige");
+        ImageIcon screenIcon = new ImageIcon("C:\\Users\\nnaml\\IdeaProjects\\Schafkopfturnier\\src\\screen.png");
+        screenIcon.setImage(screenIcon.getImage().getScaledInstance(15,15, Image.SCALE_SMOOTH));
+        displayMenu.setIcon(screenIcon);
+        JMenuItem mainScreen1MenuItem = new JMenuItem("Bidschirm 1");
+        JMenuItem mainScreen2MenuItem = new JMenuItem("Bidschirm 2");
+        mainScreen2MenuItem.setIcon(screenIcon);
+        JMenuItem configScreen1MenuItem = new JMenuItem("Bidschirm 1");
+        configScreen1MenuItem.setIcon(screenIcon);
+        JMenuItem configScreen2MenuItem = new JMenuItem("Bidschirm 2");
+        displayMenu.add(new JLabel("     Tische & Leaderboard"));
+        displayMenu.add(mainScreen1MenuItem);
+        displayMenu.add(mainScreen2MenuItem);
+        displayMenu.addSeparator();
+        displayMenu.add(new JLabel("     Konfiguration"));
+        displayMenu.add(configScreen1MenuItem);
+        displayMenu.add(configScreen2MenuItem);
+
+        mainScreen2MenuItem.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                mainScreen2MenuItem.setIcon(screenIcon);
+                mainFrame.setLocation(GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()[0].getDefaultConfiguration().getBounds().getLocation());
+                mainScreen1MenuItem.setIcon(null);
+            }
+        });
+        mainScreen1MenuItem.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                mainScreen1MenuItem.setIcon(screenIcon);
+                mainFrame.setLocation(GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()[1].getDefaultConfiguration().getBounds().getLocation());
+                mainScreen2MenuItem.setIcon(null);
+            }
+        });
+        configScreen2MenuItem.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                configScreen2MenuItem.setIcon(screenIcon);
+                configFrame.setLocation(GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()[0].getDefaultConfiguration().getBounds().getLocation());
+                configScreen1MenuItem.setIcon(null);
+            }
+        });
+        configScreen1MenuItem.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                configScreen1MenuItem.setIcon(screenIcon);
+                configFrame.setLocation(GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()[1].getDefaultConfiguration().getBounds().getLocation());
+                configScreen2MenuItem.setIcon(null);
+            }
+        });
+        menuBar.add(displayMenu);
         configFrame.setJMenuBar(menuBar);
 
         //ab hier playerConfigpanel
@@ -885,19 +923,16 @@ public class Gui {
         JScrollPane tischListScrollPane = new JScrollPane(configTischList);
         tischListScrollPane.setPreferredSize(new Dimension(120,370));
         tischListScrollPane.setFocusable(false);
-        configTischList.addListSelectionListener(new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent e) {
-                if(!configTischList.isSelectionEmpty()){
-                    configTischPlayerListModel.clear();
-                    if(configTischPlayerListModel.size() == 3){
-                        for(int i = 0; i < 4; i ++){
-                            configTischPlayerListModel.setElementAt(Game.getTisch(configTischList.getSelectedValue().split(" ")[1]).getPlayerList().get(i).getVorname() + " " + Game.getTisch(configTischList.getSelectedValue().split(" ")[1]).getPlayerList().get(i).getNachname(),i);
-                        }
-                    }else{
-                        for(int i = 0; i < 4; i ++){
-                            configTischPlayerListModel.addElement(Game.getTisch(configTischList.getSelectedValue().split(" ")[1]).getPlayerList().get(i).getVorname() + " " + Game.getTisch(configTischList.getSelectedValue().split(" ")[1]).getPlayerList().get(i).getNachname());
-                        }
+        configTischList.addListSelectionListener(e -> {
+            if(!configTischList.isSelectionEmpty()){
+                configTischPlayerListModel.clear();
+                if(configTischPlayerListModel.size() == 3){
+                    for(int i = 0; i < 4; i ++){
+                        configTischPlayerListModel.setElementAt(Game.getTisch(configTischList.getSelectedValue().split(" ")[1]).getPlayerList().get(i).getVorname() + " " + Game.getTisch(configTischList.getSelectedValue().split(" ")[1]).getPlayerList().get(i).getNachname(),i);
+                    }
+                }else{
+                    for(int i = 0; i < 4; i ++){
+                        configTischPlayerListModel.addElement(Game.getTisch(configTischList.getSelectedValue().split(" ")[1]).getPlayerList().get(i).getVorname() + " " + Game.getTisch(configTischList.getSelectedValue().split(" ")[1]).getPlayerList().get(i).getNachname());
                     }
                 }
             }
@@ -927,21 +962,18 @@ public class Gui {
         tischPlayerListScrollPane.setPreferredSize(new Dimension(200,90));
         tischPlayerListScrollPane.setFocusable(false);
         tischPlayerListPanel.add(tischPlayerListScrollPane,BorderLayout.CENTER);
-        ImageIcon playerIcon = new ImageIcon("src/people.png");
+        ImageIcon playerIcon = new ImageIcon("C:\\Users\\nnaml\\IdeaProjects\\Schafkopfturnier\\src\\people.png");
         playerIcon.setImage(playerIcon.getImage().getScaledInstance(20,20, Image.SCALE_SMOOTH));
         tabbedPane.setIconAt(1,playerIcon);
         tischIcon.setImage(tischIcon.getImage().getScaledInstance(20,20, Image.SCALE_SMOOTH));
         tabbedPane.setIconAt(2,tischIcon);
 
 
-        tabbedPane.addChangeListener(new ChangeListener() {
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                if(tabbedPane.getSelectedIndex() == 1){
-                    playerPanel.add(changePanel);
-                }else if(tabbedPane.getSelectedIndex() == 2){
-                    tischConfigPanel.add(changePanel);
-                }
+        tabbedPane.addChangeListener(e -> {
+            if(tabbedPane.getSelectedIndex() == 1){
+                playerPanel.add(changePanel);
+            }else if(tabbedPane.getSelectedIndex() == 2){
+                tischConfigPanel.add(changePanel);
             }
         });
         configFrame.add(new JLabel("©Lötgott & Sesamoel all rights reserved"),BorderLayout.SOUTH);
