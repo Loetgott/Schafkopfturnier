@@ -43,6 +43,7 @@ public class Game {
         }
         return null;
     }
+
     public static void setPlayerName(Player player, String vorname, String nachname){
         Gui.setPlayerName(player,vorname, nachname);
         player.setName(vorname,nachname);
@@ -133,6 +134,28 @@ public class Game {
             }
         }
         return notChangedPlayersList;
+    }
+
+    public static void setPointsTisch(Tisch tisch, int pP0, int pP1, int pP2, int pP3){
+        if( pP0 + pP1 + pP2 + pP3 != 0){
+            System.out.println("Punktezahl geht nicht auf! Bitte überprüfen");
+        }else{
+            addPlayerPoints(tisch.playerList.get(0),pP0);           //Punkte einfügen und playerlist nach Punkten sortieren
+            addPlayerPoints(tisch.playerList.get(1),pP1);
+            addPlayerPoints(tisch.playerList.get(2),pP2);
+            addPlayerPoints(tisch.playerList.get(3),pP3);
+
+            Collections.sort(tisch.playerList);
+
+            if(tisch.playerList.get(1).getRoundPoints() == tisch.playerList.get(2).getRoundPoints()){
+                System.out.println(RED + "Punktegleichheit! Bitte manuell eintragen, wer aufsteigt." + RESET);
+            }else{
+                tisch.playerList.get(0).setSteigtAuf(true);
+                tisch.playerList.get(1).setSteigtAuf(true);
+                tisch.playerList.get(2).setSteigtAuf(false);
+                tisch.playerList.get(3).setSteigtAuf(false);
+            }
+        }
     }
 
     public static void nextRound() {
