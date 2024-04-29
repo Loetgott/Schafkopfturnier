@@ -1,10 +1,11 @@
-public class Player {
+public class Player implements Comparable<Player> {
     String nachname;
     String vorname;
     int points;
     Tisch tisch;
     int roundPoints;
     public boolean hasRoundPoints = false;
+    public boolean steigtAuf;
 
     public Player(String vorname, String nachname) {
         this.nachname = nachname;
@@ -16,11 +17,11 @@ public class Player {
         return new String[]{vorname, nachname};
     }
 
-    public String getVorname(){
+    public String getVorname() {
         return vorname;
     }
 
-    public String getNachname(){
+    public String getNachname() {
         return nachname;
     }
 
@@ -32,31 +33,50 @@ public class Player {
     public int getPoints() {
         return points + roundPoints;
     }
-    public int getOldPoints(){
+
+    public int getOldPoints() {
         return points;
     }
-    public int getRoundPoints(){
+
+    public int getRoundPoints() {
         return roundPoints;
     }
 
+    public boolean getSteigtAuf() {
+        return steigtAuf;}
+
     public void setPoints(int points) {
         hasRoundPoints = true;
-        this.points = points;
-    }
-    public void setTisch(Tisch nTisch){
+        this.points = points;}
+
+    public void setTisch(Tisch nTisch) {
         this.tisch = nTisch;
     }
-    public Tisch getTisch(){
+
+    public Tisch getTisch() {
         return this.tisch;
     }
-    public void addRoundPoints(int nRoundPoints){
+
+    public void addRoundPoints(int nRoundPoints) {
         hasRoundPoints = true;
         roundPoints = roundPoints + nRoundPoints;
 
     }
+
+    public void setSteigtAuf(boolean x) {
+        steigtAuf = x;
+    }
+
     public void nextRound(){
         hasRoundPoints = false;
         points = points + roundPoints;
         roundPoints = 0;
     }
+
+    @Override
+    public int compareTo(Player other) {
+        return Integer.compare(this.roundPoints, other.roundPoints);
+    }
+
+
 }
