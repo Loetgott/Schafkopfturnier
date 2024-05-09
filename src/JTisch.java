@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -32,22 +33,25 @@ public class JTisch extends JComponent {
         g.fillRoundRect(0, 0, width, height,20,20);
         g.setColor(linesColor);
         g.drawRoundRect(0,0,width - 1,height - 1,30,30);
-        g.setFont(g.getFont().deriveFont(Font.BOLD, 20));
+        g.setFont(g.getFont().deriveFont(Font.BOLD, 24));
         g.setColor(linesColor);
         if(!(name == null)){
             FontMetrics fm = g.getFontMetrics();
             int stringWidth = fm.stringWidth("Tisch " + name);
             int x = (width - stringWidth) / 2;
-            g.drawString("Tisch " + name, x, 30);
+            g.drawString("Tisch " + name, x, 40);
         }
         add(table);
-        table.setBounds(15, 50, 300, 140);
+        table.setBounds(15, 50, 290, 140);
         table.setBackground(backgroundColor);
         table.setForeground(linesColor);
         table.setFont(table.getFont().deriveFont(Font.BOLD, 26));
-        table.getColumnModel().getColumn(1).setPreferredWidth(220);
+        table.getColumnModel().getColumn(1).setPreferredWidth(210);
         table.getColumnModel().getColumn(0).setPreferredWidth(0);
-        table.getColumnModel().getColumn(2).setPreferredWidth(40);
+        table.getColumnModel().getColumn(2).setPreferredWidth(45);
+        DefaultTableCellRenderer rightRenderer = new DefaultTableCellRenderer();
+        rightRenderer.setHorizontalAlignment(SwingConstants.RIGHT);
+        table.getColumnModel().getColumn(2).setCellRenderer(rightRenderer);
         table.setRowHeight(30);
         for(int i = 0; i < playerList.size(); i ++){
             //table.setValueAt(i + 1 , i,0);

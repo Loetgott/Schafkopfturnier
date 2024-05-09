@@ -1,14 +1,22 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import com.sun.net.httpserver.HttpServer;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpExchange;
 
-public class ServerTest {
-    public static void main(String[] args) throws IOException {
+public class Server {
+    public Server(){
         int port = 8000; // Portnummer für den Server
-        HttpServer server = HttpServer.create(new java.net.InetSocketAddress(port), 0);
+        HttpServer server = null;
+        try {
+            server = HttpServer.create(new java.net.InetSocketAddress(port), 0);
+        } catch (IOException e) {
+            System.out.println(Game.RED + "Fehler beim Erstellen des Servers!" + Game.RESET);
+        }
         server.createContext("/sendText", new SendTextHandler());
         server.createContext("/sendTextOnExit", new SendTextOnExitHandler());
         server.setExecutor(null); // Default-Executor verwenden
@@ -26,7 +34,7 @@ public class ServerTest {
                 exchange.getResponseHeaders().add("Access-Control-Allow-Headers", "Content-Type,Authorization");
                 exchange.sendResponseHeaders(204, -1);
             } else if (exchange.getRequestMethod().equalsIgnoreCase("POST")) {
-                System.out.println("POST-Anfrage empfangen!"); // Ausgabe in der Konsole für Debug-Zwecke
+                //System.out.println("POST-Anfrage empfangen!"); // Ausgabe in der Konsole für Debug-Zwecke
                 // Lese den Text aus dem Request-Body
                 InputStreamReader isr = new InputStreamReader(exchange.getRequestBody(), "utf-8");
                 BufferedReader br = new BufferedReader(isr);
@@ -34,7 +42,33 @@ public class ServerTest {
                 // Gib den empfangenen Text in der Konsole aus
                 String clientIP = exchange.getRemoteAddress().getAddress().getHostAddress();
                 System.out.println("Empfangener Text: " + text);
+                ArrayList<String> input = new ArrayList<>(Arrays.asList(text.split(" ")));
+                switch(input.get(0)){
+                    case "aufgerufen":
+                        Game.connectNewUser(new WebUser(clientIP));
+                        input.clear();
+                        break;
+                    case "name":
+                        System.out.println("Namenswechsel beantragt");
+                        input.remove(0);
+                        if(!input.isEmpty()){
+                            String vorname = input.get(0);
+                            String nachname = " ";
+                            input.remove(0);
+                            if(!input.isEmpty()){
+                                nachname = input.get(0);
+                            }
+                            Game.giveWebUserName(clientIP,vorname + " " + nachname);
+                        }
+                        break;
+                    case "ping":
 
+                        break;
+                    case "getTische":
+
+                        break;
+
+                }
 
                 // Sende eine Bestätigungsnachricht an den Client
                 String response = "Text empfangen: " + text;
@@ -61,7 +95,7 @@ public class ServerTest {
                 String clientIP = exchange.getRemoteAddress().getAddress().getHostAddress();
                 System.out.println("Empfangener Text beim Verlassen der Seite: " + text);
                 // Hier könntest du den empfangenen Text speichern oder verarbeiten
-
+                Gui.disconnectWebUser(clientIP);
 
                 // (z. B. in eine Datenbank einfügen)
                 exchange.sendResponseHeaders(200, -1); // Bestätigungsnachricht senden (kein Inhalt)

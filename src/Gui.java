@@ -5,9 +5,6 @@ import java.awt.event.*;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Objects;
-import javax.swing.*;
-import java.awt.*;
-import java.util.ArrayList;
 
 import com.formdev.flatlaf.*;
 import org.jetbrains.annotations.NotNull;
@@ -982,6 +979,8 @@ public class Gui {
                 tischConfigPanel.add(changePanel);
             }
         });
+
+        //ab hier server Panel
         clientTable.setBackground(configFrame.getBackground());
         clientTable.setForeground(new Color(186, 186, 186));
         clientTable.setGridColor(new Color(186,186,186));
@@ -1033,6 +1032,42 @@ public class Gui {
         for(int i = 0; i < tische.size(); i ++){
             for(int ii = 0; ii < 4; ii ++){
                 tischList.get(i).setPlayer(tische.get(i).getPlayerList().get(ii),ii);
+            }
+        }
+    }
+    public static void connectWebUser(WebUser webUser){
+        boolean notNew = false;
+        for(int i = 1; i < clientTable.getRowCount(); i++){
+            if(webUser.getIp().equals(clientTable.getValueAt(i, 1))){
+                notNew = true;
+                clientTable.setValueAt("connected",i,2);
+            }
+        }
+        if(!notNew){
+            for(int i = 1; i < clientTable.getRowCount(); i++){
+                if(clientTable.getValueAt(i,1) == null){
+                    clientTable.setValueAt(webUser.getName(), i,0);
+                    clientTable.setValueAt(webUser.getIp(), i,1);
+                    clientTable.setValueAt("connected",i,2);
+                    break;
+                }
+            }
+        }
+    }
+    public static void giveWebUserName(String ip, String name){
+        for(int i = 1; i < clientTable.getRowCount(); i++){
+            System.out.println(clientTable.getValueAt(i,1) + " | " + ip);
+            if(clientTable.getValueAt(i,1).equals(ip)){
+                System.out.println(clientTable.getValueAt(i,1) + " " + ip);
+                clientTable.setValueAt(name,i,0);
+                break;
+            }
+        }
+    }
+    public static void disconnectWebUser(String ip){
+        for(int i = 1; i < clientTable.getRowCount(); i++){
+            if(clientTable.getValueAt(i,1).equals(ip)){
+                clientTable.setValueAt("disconnected",i,2);
             }
         }
     }

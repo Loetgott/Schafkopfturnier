@@ -3,6 +3,7 @@ public class Main {
         System.out.println("running the Program...");
         Gui gui = new Gui();
         Terminal terminal = new Terminal();
+        Server server = new Server();
         while(true){
             terminal.checkForInput();
         }

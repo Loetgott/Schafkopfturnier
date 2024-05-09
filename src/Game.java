@@ -1,3 +1,4 @@
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Collections;
@@ -11,6 +12,7 @@ public class Game {
     public static final String YELLOW = "\u001B[33m";
     public static XMLMaker xmlMaker = new XMLMaker();
     public static int round;
+    public static ArrayList<WebUser> webUserList = new ArrayList<>();
     public Game() {
         xmlMaker = new XMLMaker();
     }
@@ -134,6 +136,20 @@ public class Game {
             }
         }
         return notChangedPlayersList;
+    }
+    public static void connectNewUser(WebUser webUser){
+        if(!webUserList.contains(webUser)){
+            webUserList.add(webUser);
+        }
+        Gui.connectWebUser(webUser);
+    }
+    public static void giveWebUserName(String ip, String name){
+        for(int i = 0; i < webUserList.size(); i++){
+            if(Objects.equals(webUserList.get(i).getIp(), ip)){
+                webUserList.get(i).setName(name);
+            }
+        }
+        Gui.giveWebUserName(ip, name);
     }
 
     public static void setPointsTisch(Tisch tisch, int pP0, int pP1, int pP2, int pP3){
