@@ -5,6 +5,9 @@ import java.awt.event.*;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Objects;
+import javax.swing.*;
+import java.awt.*;
+import java.util.ArrayList;
 
 import com.formdev.flatlaf.*;
 import org.jetbrains.annotations.NotNull;
@@ -18,11 +21,8 @@ public class Gui {
     public static JList<String> configTischList = new JList<>(configTischlistModel);
     public static DefaultListModel<String> configTischPlayerListModel = new DefaultListModel<>();
     public static JList<String> configTischPlayerList = new JList<>(configTischPlayerListModel);
+    public static JTable clientTable = new JTable(10,3);
     static JTable leaderboardTable = new JTable(10,3);
-    public static final String RESET = "\u001B[0m";
-    public static final String RED = "\u001B[31m";
-    public static final String GREEN = "\u001B[32m";
-    public static final String YELLOW = "\u001B[33m";
     public static ArrayList<JTisch> tischList = new ArrayList<>();
     public static JLabel leaderboardLabel = new JLabel("<html><u>Leaderboard:</u></html>");
     public static String backupPath = "C:/Users/nnaml/OneDrive/Schule/P-Seminar-Schafkopfen/";
@@ -136,7 +136,7 @@ public class Gui {
         mainFrame.add(mainPanel);
         mainFrame.setLocation(GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()[0].getDefaultConfiguration().getBounds().getLocation());
         mainFrame.setVisible(true);
-        System.out.println(GREEN + "mainFrame generated" + RESET);
+        System.out.println(Game.GREEN + "mainFrame generated" + Game.RESET);
 
         //ab hier alles configFrame
         JFrame configFrame = new JFrame("");
@@ -148,9 +148,11 @@ public class Gui {
         JPanel mainTab = new JPanel();
         JPanel playerTab = new JPanel(new BorderLayout());
         JPanel tischTab = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        JPanel serverPanel = new JPanel(new GridBagLayout());
         tabbedPane.addTab("Allgemein", mainTab);
         tabbedPane.addTab("Spieler", playerTab);
         tabbedPane.addTab("Tische", tischTab);
+        tabbedPane.addTab("Server", serverPanel);
         configFrame.add(tabbedPane);
 
         //ab hier alles Player Panel
@@ -427,6 +429,11 @@ public class Gui {
                 pointsTextField.setText(String.valueOf(Objects.requireNonNull(changePlayer).getPoints()));
                 newPointsTextField.setText("");
                 changePanel.requestFocusInWindow();
+                //for(Player player : changePlayer.getTisch().getPlayerList()){
+                //    if(changePlayer.getRoundPoints() == player.getRoundPoints() && changePlayer != player){
+                //        configTischPlayerList.add((new ImageIcon("C:\\Users\\nnaml\\IdeaProjects\\Schafkopfturnier\\src\\list.png"),0);
+                //    }
+                //}
             }
         });
         changePlayerPointsPanel.add(changePointsButton,gbc);
@@ -546,7 +553,7 @@ public class Gui {
                     tischChangeFrame.setVisible(true);
             }else if(! newTischTextField.getText().isEmpty()){
                 if(Integer.parseInt(newTischTextField.getText()) - 1 >= Game.tischList.size()) {
-                    System.out.println(RED + "tisch number is too big!" + RESET);
+                    System.out.println(Game.RED + "tisch number is too big!" + Game.RESET);
                 }
             }
             }
@@ -636,7 +643,7 @@ public class Gui {
                     tischChangeFrame.setVisible(true);
                 }else if(! newTischTextField.getText().isEmpty()){
                     if(Integer.parseInt(newTischTextField.getText()) - 1 >= Game.tischList.size()) {
-                        System.out.println(RED + "tisch number is too big!" + RESET);
+                        System.out.println(Game.RED + "tisch number is too big!" + Game.RESET);
                     }
                 }
             }
@@ -782,7 +789,7 @@ public class Gui {
                     gbc.anchor = GridBagConstraints.CENTER;
                     textPanel.add(new JLabel("Folgende Spieler haben keine neuen Punkte. wirklich nächste Runde beginnen?"),gbc);
                     JMenuBar playerBar = new JMenuBar();
-                    JMenu playerMenu = new JMenu("Tauschspieler");
+                    JMenu playerMenu = new JMenu("Spieler");
                     ArrayList<Player> changePlayerList = Game.nextRoundChangedPlayers();
                     final Player[] changePlayer2 = new Player[1];
                     for (Player player : changePlayerList) {
@@ -790,8 +797,7 @@ public class Gui {
                         playerItem.addMouseListener(new MouseAdapter() {
                             @Override
                             public void mouseReleased(MouseEvent e){
-                                changePlayer2[0] = player;
-                                playerMenu.setText(player.getVorname() + " " + player.getNachname());
+
                             }
                         });
                         playerMenu.add(playerItem);
@@ -946,6 +952,7 @@ public class Gui {
         configTischPlayerList.addListSelectionListener(e -> {
             if(!configTischPlayerList.isSelectionEmpty()){
                 changePlayer = Game.getPlayer(configTischPlayerList.getSelectedValue().split(" ")[0],configTischPlayerList.getSelectedValue().split(" ")[1]);
+                assert changePlayer != null;
                 changeVornameTextField.setText(changePlayer.getVorname());
                 changeNachnameTextField.setText(changePlayer.getNachname());
                 pointsTextField.setText(String.valueOf(Objects.requireNonNull(changePlayer).getPoints()));
@@ -968,7 +975,6 @@ public class Gui {
         tischIcon.setImage(tischIcon.getImage().getScaledInstance(20,20, Image.SCALE_SMOOTH));
         tabbedPane.setIconAt(2,tischIcon);
 
-
         tabbedPane.addChangeListener(e -> {
             if(tabbedPane.getSelectedIndex() == 1){
                 playerPanel.add(changePanel);
@@ -976,10 +982,22 @@ public class Gui {
                 tischConfigPanel.add(changePanel);
             }
         });
+        clientTable.setBackground(configFrame.getBackground());
+        clientTable.setForeground(new Color(186, 186, 186));
+        clientTable.setGridColor(new Color(186,186,186));
+        clientTable.setRowHeight(40);
+        clientTable.getColumnModel().getColumn(0).setPreferredWidth(230);
+        clientTable.getColumnModel().getColumn(1).setPreferredWidth(180);
+        clientTable.getColumnModel().getColumn(2).setPreferredWidth(150);
+        clientTable.setFont(new Font(configPlayerList.getFont().getName(),tischPlayerListPanel.getFont().getStyle(),23));
+        clientTable.setValueAt("Name",0,0);
+        clientTable.setValueAt("IP",0,1);
+        clientTable.setValueAt("Status",0,2);
+        serverPanel.add(clientTable);
         configFrame.add(new JLabel("©Lötgott & Sesamoel all rights reserved"),BorderLayout.SOUTH);
         configFrame.setLocationRelativeTo(null);
         configFrame.setVisible(true);
-        System.out.println(GREEN + "configFrame generated!" + RESET);
+        System.out.println(Game.GREEN + "configFrame generated!" + Game.RESET);
     }
 
     public static void addPlayerToList(@NotNull Player nPlayer){
@@ -991,13 +1009,13 @@ public class Gui {
         if (index != -1) {
             configPlayerListModel.setElementAt(newVorname + " " + newNachname, index);
             oldPlayer.setName(newVorname, newNachname);
-            System.out.println(GREEN + "Der Name des Spielers " + oldName + " wurde zu " + newVorname + " " + newNachname +" geändert");
+            System.out.println(Game.GREEN + "Der Name des Spielers " + oldName + " wurde zu " + newVorname + " " + newNachname +" geändert");
         }
         index = configTischPlayerListModel.indexOf(oldName);
         if (index != -1) {
             configTischPlayerListModel.setElementAt(newVorname + " " + newNachname, index);
             oldPlayer.setName(newVorname, newNachname);
-            System.out.println(GREEN + "Der Name des Spielers " + oldName + " wurde zu " + newVorname + " " + newNachname +" geändert");
+            System.out.println(Game.GREEN + "Der Name des Spielers " + oldName + " wurde zu " + newVorname + " " + newNachname +" geändert");
         }
     }
     public static void updateLeaderboard(ArrayList<Player> playerlist){
@@ -1009,7 +1027,7 @@ public class Gui {
                 leaderboardTable.setValueAt(playerlist.get(i).getPoints(),i,2);
             }
         }
-        System.out.println(YELLOW + "updated the leaderboard" + RESET);
+        System.out.println(Game.YELLOW + "updated the leaderboard" + Game.RESET);
     }
     public static void updateTisch(ArrayList<Tisch> tische){
         for(int i = 0; i < tische.size(); i ++){

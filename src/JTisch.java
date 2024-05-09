@@ -38,7 +38,7 @@ public class JTisch extends JComponent {
             FontMetrics fm = g.getFontMetrics();
             int stringWidth = fm.stringWidth("Tisch " + name);
             int x = (width - stringWidth) / 2;
-            g.drawString("Tisch " + name, x, 30); // Vertikale Position in der Mitte der Höhe
+            g.drawString("Tisch " + name, x, 30);
         }
         add(table);
         table.setBounds(15, 50, 300, 140);

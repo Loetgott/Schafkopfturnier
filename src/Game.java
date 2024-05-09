@@ -9,7 +9,6 @@ public class Game {
     public static final String RED = "\u001B[31m";
     public static final String GREEN = "\u001B[32m";
     public static final String YELLOW = "\u001B[33m";
-    public static final String WHITE = "\u001B[37m";
     public static XMLMaker xmlMaker = new XMLMaker();
     public static int round;
     public Game() {
@@ -131,6 +130,7 @@ public class Game {
                 player.nextRound();
             }else{
                 notChangedPlayersList.add(player);
+                System.out.println(player.getName());
             }
         }
         return notChangedPlayersList;

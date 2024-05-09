@@ -9,12 +9,28 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bdf4d30b-1150-4e01-8031-276c41c2ea01" name="Changes" comment="mehrere versionen von runden">
-      <change afterPath="$PROJECT_DIR$/src/screen.png" afterDir="false" />
+    <list default="true" id="bdf4d30b-1150-4e01-8031-276c41c2ea01" name="Changes" comment="neues Bilschirmwechesel menü">
+      <change afterPath="$PROJECT_DIR$/src/ServerTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/icons/updating.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/webUser.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Game.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Gui.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Gui.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/JTisch.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/JTisch.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/XMLMaker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/XMLMaker.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/JavaServer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/export.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/icons/export.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/folder.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/icons/folder.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/image sources" beforeDir="false" afterPath="$PROJECT_DIR$/src/icons/image sources" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/import.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/icons/import.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/list.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/icons/list.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/next.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/icons/next.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/people.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/icons/people.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/population.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/icons/population.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screen.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/icons/screen.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/table.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/icons/table.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/updating.png" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,6 +70,7 @@
     &quot;Application.JavaServer.executor&quot;: &quot;Run&quot;,
     &quot;Application.Main.executor&quot;: &quot;Run&quot;,
     &quot;Application.MultiplePanelsExample.executor&quot;: &quot;Run&quot;,
+    &quot;Application.ServerTest.executor&quot;: &quot;Run&quot;,
     &quot;Application.Unnamed.executor&quot;: &quot;Run&quot;,
     &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
     &quot;Downloaded.Files.Path.Enabled&quot;: &quot;true&quot;,
@@ -81,6 +98,7 @@
       <recent name="C:\Users\nnaml\IdeaProjects\Schafkopfturnier" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\nnaml\IdeaProjects\Schafkopfturnier\src\icons" />
       <recent name="C:\Users\nnaml\IdeaProjects\Schafkopfturnier\src" />
       <recent name="C:\Users\nnaml\IdeaProjects\Schafkopfturnier\pictures" />
     </key>
@@ -114,12 +132,20 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="ServerTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="ServerTest" />
+      <module name="Schafkopfturnier" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="flatlaf-3.4.jar" type="JarApplication" temporary="true">
       <option name="JAR_PATH" value="$PROJECT_DIR$/flatlaf-3.4.jar" />
       <method v="2" />
     </configuration>
     <list>
       <item itemvalue="Application.Main" />
+      <item itemvalue="Application.ServerTest" />
       <item itemvalue="Application.Gui" />
       <item itemvalue="Application.JavaServer" />
       <item itemvalue="Application.MultiplePanelsExample" />
@@ -127,6 +153,7 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.ServerTest" />
         <item itemvalue="Application.JavaServer" />
         <item itemvalue="Application.MultiplePanelsExample" />
         <item itemvalue="JAR Application.flatlaf-3.4.jar" />
@@ -149,14 +176,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1712598295900</updated>
-    </task>
-    <task id="LOCAL-00007" summary="updated color &amp; menu bar">
-      <option name="closed" value="true" />
-      <created>1712772202066</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1712772202066</updated>
     </task>
     <task id="LOCAL-00008" summary="erste Tisch versuche">
       <option name="closed" value="true" />
@@ -542,7 +561,15 @@
       <option name="project" value="LOCAL" />
       <updated>1714311687055</updated>
     </task>
-    <option name="localTasksCounter" value="56" />
+    <task id="LOCAL-00056" summary="neues Bilschirmwechesel menü">
+      <option name="closed" value="true" />
+      <created>1714413069969</created>
+      <option name="number" value="00056" />
+      <option name="presentableId" value="LOCAL-00056" />
+      <option name="project" value="LOCAL" />
+      <updated>1714413069970</updated>
+    </task>
+    <option name="localTasksCounter" value="57" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -558,7 +585,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="p Seminar vorbei" />
     <MESSAGE value="confirmationFrame bei changePoints" />
     <MESSAGE value="tisch taushc anfang" />
     <MESSAGE value="tisch tauschen geht jetzt" />
@@ -583,6 +609,7 @@
     <MESSAGE value="icond für die verschiedenen menüs" />
     <MESSAGE value="standart dateipfad" />
     <MESSAGE value="mehrere versionen von runden" />
-    <option name="LAST_COMMIT_MESSAGE" value="mehrere versionen von runden" />
+    <MESSAGE value="neues Bilschirmwechesel menü" />
+    <option name="LAST_COMMIT_MESSAGE" value="neues Bilschirmwechesel menü" />
   </component>
 </project>

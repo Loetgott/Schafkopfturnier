@@ -46,7 +46,6 @@ public class Player implements Comparable<Player> {
         return steigtAuf;}
 
     public void setPoints(int points) {
-        hasRoundPoints = true;
         this.points = points;}
 
     public void setTisch(Tisch nTisch) {
