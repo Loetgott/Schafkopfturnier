@@ -65,17 +65,34 @@ public class Server {
 
                         break;
                     case "getTische":
-
+                            input.remove(0);
+                            if(!input.isEmpty()){
+                                int tischNumber = Integer.parseInt(input.get(0));
+                                System.out.println("Tisch " + tischNumber + " ausgewählt!");
+                                StringBuilder response = new StringBuilder("");
+                                response.append(Game.tischList.get(tischNumber - 1).playerList.get(0).getName()[0]).append(" ").append(Game.tischList.get(tischNumber - 1).playerList.get(0).getName()[1].charAt(0)).append(".");
+                                response.append(";");
+                                response.append(Game.tischList.get(tischNumber - 1).playerList.get(1).getName()[0]).append(" ").append(Game.tischList.get(tischNumber - 1).playerList.get(1).getName()[1].charAt(0)).append(".");
+                                response.append(";");
+                                response.append(Game.tischList.get(tischNumber - 1).playerList.get(2).getName()[0]).append(" ").append(Game.tischList.get(tischNumber - 1).playerList.get(2).getName()[1].charAt(0)).append(".");
+                                response.append(";");
+                                response.append(Game.tischList.get(tischNumber - 1).playerList.get(3).getName()[0]).append(" ").append(Game.tischList.get(tischNumber - 1).playerList.get(3).getName()[1].charAt(0)).append(".");
+                                response.append(";");
+                                exchange.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
+                                exchange.sendResponseHeaders(200, response.toString().getBytes().length); // Setze den HTTP-Statuscode und die Länge der Antwort
+                                exchange.getResponseBody().write(response.toString().getBytes());
+                                exchange.getResponseBody().close();
+                            }
                         break;
 
                 }
 
                 // Sende eine Bestätigungsnachricht an den Client
-                String response = "Text empfangen: " + text;
-                exchange.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
-                exchange.sendResponseHeaders(200, response.getBytes().length); // Setze den HTTP-Statuscode und die Länge der Antwort
-                exchange.getResponseBody().write(response.getBytes());
-                exchange.getResponseBody().close();
+                //String response = "Text empfangen: " + text;
+                //exchange.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
+                //exchange.sendResponseHeaders(200, response.getBytes().length); // Setze den HTTP-Statuscode und die Länge der Antwort
+                //exchange.getResponseBody().write(response.getBytes());
+                //exchange.getResponseBody().close();
             } else {
                 System.out.println("Ungültige Anfrage-Methode: " + exchange.getRequestMethod()); // Ausgabe in der Konsole für Debug-Zwecke
             }

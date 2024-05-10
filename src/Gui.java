@@ -1056,9 +1056,7 @@ public class Gui {
     }
     public static void giveWebUserName(String ip, String name){
         for(int i = 1; i < clientTable.getRowCount(); i++){
-            System.out.println(clientTable.getValueAt(i,1) + " | " + ip);
             if(clientTable.getValueAt(i,1).equals(ip)){
-                System.out.println(clientTable.getValueAt(i,1) + " " + ip);
                 clientTable.setValueAt(name,i,0);
                 break;
             }

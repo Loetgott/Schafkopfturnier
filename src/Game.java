@@ -132,7 +132,6 @@ public class Game {
                 player.nextRound();
             }else{
                 notChangedPlayersList.add(player);
-                System.out.println(player.getName());
             }
         }
         return notChangedPlayersList;
