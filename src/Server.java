@@ -3,6 +3,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Objects;
 
 import com.sun.net.httpserver.HttpServer;
 import com.sun.net.httpserver.HttpHandler;
@@ -34,14 +35,12 @@ public class Server {
                 exchange.getResponseHeaders().add("Access-Control-Allow-Headers", "Content-Type,Authorization");
                 exchange.sendResponseHeaders(204, -1);
             } else if (exchange.getRequestMethod().equalsIgnoreCase("POST")) {
-                //System.out.println("POST-Anfrage empfangen!"); // Ausgabe in der Konsole für Debug-Zwecke
+                System.out.println("POST-Anfrage empfangen!"); // Ausgabe in der Konsole für Debug-Zwecke
                 // Lese den Text aus dem Request-Body
                 InputStreamReader isr = new InputStreamReader(exchange.getRequestBody(), "utf-8");
                 BufferedReader br = new BufferedReader(isr);
                 String text = br.readLine();
-                // Gib den empfangenen Text in der Konsole aus
                 String clientIP = exchange.getRemoteAddress().getAddress().getHostAddress();
-                System.out.println("Empfangener Text: " + text);
                 ArrayList<String> input = new ArrayList<>(Arrays.asList(text.split(" ")));
                 switch(input.get(0)){
                     case "aufgerufen":
@@ -65,26 +64,68 @@ public class Server {
 
                         break;
                     case "getTische":
+                        input.remove(0);
+                        if(!input.isEmpty()){
+                            int tischNumber = Integer.parseInt(input.get(0));
+                            StringBuilder response = new StringBuilder("");
+                            response.append(Game.tischList.get(tischNumber - 1).playerList.get(0).getName()[0]).append(" ").append(Game.tischList.get(tischNumber - 1).playerList.get(0).getName()[1].charAt(0)).append(".");
+                            response.append(";");
+                            response.append(Game.tischList.get(tischNumber - 1).playerList.get(1).getName()[0]).append(" ").append(Game.tischList.get(tischNumber - 1).playerList.get(1).getName()[1].charAt(0)).append(".");
+                            response.append(";");
+                            response.append(Game.tischList.get(tischNumber - 1).playerList.get(2).getName()[0]).append(" ").append(Game.tischList.get(tischNumber - 1).playerList.get(2).getName()[1].charAt(0)).append(".");
+                            response.append(";");
+                            response.append(Game.tischList.get(tischNumber - 1).playerList.get(3).getName()[0]).append(" ").append(Game.tischList.get(tischNumber - 1).playerList.get(3).getName()[1].charAt(0)).append(".");
+                            response.append(";");
+
+                            response.append(Game.tischList.get(tischNumber - 1).playerList.get(0).getPoints());
+                            response.append(";");
+                            response.append(Game.tischList.get(tischNumber - 1).playerList.get(1).getPoints());
+                            response.append(";");
+                            response.append(Game.tischList.get(tischNumber - 1).playerList.get(2).getPoints());
+                            response.append(";");
+                            response.append(Game.tischList.get(tischNumber - 1).playerList.get(3).getPoints());
+                            response.append(";");
+                            exchange.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
+                            exchange.sendResponseHeaders(200, response.toString().getBytes().length); // Setze den HTTP-Statuscode und die Länge der Antwort
+                            exchange.getResponseBody().write(response.toString().getBytes());
+                            exchange.getResponseBody().close();
+                        }
+                        break;
+                    case "setPoints":
+                        input.remove(0);
+                        if(!input.isEmpty()){
+                            int tischNumber = Integer.parseInt(input.get(0));
                             input.remove(0);
                             if(!input.isEmpty()){
-                                int tischNumber = Integer.parseInt(input.get(0));
-                                System.out.println("Tisch " + tischNumber + " ausgewählt!");
-                                StringBuilder response = new StringBuilder("");
-                                response.append(Game.tischList.get(tischNumber - 1).playerList.get(0).getName()[0]).append(" ").append(Game.tischList.get(tischNumber - 1).playerList.get(0).getName()[1].charAt(0)).append(".");
-                                response.append(";");
-                                response.append(Game.tischList.get(tischNumber - 1).playerList.get(1).getName()[0]).append(" ").append(Game.tischList.get(tischNumber - 1).playerList.get(1).getName()[1].charAt(0)).append(".");
-                                response.append(";");
-                                response.append(Game.tischList.get(tischNumber - 1).playerList.get(2).getName()[0]).append(" ").append(Game.tischList.get(tischNumber - 1).playerList.get(2).getName()[1].charAt(0)).append(".");
-                                response.append(";");
-                                response.append(Game.tischList.get(tischNumber - 1).playerList.get(3).getName()[0]).append(" ").append(Game.tischList.get(tischNumber - 1).playerList.get(3).getName()[1].charAt(0)).append(".");
-                                response.append(";");
-                                exchange.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
-                                exchange.sendResponseHeaders(200, response.toString().getBytes().length); // Setze den HTTP-Statuscode und die Länge der Antwort
-                                exchange.getResponseBody().write(response.toString().getBytes());
-                                exchange.getResponseBody().close();
+                                String vorname = input.get(0);
+                                input.remove(0);
+                                if(!input.isEmpty()){
+                                    String nachname = input.get(0);
+                                    input.remove(0);
+                                    if(!input.isEmpty()){
+                                        System.out.println(vorname + " " + nachname);
+                                        for(int i = 0; i < Game.tischList.get(tischNumber - 1).playerList.size(); i++){
+                                            if(Objects.equals(Game.tischList.get(tischNumber - 1).playerList.get(i).getName()[0], vorname) && Game.tischList.get(tischNumber - 1).playerList.get(i).getName()[1].charAt(0) == nachname.charAt(0)){
+                                                System.out.println("spieler gefunden!");
+                                                Objects.requireNonNull(Game.getPlayer(Game.tischList.get(tischNumber - 1).playerList.get(i).getVorname(), Game.tischList.get(tischNumber - 1).playerList.get(i).getNachname())).addRoundPoints(Integer.parseInt(input.get(0)));
+                                                StringBuilder response = new StringBuilder("");
+                                                response.append(vorname).append(";");
+                                                response.append(nachname).append(";");
+                                                response.append(input.get(0));
+                                                exchange.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
+                                                exchange.sendResponseHeaders(200, response.toString().getBytes().length); // Setze den HTTP-Statuscode und die Länge der Antwort
+                                                exchange.getResponseBody().write(response.toString().getBytes());
+                                                exchange.getResponseBody().close();
+                                            }
+                                        }
+                                    }
+                                }
                             }
+                        }
                         break;
-
+                    default:
+                        System.out.println(Game.RED + "unbekannte Anfrage vom Server! bitte prüfen");
+                        System.out.println(input.get(0)  + Game.RESET);
                 }
 
                 // Sende eine Bestätigungsnachricht an den Client
