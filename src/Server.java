@@ -35,7 +35,7 @@ public class Server {
                 exchange.getResponseHeaders().add("Access-Control-Allow-Headers", "Content-Type,Authorization");
                 exchange.sendResponseHeaders(204, -1);
             } else if (exchange.getRequestMethod().equalsIgnoreCase("POST")) {
-                System.out.println("POST-Anfrage empfangen!"); // Ausgabe in der Konsole für Debug-Zwecke
+                //System.out.println("POST-Anfrage empfangen!"); // Ausgabe in der Konsole für Debug-Zwecke
                 // Lese den Text aus dem Request-Body
                 InputStreamReader isr = new InputStreamReader(exchange.getRequestBody(), "utf-8");
                 BufferedReader br = new BufferedReader(isr);
@@ -48,7 +48,7 @@ public class Server {
                         input.clear();
                         break;
                     case "name":
-                        System.out.println("Namenswechsel beantragt");
+                        //System.out.println("Namenswechsel beantragt");
                         input.remove(0);
                         if(!input.isEmpty()){
                             String vorname = input.get(0);
