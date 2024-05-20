@@ -172,6 +172,14 @@ public class Game {
             }
         }
     }
+    public static WebUser getWebUser(String ip){
+        for(int i = 0; i < webUserList.size(); i++){
+            if(Objects.equals(webUserList.get(i).ip, ip)){
+                return webUserList.get(i);
+            }
+        }
+        return null;
+    }
 
     public static void nextRound() {
         xmlMaker.nextRound();

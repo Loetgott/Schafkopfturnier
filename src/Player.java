@@ -57,7 +57,7 @@ public class Player implements Comparable<Player> {
     }
 
     public void addRoundPoints(int nRoundPoints) {
-        System.out.println(vorname + " " + nachname + " hat " + nRoundPoints + " bekommen!");
+        //System.out.println(vorname + " " + nachname + " hat " + nRoundPoints + " bekommen!");
         hasRoundPoints = true;
         roundPoints = roundPoints + nRoundPoints;
 

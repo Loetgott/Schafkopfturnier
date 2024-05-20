@@ -134,9 +134,12 @@ public class Gui {
         mainFrame.setLocation(GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()[0].getDefaultConfiguration().getBounds().getLocation());
         mainFrame.setVisible(true);
         System.out.println(Game.GREEN + "mainFrame generated" + Game.RESET);
+        ImageIcon frameIcon = new ImageIcon("C:\\Users\\nnaml\\Downloads\\schafkopf-clipart-17.jpg");
+        mainFrame.setIconImage(frameIcon.getImage());
 
         //ab hier alles configFrame
         JFrame configFrame = new JFrame("");
+        configFrame.setIconImage(frameIcon.getImage());
         configFrame.setUndecorated(false);
         configFrame.setSize(new Dimension(800, 600));
         configFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
