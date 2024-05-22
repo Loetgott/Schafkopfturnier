@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Player implements Comparable<Player> {
     String nachname;
     String vorname;
@@ -6,6 +8,7 @@ public class Player implements Comparable<Player> {
     int roundPoints;
     public boolean hasRoundPoints = false;
     public boolean steigtAuf;
+    public boolean nextTischSet;
 
     public Player(String vorname, String nachname) {
         this.nachname = nachname;
@@ -31,7 +34,7 @@ public class Player implements Comparable<Player> {
     }
 
     public int getPoints() {
-        return points + roundPoints;
+        return points;
     }
 
     public int getOldPoints() {
@@ -58,11 +61,12 @@ public class Player implements Comparable<Player> {
 
     public void addRoundPoints(int nRoundPoints) {
         //System.out.println(vorname + " " + nachname + " hat " + nRoundPoints + " bekommen!");
+        nextTischSet = false;
+        steigtAuf = false;
         hasRoundPoints = true;
         roundPoints = roundPoints + nRoundPoints;
-
+        tisch.sortPlayers();
     }
-
     public void setSteigtAuf(boolean x) {
         steigtAuf = x;
     }
@@ -71,6 +75,19 @@ public class Player implements Comparable<Player> {
         hasRoundPoints = false;
         points = points + roundPoints;
         roundPoints = 0;
+        if(steigtAuf){
+            if(Game.tischList.indexOf(tisch) != Game.tischList.size() - 1){
+                tisch = Game.tischList.get(Game.tischList.indexOf(tisch) + 1);
+            }else{
+                tisch = Game.tischList.get(0);
+            }
+        }else{
+            if(Game.tischList.indexOf(tisch) != 0){
+                tisch = Game.tischList.get(Game.tischList.indexOf(tisch) - 1);
+            }else{
+                tisch = Game.tischList.get(Game.tischList.size() - 1);
+            }
+        }
     }
 
     @Override

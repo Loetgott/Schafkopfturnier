@@ -6,6 +6,7 @@ import java.util.Collections;
 public class Game {
     public static ArrayList<Player> playerList = new ArrayList<>();
     public static ArrayList<Tisch> tischList = new ArrayList<>();
+    public static ArrayList<ArrayList<Player>> equalPlayerlist = new ArrayList<>();
     public static final String RESET = "\u001B[0m";
     public static final String RED = "\u001B[31m";
     public static final String GREEN = "\u001B[32m";
@@ -83,17 +84,16 @@ public class Game {
             }
             System.out.println(RED + "Nicht genug Spieler! " + newPlayerCount + " Platzhalter hinzugefügt. Bitte umbenennen!" + RESET);
         }
-        Collections.shuffle(playerList);//playerList mischen
-        for(int i = 0; i < playerList.size() / 4 ; i++){//Tische hinzufügen
+        Collections.shuffle(playerList);
+        for(int i = 0; i < playerList.size() / 4 ; i++){
             Tisch nTisch = new Tisch(i + 1);
             for(int ii = 0; ii < 4 ; ii++){
                 nTisch.playerList.add(playerList.get(i * 4 + ii));
                 playerList.get(i * 4 + ii).setTisch(nTisch);
             }
             tischList.add(nTisch);
+            equalPlayerlist.add(new ArrayList<>());
         }
-
-
     }
     public static void saveBackup(String path){
         xmlMaker.saveBackup(tischList,path);
@@ -128,9 +128,7 @@ public class Game {
     public static ArrayList<Player> nextRoundChangedPlayers(){
         ArrayList<Player> notChangedPlayersList = new ArrayList<>();
         for(Player player : playerList){
-            if(player.hasRoundPoints == true){
-                player.nextRound();
-            }else{
+            if(!player.hasRoundPoints){
                 notChangedPlayersList.add(player);
             }
         }
@@ -182,6 +180,49 @@ public class Game {
     }
 
     public static void nextRound() {
+        for (Player player : playerList) {
+            player.nextRound();
+        }
+        ArrayList<Tisch> tempTischList = new ArrayList<>();
+        for(int i = 0; i < tischList.size(); i++){
+            tempTischList.add(new Tisch(i + 1));
+        }
+        for(int i = 0; i < tischList.size(); i++){
+            if(i == 0){
+                for(int ii = 0; ii < tischList.get(i).playerList.size(); ii++){
+                    if(tischList.get(i).playerList.get(ii).steigtAuf){
+                        tempTischList.get(i + 1).playerList.add(tischList.get(i).playerList.get(ii));
+                    }else{
+                        tempTischList.get(tempTischList.size() - 1).playerList.add(tischList.get(i).playerList.get(ii));
+                    }
+                }
+            }else if(i == tischList.size() - 1){
+                for(int ii = 0; ii < tischList.get(i).playerList.size(); ii++){
+                    if(tischList.get(i).playerList.get(ii).steigtAuf){
+                        tempTischList.get(i + 1).playerList.add(tischList.get(i).playerList.get(ii));
+                    }else{
+                        tempTischList.get(i - 1).playerList.add(tischList.get(i).playerList.get(ii));
+                    }
+                }
+            }else{
+                for(int ii = 0; ii < tischList.get(i).playerList.size(); ii++){
+                    if(tischList.get(i).playerList.get(ii).steigtAuf){
+                        tempTischList.get(0).playerList.add(tischList.get(i).playerList.get(ii));
+                    }else{
+                        tempTischList.get(i - 1).playerList.add(tischList.get(i).playerList.get(ii));
+                    }
+                }
+            }
+        }
+        boolean nextRoundSuccesful = true;
+        for(int i = 0; i < tempTischList.size(); i++){
+            if(tempTischList.get(i).playerList.size() != 4){
+                nextRoundSuccesful = false;
+            }
+        }
+        if(nextRoundSuccesful){
+            tischList = tempTischList;
+        }
         xmlMaker.nextRound();
         round ++;
     }

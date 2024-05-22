@@ -164,8 +164,8 @@ public class Gui {
         JPanel changePlayerNamePanel = new JPanel(new GridBagLayout());
         JPanel changePlayerPointsPanel = new JPanel(new GridBagLayout());
         JPanel changePlayerTischPanel = new JPanel(new GridBagLayout());
+        JPanel changePlayerNextRoundPanel = new JPanel(new GridBagLayout());
         changePlayerPointsPanel.setVisible(true);
-
 
         gbc.gridx = 0;
         gbc.gridy = 0;
@@ -299,9 +299,9 @@ public class Gui {
         gbc.gridx = 0;
         gbc.gridy = 0;
         changePlayerNamePanel.setVisible(true);
-        changePlayerNamePanel.add(new JLabel("neuer Vorname"),gbc);
+        changePlayerNamePanel.add(new JLabel("Vorname"),gbc);
         gbc.gridx ++;
-        changePlayerNamePanel.add(new JLabel("neuer Nachname"),gbc);
+        changePlayerNamePanel.add(new JLabel("Nachname"),gbc);
         gbc.gridy ++;
         gbc.gridx = 0;
         changePlayerNamePanel.add(changeVornameTextField,gbc);
@@ -315,7 +315,7 @@ public class Gui {
         JLabel pointsLabel = new JLabel("Punktestand");
         changePlayerPointsPanel.add(pointsLabel, gbc);
         gbc.gridx ++;
-        JLabel newPointsLabel = new JLabel("neue Punkte");
+        JLabel newPointsLabel = new JLabel("Rundenpunkte");
         changePlayerPointsPanel.add(newPointsLabel, gbc);
         gbc.gridx = 0;
         gbc.gridy ++;
@@ -402,7 +402,6 @@ public class Gui {
                     if(!pointsTextField.getText().isBlank()){
                         Game.addPlayerPoints(Objects.requireNonNull(changePlayer),Integer.parseInt(newPointsTextField.getText()));
                         pointsTextField.setText(String.valueOf(Objects.requireNonNull(changePlayer).getPoints()));
-                        newPointsTextField.setText("");
                         changePanel.requestFocusInWindow();
 
                     }
@@ -426,8 +425,7 @@ public class Gui {
             @Override
             public void mouseClicked(MouseEvent e) {
                 Game.addPlayerPoints(Objects.requireNonNull(changePlayer),Integer.parseInt(newPointsTextField.getText()));
-                pointsTextField.setText(String.valueOf(Objects.requireNonNull(changePlayer).getPoints()));
-                newPointsTextField.setText("");
+                //pointsTextField.setText(String.valueOf(Objects.requireNonNull(changePlayer).getPoints()));
                 changePanel.requestFocusInWindow();
                 //for(Player player : changePlayer.getTisch().getPlayerList()){
                 //    if(changePlayer.getRoundPoints() == player.getRoundPoints() && changePlayer != player){
@@ -648,6 +646,18 @@ public class Gui {
                 }
             }
         });
+
+        gbc.gridx = 0;
+        gbc.gridy = 0 ;
+        changePlayerNextRoundPanel.add(new JLabel("nächster Tisch"),gbc);
+        gbc.gridy ++;
+        JTextField nextRoundTischTextField = new JTextField();
+        changePlayerNextRoundPanel.add(nextRoundTischTextField,gbc);
+        changePlayerNextRoundPanel.setVisible(true);
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        changePanel.add(changePlayerNextRoundPanel,gbc);
+
         configPlayerList.addListSelectionListener(e -> {
             if(!configPlayerList.isSelectionEmpty()){
                 changePlayer = Game.getPlayer(configPlayerList.getSelectedValue().split(" ")[0],configPlayerList.getSelectedValue().split(" ")[1]);
@@ -657,6 +667,22 @@ public class Gui {
                 changeVornameTextField.setText(changePlayer.getVorname());
                 changeNachnameTextField.setText(changePlayer.getNachname());
                 pointsTextField.setText(String.valueOf(Objects.requireNonNull(changePlayer).getPoints()));
+                if(changePlayer.steigtAuf && changePlayer.nextTischSet){
+                    if(changePlayer.tisch.number != Game.tischList.size()){
+                        nextRoundTischTextField.setText(String.valueOf(changePlayer.getTisch().getNumber() + 1));
+                    }else{
+                        nextRoundTischTextField.setText("1");
+                    }
+                }else if(changePlayer.nextTischSet){
+                    if(changePlayer.tisch.number != 1){
+                        nextRoundTischTextField.setText(String.valueOf(changePlayer.getTisch().getNumber() - 1));
+                    }else{
+                        nextRoundTischTextField.setText(String.valueOf(Game.tischList.size()));
+                    }
+                }else{
+                    nextRoundTischTextField.setText("N/A");
+                }
+                newPointsTextField.setText(String.valueOf((Objects.requireNonNull(changePlayer).getRoundPoints())));
                 if(changePlayer.getTisch() != null){
                     TischLabelNow.setText(changePlayer.getTisch().getName());
                     newTischTextField.setText(changePlayer.getTisch().getName());
@@ -956,6 +982,22 @@ public class Gui {
                 changeVornameTextField.setText(changePlayer.getVorname());
                 changeNachnameTextField.setText(changePlayer.getNachname());
                 pointsTextField.setText(String.valueOf(Objects.requireNonNull(changePlayer).getPoints()));
+                newPointsTextField.setText(String.valueOf((Objects.requireNonNull(changePlayer).getRoundPoints())));
+                if(changePlayer.steigtAuf && changePlayer.nextTischSet){
+                    if(changePlayer.tisch.number != Game.tischList.size()){
+                        nextRoundTischTextField.setText(String.valueOf(changePlayer.getTisch().getNumber() + 1));
+                    }else{
+                        nextRoundTischTextField.setText("1");
+                    }
+                }else if(changePlayer.nextTischSet){
+                    if(changePlayer.tisch.number != 1){
+                        nextRoundTischTextField.setText(String.valueOf(changePlayer.getTisch().getNumber() - 1));
+                    }else{
+                        nextRoundTischTextField.setText(String.valueOf(Game.tischList.size()));
+                    }
+                }else{
+                    nextRoundTischTextField.setText("N/A");
+                }
                 if(changePlayer.getTisch() != null){
                     TischLabelNow.setText(changePlayer.getTisch().getName());
                     newTischTextField.setText(changePlayer.getTisch().getName());
@@ -1071,5 +1113,77 @@ public class Gui {
                 clientTable.setValueAt("disconnected",i,2);
             }
         }
+    }
+
+    public static void showEqualPlayerWarning(Player p1, Player p2, Tisch tisch){
+        final String[] player = {" "};
+        JDialog playerEqualityFrame = new JDialog();
+        JMenuBar buttonBar = new JMenuBar();
+        JButton confirmButton = new JButton("weiter");
+        JButton denyButton = new JButton("abbrechen");
+        buttonBar.add(confirmButton);
+        buttonBar.add(denyButton);
+        buttonBar.setBorderPainted(false);
+        buttonBar.setBackground(playerEqualityFrame.getBackground());
+        buttonBar.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
+        playerEqualityFrame.add(buttonBar, BorderLayout.SOUTH);
+        playerEqualityFrame.setSize(new Dimension(250, 150));
+        JPanel textPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.anchor = GridBagConstraints.CENTER;
+        textPanel.add(new JLabel("Folgende Spieler haben gleiche Punkte:"),gbc);
+        gbc.gridy = 1;
+        textPanel.add(new JLabel("welcher soll aufsteigen?"),gbc);
+        JMenuBar playerBar = new JMenuBar();
+        JMenu playerMenuUp = new JMenu("Spieler");
+        JMenuItem player1Item = new JMenuItem(p1.getVorname() + " " + p1.getNachname());
+        JMenuItem player2Item = new JMenuItem(p2.getVorname() + " " + p2.getNachname());
+        playerMenuUp.add(player1Item);
+        playerMenuUp.add(player2Item);
+        playerMenuUp.setVisible(true);
+        player1Item.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                playerMenuUp.setText(player1Item.getText());
+            }
+        });
+        player2Item.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                playerMenuUp.setText(player2Item.getText());
+            }
+        });
+        confirmButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                Objects.requireNonNull(Game.getPlayer(playerMenuUp.getText().split(" ")[0], playerMenuUp.getText().split(" ")[1])).steigtAuf = true;
+                System.out.println(Objects.requireNonNull(Game.getPlayer(playerMenuUp.getText().split(" ")[0], playerMenuUp.getText().split(" ")[1])).getVorname() + " steigt auf");
+                Objects.requireNonNull(Game.getPlayer(playerMenuUp.getText().split(" ")[0], playerMenuUp.getText().split(" ")[1])).nextTischSet = true;
+                if(Objects.equals(playerMenuUp.getText().split(" ")[0], p1.getVorname()) && Objects.equals(playerMenuUp.getText().split(" ")[1], p1.getNachname())){
+                    Objects.requireNonNull(Game.getPlayer(p2.getVorname(), p2.getNachname())).nextTischSet = true;
+                    Objects.requireNonNull(Game.getPlayer(p2.getVorname(), p2.getNachname())).steigtAuf = false;
+                }else{
+                    Objects.requireNonNull(Game.getPlayer(p1.getVorname(), p1.getNachname())).nextTischSet = true;
+                    Objects.requireNonNull(Game.getPlayer(p1.getVorname(), p1.getNachname())).steigtAuf = false;
+                }
+                playerEqualityFrame.dispose();
+            }
+        });
+        denyButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                Objects.requireNonNull(Game.getPlayer(p1.getVorname(), p1.getNachname())).nextTischSet = false;
+                Objects.requireNonNull(Game.getPlayer(p2.getVorname(), p2.getNachname())).nextTischSet = false;
+                playerEqualityFrame.dispose();
+            }
+        });
+        gbc.gridy = 2;
+        gbc.gridx = 0;
+        playerBar.add(playerMenuUp);
+        textPanel.add(playerBar, gbc);
+        playerEqualityFrame.add(textPanel, BorderLayout.CENTER);
+        playerEqualityFrame.setVisible(true);
     }
 }

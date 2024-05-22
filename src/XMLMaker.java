@@ -73,6 +73,7 @@ public class XMLMaker {
             for (int i = 0; i < tischNodes.getLength(); i++) {
                 if (tischNodes.item(i) instanceof Element tisch) {
                     Game.tischList.add(new Tisch(Integer.parseInt(tisch.getAttribute("number"))));
+                    Game.equalPlayerlist.add(new ArrayList<>());
                     Gui.configTischlistModel.add(i,"Tisch " + tisch.getAttribute("number"));
                     NodeList playerNodes = tisch.getElementsByTagName("Player");
                     for (int ii = 0; ii < playerNodes.getLength(); ii++) {
