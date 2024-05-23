@@ -312,14 +312,37 @@ public class Gui {
         gbc.gridx = 0;
         gbc.gridy = 0;
         changePanel.add(changePlayerNamePanel,gbc);
-        JLabel pointsLabel = new JLabel("Punktestand");
-        changePlayerPointsPanel.add(pointsLabel, gbc);
+        changePlayerPointsPanel.add(new JLabel("Punktestand"), gbc);
         gbc.gridx ++;
-        JLabel newPointsLabel = new JLabel("Rundenpunkte");
-        changePlayerPointsPanel.add(newPointsLabel, gbc);
+        changePlayerPointsPanel.add(new JLabel("Rundenpunkte"), gbc);
+        gbc.gridx ++;
+        changePlayerPointsPanel.add(new JLabel("neue Punkte"),gbc);
         gbc.gridx = 0;
         gbc.gridy ++;
         JTextField pointsTextField = new JTextField();
+        pointsTextField.setPreferredSize(new Dimension(90,25));
+        changePlayerPointsPanel.add(pointsTextField,gbc);
+        gbc.gridx ++;
+        JTextField roundPointsTextField = new JTextField();
+        roundPointsTextField.setPreferredSize(new Dimension(90,25));
+        changePlayerPointsPanel.add(roundPointsTextField,gbc);
+        gbc.gridx ++;
+        JTextField newPointsTextField = new JTextField();
+        newPointsTextField.setPreferredSize(new Dimension(90,25));
+        changePlayerPointsPanel.add(newPointsTextField,gbc);
+
+        roundPointsTextField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                if(e.getKeyCode() == KeyEvent.VK_ENTER || e.getKeyCode() == KeyEvent.VK_SPACE){
+                    if(!pointsTextField.getText().isBlank()){
+                        Game.getPlayer(changePlayer.getVorname(), changePlayer.getNachname()).roundPoints = Integer.parseInt(roundPointsTextField.getText());
+                        pointsTextField.setText(String.valueOf(Objects.requireNonNull(changePlayer).getPoints()));
+                        changePanel.requestFocusInWindow();
+                    }
+                }
+            }
+        });
         pointsTextField.addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent e) {
@@ -391,25 +414,27 @@ public class Gui {
                 }
             }
         });
-        pointsTextField.setPreferredSize(new Dimension(90,25));
-        changePlayerPointsPanel.add(pointsTextField,gbc);
-        gbc.gridx ++;
-        JTextField newPointsTextField = new JTextField();
         newPointsTextField.addKeyListener(new KeyAdapter() {
             @Override
-            public void keyReleased(KeyEvent e) {
-                if(e.getKeyCode() == KeyEvent.VK_ENTER || e.getKeyCode() == KeyEvent.VK_SPACE){
-                    if(!pointsTextField.getText().isBlank()){
-                        Game.addPlayerPoints(Objects.requireNonNull(changePlayer),Integer.parseInt(newPointsTextField.getText()));
-                        pointsTextField.setText(String.valueOf(Objects.requireNonNull(changePlayer).getPoints()));
-                        changePanel.requestFocusInWindow();
-
-                    }
+            public void keyTyped(KeyEvent e) {
+                char c = e.getKeyChar();
+                if (!(Character.isDigit(c) || (c == KeyEvent.VK_DELETE) || (c == '-') || (c == '+'))) {
+                    e.consume();
                 }
             }
         });
-        newPointsTextField.setPreferredSize(new Dimension(90,25));
         newPointsTextField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER || e.getKeyCode() == KeyEvent.VK_SPACE) {
+                    Game.addPlayerPoints(changePlayer,Integer.parseInt(newPointsTextField.getText()));
+                    newPointsTextField.setText("");
+                    roundPointsTextField.setText(String.valueOf(Game.getPlayer(changePlayer.getVorname(), changePlayer.getNachname()).roundPoints));
+                    changePanel.requestFocusInWindow();
+                }
+            }
+        });
+        roundPointsTextField.addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent e) {
                 char c = e.getKeyChar();
@@ -418,14 +443,15 @@ public class Gui {
                 }
             }
         });
-        changePlayerPointsPanel.add(newPointsTextField,gbc);
+
         gbc.gridx ++;
-        JButton changePointsButton = new JButton("Punkte ändern");
+        JButton changePointsButton = new JButton("Punkte hinzufügen");
         changePointsButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                Game.addPlayerPoints(Objects.requireNonNull(changePlayer),Integer.parseInt(newPointsTextField.getText()));
-                //pointsTextField.setText(String.valueOf(Objects.requireNonNull(changePlayer).getPoints()));
+                Game.addPlayerPoints(changePlayer,Integer.parseInt(newPointsTextField.getText()));
+                newPointsTextField.setText("");
+                roundPointsTextField.setText(String.valueOf(Game.getPlayer(changePlayer.getVorname(), changePlayer.getNachname()).roundPoints));
                 changePanel.requestFocusInWindow();
                 //for(Player player : changePlayer.getTisch().getPlayerList()){
                 //    if(changePlayer.getRoundPoints() == player.getRoundPoints() && changePlayer != player){
@@ -653,6 +679,15 @@ public class Gui {
         gbc.gridy ++;
         JTextField nextRoundTischTextField = new JTextField();
         changePlayerNextRoundPanel.add(nextRoundTischTextField,gbc);
+        JButton updateNextRoundTischButton = new JButton("nächsten Tisch berechnen");
+        gbc.gridx ++;
+        updateNextRoundTischButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                Game.getTisch(configTischList.getSelectedValue().split(" ")[1]).sortPlayers();
+            }
+        });
+        changePlayerNextRoundPanel.add(updateNextRoundTischButton,gbc);
         changePlayerNextRoundPanel.setVisible(true);
         gbc.gridx = 0;
         gbc.gridy = 3;
@@ -682,7 +717,7 @@ public class Gui {
                 }else{
                     nextRoundTischTextField.setText("N/A");
                 }
-                newPointsTextField.setText(String.valueOf((Objects.requireNonNull(changePlayer).getRoundPoints())));
+                roundPointsTextField.setText(String.valueOf((Objects.requireNonNull(changePlayer).getRoundPoints())));
                 if(changePlayer.getTisch() != null){
                     TischLabelNow.setText(changePlayer.getTisch().getName());
                     newTischTextField.setText(changePlayer.getTisch().getName());
@@ -982,7 +1017,7 @@ public class Gui {
                 changeVornameTextField.setText(changePlayer.getVorname());
                 changeNachnameTextField.setText(changePlayer.getNachname());
                 pointsTextField.setText(String.valueOf(Objects.requireNonNull(changePlayer).getPoints()));
-                newPointsTextField.setText(String.valueOf((Objects.requireNonNull(changePlayer).getRoundPoints())));
+                roundPointsTextField.setText(String.valueOf((Objects.requireNonNull(changePlayer).getRoundPoints())));
                 if(changePlayer.steigtAuf && changePlayer.nextTischSet){
                     if(changePlayer.tisch.number != Game.tischList.size()){
                         nextRoundTischTextField.setText(String.valueOf(changePlayer.getTisch().getNumber() + 1));
@@ -1115,8 +1150,7 @@ public class Gui {
         }
     }
 
-    public static void showEqualPlayerWarning(Player p1, Player p2, Tisch tisch){
-        final String[] player = {" "};
+    public static void show2EuqalPlayersWarning(Player p1, Player p2){
         JDialog playerEqualityFrame = new JDialog();
         JMenuBar buttonBar = new JMenuBar();
         JButton confirmButton = new JButton("weiter");
@@ -1184,6 +1218,459 @@ public class Gui {
         playerBar.add(playerMenuUp);
         textPanel.add(playerBar, gbc);
         playerEqualityFrame.add(textPanel, BorderLayout.CENTER);
+        playerEqualityFrame.setLocationRelativeTo(null);
+        playerEqualityFrame.setSize(500,250);
+        playerEqualityFrame.setVisible(true);
+    }
+    public static void show3EqualPlayersDownWarning(Player p1, Player p2, Player p3){
+        JDialog playerEqualityFrame = new JDialog();
+        JMenuBar buttonBar = new JMenuBar();
+        JButton confirmButton = new JButton("weiter");
+        JButton denyButton = new JButton("abbrechen");
+        buttonBar.add(confirmButton);
+        buttonBar.add(denyButton);
+        buttonBar.setBorderPainted(false);
+        buttonBar.setBackground(playerEqualityFrame.getBackground());
+        buttonBar.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
+        playerEqualityFrame.add(buttonBar, BorderLayout.SOUTH);
+        playerEqualityFrame.setSize(new Dimension(250, 150));
+        JPanel textPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.anchor = GridBagConstraints.CENTER;
+        textPanel.add(new JLabel("Folgende Spieler haben gleiche Punkte:"),gbc);
+        gbc.gridy ++;
+        textPanel.add(new JLabel("welche sollen aufsteigen?"),gbc);
+        JMenuBar playerBar = new JMenuBar();
+        JMenu playerMenuUp1 = new JMenu("Hoch");
+        JMenuItem player1Item1 = new JMenuItem(p1.getVorname() + " " + p1.getNachname());
+        JMenuItem player2Item1 = new JMenuItem(p2.getVorname() + " " + p2.getNachname());
+        JMenuItem player3Item1 = new JMenuItem(p3.getVorname() + " " + p3.getNachname());
+        playerMenuUp1.add(player1Item1);
+        playerMenuUp1.add(player2Item1);
+        playerMenuUp1.add(player3Item1);
+        playerMenuUp1.setVisible(true);
+        player1Item1.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                playerMenuUp1.setText("Hoch: " + player1Item1.getText());
+            }
+        });
+        player2Item1.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                playerMenuUp1.setText("Hoch: " + player2Item1.getText());
+            }
+        });
+        player3Item1.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                playerMenuUp1.setText("Hoch: " + player3Item1.getText());
+            }
+        });
+        JMenu playerMenuDown1 = new JMenu("Runter");
+        JMenuItem player1Item2 = new JMenuItem(p1.getVorname() + " " + p1.getNachname());
+        JMenuItem player2Item2 = new JMenuItem(p2.getVorname() + " " + p2.getNachname());
+        JMenuItem player3Item2 = new JMenuItem(p3.getVorname() + " " + p3.getNachname());
+        playerMenuDown1.add(player1Item2);
+        playerMenuDown1.add(player2Item2);
+        playerMenuDown1.add(player3Item2);
+        playerMenuDown1.setVisible(true);
+        player1Item2.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                playerMenuDown1.setText("Runter: " + player1Item2.getText());
+            }
+        });
+        player2Item2.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                playerMenuDown1.setText("Runter: " + player2Item2.getText());
+            }
+        });
+        player3Item2.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                playerMenuDown1.setText("Runter: " + player3Item2.getText());
+            }
+        });
+        JMenu playerMenuDown2 = new JMenu("Runter");
+        JMenuItem player1Item3 = new JMenuItem(p1.getVorname() + " " + p1.getNachname());
+        JMenuItem player2Item3 = new JMenuItem(p2.getVorname() + " " + p2.getNachname());
+        JMenuItem player3Item3 = new JMenuItem(p3.getVorname() + " " + p3.getNachname());
+        playerMenuDown2.add(player1Item3);
+        playerMenuDown2.add(player2Item3);
+        playerMenuDown2.add(player3Item3);
+        playerMenuDown2.setVisible(true);
+        player1Item3.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                playerMenuDown2.setText("Runter: " + player1Item3.getText());
+            }
+        });
+        player2Item3.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                playerMenuDown2.setText("Runter: " + player2Item3.getText());
+            }
+        });
+        player3Item3.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                playerMenuDown2.setText("Runter: " + player3Item3.getText());
+            }
+        });
+        confirmButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                if(!Objects.equals(playerMenuUp1.getText(), playerMenuDown1.getText()) && !Objects.equals(playerMenuUp1.getText(), playerMenuDown2.getText()) && !Objects.equals(playerMenuDown1.getText(), playerMenuDown2.getText())){
+                    Objects.requireNonNull(Game.getPlayer(playerMenuUp1.getText().split(" ")[1], playerMenuUp1.getText().split(" ")[2])).steigtAuf = true;
+                    Objects.requireNonNull(Game.getPlayer(playerMenuUp1.getText().split(" ")[1], playerMenuUp1.getText().split(" ")[2])).nextTischSet = true;
+                    Objects.requireNonNull(Game.getPlayer(playerMenuDown1.getText().split(" ")[1], playerMenuDown1.getText().split(" ")[2])).steigtAuf = false;
+                    Objects.requireNonNull(Game.getPlayer(playerMenuDown1.getText().split(" ")[1], playerMenuDown1.getText().split(" ")[2])).nextTischSet = true;
+                    Objects.requireNonNull(Game.getPlayer(playerMenuDown2.getText().split(" ")[1], playerMenuDown2.getText().split(" ")[2])).steigtAuf = false;
+                    Objects.requireNonNull(Game.getPlayer(playerMenuDown2.getText().split(" ")[1], playerMenuDown2.getText().split(" ")[2])).nextTischSet = true;
+                    playerEqualityFrame.dispose();
+                }
+            }
+        });
+        denyButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                playerEqualityFrame.dispose();
+            }
+        });
+        gbc.gridy ++;
+        gbc.gridx = 0;
+        playerBar.add(playerMenuUp1);
+        playerBar.add(playerMenuDown1);
+        playerBar.add(playerMenuDown2);
+        textPanel.add(playerBar, gbc);
+        playerEqualityFrame.add(textPanel, BorderLayout.CENTER);
+        playerEqualityFrame.setLocationRelativeTo(null);
+        playerEqualityFrame.setSize(500,250);
+        playerEqualityFrame.setVisible(true);
+    }
+    public static void show3EqualPlayersUpWarning(Player p1, Player p2, Player p3){
+        JDialog playerEqualityFrame = new JDialog();
+        JMenuBar buttonBar = new JMenuBar();
+        JButton confirmButton = new JButton("weiter");
+        JButton denyButton = new JButton("abbrechen");
+        buttonBar.add(confirmButton);
+        buttonBar.add(denyButton);
+        buttonBar.setBorderPainted(false);
+        buttonBar.setBackground(playerEqualityFrame.getBackground());
+        buttonBar.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
+        playerEqualityFrame.add(buttonBar, BorderLayout.SOUTH);
+        playerEqualityFrame.setSize(new Dimension(250, 150));
+        JPanel textPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.anchor = GridBagConstraints.CENTER;
+        textPanel.add(new JLabel("Folgende Spieler haben gleiche Punkte:"),gbc);
+        gbc.gridy ++;
+        textPanel.add(new JLabel("welche sollen aufsteigen?"),gbc);
+        JMenuBar playerBar = new JMenuBar();
+        JMenu playerMenuUp1 = new JMenu("Hoch");
+        JMenuItem player1Item1 = new JMenuItem(p1.getVorname() + " " + p1.getNachname());
+        JMenuItem player2Item1 = new JMenuItem(p2.getVorname() + " " + p2.getNachname());
+        JMenuItem player3Item1 = new JMenuItem(p3.getVorname() + " " + p3.getNachname());
+        playerMenuUp1.add(player1Item1);
+        playerMenuUp1.add(player2Item1);
+        playerMenuUp1.add(player3Item1);
+        playerMenuUp1.setVisible(true);
+        player1Item1.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                playerMenuUp1.setText("Hoch: " + player1Item1.getText());
+            }
+        });
+        player2Item1.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                playerMenuUp1.setText("Hoch: " + player2Item1.getText());
+            }
+        });
+        player3Item1.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                playerMenuUp1.setText("Hoch: " + player3Item1.getText());
+            }
+        });
+        JMenu playerMenuUp2 = new JMenu("Hoch");
+        JMenuItem player1Item2 = new JMenuItem(p1.getVorname() + " " + p1.getNachname());
+        JMenuItem player2Item2 = new JMenuItem(p2.getVorname() + " " + p2.getNachname());
+        JMenuItem player3Item2 = new JMenuItem(p3.getVorname() + " " + p3.getNachname());
+        playerMenuUp2.add(player1Item2);
+        playerMenuUp2.add(player2Item2);
+        playerMenuUp2.add(player3Item2);
+        playerMenuUp2.setVisible(true);
+        player1Item2.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                playerMenuUp2.setText("Hoch: " + player1Item2.getText());
+            }
+        });
+        player2Item2.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                playerMenuUp2.setText("Hoch: " + player2Item2.getText());
+            }
+        });
+        player3Item2.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                playerMenuUp2.setText("Hoch: " + player3Item2.getText());
+            }
+        });
+        JMenu playerMenuDown = new JMenu("Runter");
+        JMenuItem player1Item3 = new JMenuItem(p1.getVorname() + " " + p1.getNachname());
+        JMenuItem player2Item3 = new JMenuItem(p2.getVorname() + " " + p2.getNachname());
+        JMenuItem player3Item3 = new JMenuItem(p3.getVorname() + " " + p3.getNachname());
+        playerMenuDown.add(player1Item3);
+        playerMenuDown.add(player2Item3);
+        playerMenuDown.add(player3Item3);
+        playerMenuDown.setVisible(true);
+        player1Item3.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                playerMenuDown.setText("Runter: " + player1Item3.getText());
+            }
+        });
+        player2Item3.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                playerMenuDown.setText("Runter: " + player2Item3.getText());
+            }
+        });
+        player3Item3.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                playerMenuDown.setText("Runter: " + player3Item3.getText());
+            }
+        });
+        confirmButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                if(!Objects.equals(playerMenuUp1.getText(), playerMenuUp2.getText()) && !Objects.equals(playerMenuUp1.getText(), playerMenuDown.getText()) && !Objects.equals(playerMenuUp2.getText(), playerMenuDown.getText())){
+                    Objects.requireNonNull(Game.getPlayer(playerMenuUp1.getText().split(" ")[1], playerMenuUp1.getText().split(" ")[2])).steigtAuf = true;
+                    Objects.requireNonNull(Game.getPlayer(playerMenuUp1.getText().split(" ")[1], playerMenuUp1.getText().split(" ")[2])).nextTischSet = true;
+                    Objects.requireNonNull(Game.getPlayer(playerMenuUp2.getText().split(" ")[1], playerMenuUp2.getText().split(" ")[2])).steigtAuf = true;
+                    Objects.requireNonNull(Game.getPlayer(playerMenuUp2.getText().split(" ")[1], playerMenuUp2.getText().split(" ")[2])).nextTischSet = true;
+                    Objects.requireNonNull(Game.getPlayer(playerMenuDown.getText().split(" ")[1], playerMenuDown.getText().split(" ")[2])).steigtAuf = false;
+                    Objects.requireNonNull(Game.getPlayer(playerMenuDown.getText().split(" ")[1], playerMenuDown.getText().split(" ")[2])).nextTischSet = true;
+                    playerEqualityFrame.dispose();
+                }
+            }
+        });
+        denyButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                playerEqualityFrame.dispose();
+            }
+        });
+        gbc.gridy ++;
+        gbc.gridx = 0;
+        playerBar.add(playerMenuUp1);
+        playerBar.add(playerMenuUp2);
+        playerBar.add(playerMenuDown);
+        textPanel.add(playerBar, gbc);
+        playerEqualityFrame.add(textPanel, BorderLayout.CENTER);
+        playerEqualityFrame.setLocationRelativeTo(null);
+        playerEqualityFrame.setSize(500,250);
+        playerEqualityFrame.setVisible(true);
+    }
+    public static void show4EqualPlayersUpWarning(Player p1, Player p2, Player p3, Player p4){
+        JDialog playerEqualityFrame = new JDialog();
+        JMenuBar buttonBar = new JMenuBar();
+        JButton confirmButton = new JButton("weiter");
+        JButton denyButton = new JButton("abbrechen");
+        buttonBar.add(confirmButton);
+        buttonBar.add(denyButton);
+        buttonBar.setBorderPainted(false);
+        buttonBar.setBackground(playerEqualityFrame.getBackground());
+        buttonBar.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
+        playerEqualityFrame.add(buttonBar, BorderLayout.SOUTH);
+        playerEqualityFrame.setSize(new Dimension(250, 150));
+        JPanel textPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.anchor = GridBagConstraints.CENTER;
+        textPanel.add(new JLabel("Folgende Spieler haben gleiche Punkte:"),gbc);
+        gbc.gridy ++;
+        textPanel.add(new JLabel("welche sollen aufsteigen?"),gbc);
+        JMenuBar playerBar = new JMenuBar();
+        JMenu playerMenuUp1 = new JMenu("Hoch");
+        JMenuItem player1Item1 = new JMenuItem(p1.getVorname() + " " + p1.getNachname());
+        JMenuItem player2Item1 = new JMenuItem(p2.getVorname() + " " + p2.getNachname());
+        JMenuItem player3Item1 = new JMenuItem(p3.getVorname() + " " + p3.getNachname());
+        JMenuItem player4Item1 = new JMenuItem(p4.getVorname() + " " + p4.getNachname());
+        playerMenuUp1.add(player1Item1);
+        playerMenuUp1.add(player2Item1);
+        playerMenuUp1.add(player3Item1);
+        playerMenuUp1.add(player4Item1);
+        playerMenuUp1.setVisible(true);
+        player1Item1.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                playerMenuUp1.setText("Hoch: " + player1Item1.getText());
+            }
+        });
+        player2Item1.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                playerMenuUp1.setText("Hoch: " + player2Item1.getText());
+            }
+        });
+        player3Item1.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                playerMenuUp1.setText("Hoch: " + player3Item1.getText());
+            }
+        });
+        player4Item1.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                playerMenuUp1.setText("Runter: " + player4Item1.getText());
+            }
+        });
+        JMenu playerMenuUp2 = new JMenu("Hoch");
+        JMenuItem player1Item2 = new JMenuItem(p1.getVorname() + " " + p1.getNachname());
+        JMenuItem player2Item2 = new JMenuItem(p2.getVorname() + " " + p2.getNachname());
+        JMenuItem player3Item2 = new JMenuItem(p3.getVorname() + " " + p3.getNachname());
+        JMenuItem player4Item2 = new JMenuItem(p4.getVorname() + " " + p4.getNachname());
+        playerMenuUp2.add(player1Item2);
+        playerMenuUp2.add(player2Item2);
+        playerMenuUp2.add(player3Item2);
+        playerMenuUp2.add(player4Item2);
+        playerMenuUp2.setVisible(true);
+        player1Item2.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                playerMenuUp2.setText("Hoch: " + player1Item2.getText());
+            }
+        });
+        player2Item2.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                playerMenuUp2.setText("Hoch: " + player2Item2.getText());
+            }
+        });
+        player3Item2.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                playerMenuUp2.setText("Hoch: " + player3Item2.getText());
+            }
+        });
+        player4Item2.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                playerMenuUp2.setText("Runter: " + player4Item2.getText());
+            }
+        });
+        JMenu playerMenuDown1 = new JMenu("Runter");
+        JMenuItem player1Item3 = new JMenuItem(p1.getVorname() + " " + p1.getNachname());
+        JMenuItem player2Item3 = new JMenuItem(p2.getVorname() + " " + p2.getNachname());
+        JMenuItem player3Item3 = new JMenuItem(p3.getVorname() + " " + p3.getNachname());
+        JMenuItem player4Item3 = new JMenuItem(p4.getVorname() + " " + p4.getNachname());
+        playerMenuDown1.add(player1Item3);
+        playerMenuDown1.add(player2Item3);
+        playerMenuDown1.add(player3Item3);
+        playerMenuDown1.add(player4Item3);
+        playerMenuDown1.setVisible(true);
+        player1Item3.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                playerMenuDown1.setText("Runter: " + player1Item3.getText());
+            }
+        });
+        player2Item3.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                playerMenuDown1.setText("Runter: " + player2Item3.getText());
+            }
+        });
+        player3Item3.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                playerMenuDown1.setText("Runter: " + player3Item3.getText());
+            }
+        });
+        player4Item3.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                playerMenuDown1.setText("Runter: " + player4Item3.getText());
+            }
+        });
+        JMenu playerMenuDown2 = new JMenu("Runter");
+        JMenuItem player1Item4 = new JMenuItem(p1.getVorname() + " " + p1.getNachname());
+        JMenuItem player2Item4 = new JMenuItem(p2.getVorname() + " " + p2.getNachname());
+        JMenuItem player3Item4 = new JMenuItem(p3.getVorname() + " " + p3.getNachname());
+        JMenuItem player4Item4 = new JMenuItem(p4.getVorname() + " " + p4.getNachname());
+        playerMenuDown2.add(player1Item4);
+        playerMenuDown2.add(player2Item4);
+        playerMenuDown2.add(player3Item4);
+        playerMenuDown2.add(player4Item4);
+        playerMenuDown2.setVisible(true);
+        player1Item4.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                playerMenuDown2.setText("Runter: " + player1Item4.getText());
+            }
+        });
+        player2Item4.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                playerMenuDown2.setText("Runter: " + player2Item4.getText());
+            }
+        });
+        player3Item4.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                playerMenuDown2.setText("Runter: " + player3Item4.getText());
+            }
+        });
+        player4Item4.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                playerMenuDown2.setText("Runter: " + player4Item4.getText());
+            }
+        });
+        confirmButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                if(!Objects.equals(playerMenuUp1.getText(), playerMenuUp2.getText()) && !Objects.equals(playerMenuUp1.getText(), playerMenuDown1.getText()) && !Objects.equals(playerMenuUp2.getText(), playerMenuDown1.getText()) && !Objects.equals(playerMenuUp2.getText(), playerMenuDown2.getText()) && !Objects.equals(playerMenuDown1.getText(), playerMenuDown2.getText()) && !Objects.equals(playerMenuUp1.getText(), playerMenuDown2.getText())){
+                    Objects.requireNonNull(Game.getPlayer(playerMenuUp1.getText().split(" ")[1], playerMenuUp1.getText().split(" ")[2])).steigtAuf = true;
+                    Objects.requireNonNull(Game.getPlayer(playerMenuUp1.getText().split(" ")[1], playerMenuUp1.getText().split(" ")[2])).nextTischSet = true;
+                    Objects.requireNonNull(Game.getPlayer(playerMenuUp2.getText().split(" ")[1], playerMenuUp2.getText().split(" ")[2])).steigtAuf = true;
+                    Objects.requireNonNull(Game.getPlayer(playerMenuUp2.getText().split(" ")[1], playerMenuUp2.getText().split(" ")[2])).nextTischSet = true;
+                    Objects.requireNonNull(Game.getPlayer(playerMenuDown1.getText().split(" ")[1], playerMenuDown1.getText().split(" ")[2])).steigtAuf = false;
+                    Objects.requireNonNull(Game.getPlayer(playerMenuDown1.getText().split(" ")[1], playerMenuDown1.getText().split(" ")[2])).nextTischSet = true;
+                    Objects.requireNonNull(Game.getPlayer(playerMenuDown2.getText().split(" ")[1], playerMenuDown2.getText().split(" ")[2])).steigtAuf = false;
+                    Objects.requireNonNull(Game.getPlayer(playerMenuDown2.getText().split(" ")[1], playerMenuDown2.getText().split(" ")[2])).nextTischSet = true;
+                    playerEqualityFrame.dispose();
+                }
+            }
+        });
+        denyButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                playerEqualityFrame.dispose();
+            }
+        });
+        gbc.gridy ++;
+        gbc.gridx = 0;
+        playerBar.add(playerMenuUp1);
+        playerBar.add(playerMenuUp2);
+        playerBar.add(playerMenuDown1);
+        playerBar.add(playerMenuDown2);
+        textPanel.add(playerBar, gbc);
+        playerEqualityFrame.add(textPanel, BorderLayout.CENTER);
+        playerEqualityFrame.setLocationRelativeTo(null);
+        playerEqualityFrame.setSize(500,250);
         playerEqualityFrame.setVisible(true);
     }
 }

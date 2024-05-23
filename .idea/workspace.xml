@@ -9,13 +9,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bdf4d30b-1150-4e01-8031-276c41c2ea01" name="Changes" comment="server mit punkte adden fertig">
+    <list default="true" id="bdf4d30b-1150-4e01-8031-276c41c2ea01" name="Changes" comment="anfänge der auf/absteigeordnungs methode">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Game.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Gui.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Gui.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Player.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Tisch.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Tisch.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/XMLMaker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/XMLMaker.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -166,14 +164,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1712598295900</updated>
-    </task>
-    <task id="LOCAL-00014" summary="finished the changeName Method in GUi">
-      <option name="closed" value="true" />
-      <created>1712995623277</created>
-      <option name="number" value="00014" />
-      <option name="presentableId" value="LOCAL-00014" />
-      <option name="project" value="LOCAL" />
-      <updated>1712995623277</updated>
     </task>
     <task id="LOCAL-00015" summary="finished the changePoints Method in GUi">
       <option name="closed" value="true" />
@@ -559,7 +549,15 @@
       <option name="project" value="LOCAL" />
       <updated>1716238672819</updated>
     </task>
-    <option name="localTasksCounter" value="63" />
+    <task id="LOCAL-00063" summary="anfänge der auf/absteigeordnungs methode">
+      <option name="closed" value="true" />
+      <created>1716411839693</created>
+      <option name="number" value="00063" />
+      <option name="presentableId" value="LOCAL-00063" />
+      <option name="project" value="LOCAL" />
+      <updated>1716411839694</updated>
+    </task>
+    <option name="localTasksCounter" value="64" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -575,7 +573,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="erste vercueh mit web app" />
     <MESSAGE value="errors beim tischetauschen behoben" />
     <MESSAGE value="erste tisch versuche im gui" />
     <MESSAGE value="tisch zuteilung auch im gui implementiert" />
@@ -600,6 +597,7 @@
     <MESSAGE value="Tischwahl im Server geht" />
     <MESSAGE value="Server grundlegend fertig" />
     <MESSAGE value="server mit punkte adden fertig" />
-    <option name="LAST_COMMIT_MESSAGE" value="server mit punkte adden fertig" />
+    <MESSAGE value="anfänge der auf/absteigeordnungs methode" />
+    <option name="LAST_COMMIT_MESSAGE" value="anfänge der auf/absteigeordnungs methode" />
   </component>
 </project>

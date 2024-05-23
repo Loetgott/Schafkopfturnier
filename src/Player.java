@@ -65,7 +65,6 @@ public class Player implements Comparable<Player> {
         steigtAuf = false;
         hasRoundPoints = true;
         roundPoints = roundPoints + nRoundPoints;
-        tisch.sortPlayers();
     }
     public void setSteigtAuf(boolean x) {
         steigtAuf = x;

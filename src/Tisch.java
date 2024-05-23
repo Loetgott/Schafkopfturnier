@@ -1,5 +1,3 @@
-import javax.swing.*;
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.Comparator;
 
@@ -28,25 +26,58 @@ public class Tisch{
                 }
             }
         });
-        playerList.get(0).setSteigtAuf(false);
-        playerList.get(0).nextTischSet = true;
-        playerList.get(3).setSteigtAuf(true);
-        playerList.get(3).nextTischSet = true;
-        if(playerList.get(1).getRoundPoints() == playerList.get(2).getRoundPoints()  && !playerList.get(1).nextTischSet && !playerList.get(2).nextTischSet){
-            System.out.println(Game.RED + "Achtung: zwei Spieler an Tisch " + number + " haben gleich viele Punkte" + Game.RESET);
-            Gui.showEqualPlayerWarning(playerList.get(1),playerList.get(2), this);
+
+        if(playerList.get(1).getRoundPoints() == playerList.get(2).getRoundPoints()  && playerList.get(3).getRoundPoints() == playerList.get(2).getRoundPoints() && playerList.get(0).getRoundPoints() == playerList.get(2).getRoundPoints()) {
+            playerList.get(0).nextTischSet = false;
             playerList.get(1).nextTischSet = false;
             playerList.get(2).nextTischSet = false;
+            playerList.get(3).nextTischSet = false;
+            Gui.show4EqualPlayersUpWarning(playerList.get(0),playerList.get(1),playerList.get(2),playerList.get(3));
+        }else if(playerList.get(1).getRoundPoints() == playerList.get(2).getRoundPoints()  && playerList.get(0).getRoundPoints() == playerList.get(2).getRoundPoints()) {
+            playerList.get(0).nextTischSet = false;
+            playerList.get(1).nextTischSet = false;
+            playerList.get(2).nextTischSet = false;
+            playerList.get(3).steigtAuf = true;
+            playerList.get(3).nextTischSet = true;
+            Gui.show3EqualPlayersDownWarning(playerList.get(0),playerList.get(1),playerList.get(2));
+        }else if(playerList.get(1).getRoundPoints() == playerList.get(2).getRoundPoints()  && playerList.get(3).getRoundPoints() == playerList.get(2).getRoundPoints()){
+            playerList.get(1).nextTischSet = false;
+            playerList.get(2).nextTischSet = false;
+            playerList.get(3).nextTischSet = false;
+            playerList.get(0).steigtAuf = false;
+            playerList.get(0).nextTischSet = true;
+            Gui.show3EqualPlayersUpWarning(playerList.get(1),playerList.get(2),playerList.get(3));
+        }else if(playerList.get(1).getRoundPoints() == playerList.get(2).getRoundPoints()  && !playerList.get(1).nextTischSet && !playerList.get(2).nextTischSet){
+            System.out.println(Game.RED + "Achtung: zwei Spieler an Tisch " + number + " haben gleich viele Punkte" + Game.RESET);
+            Gui.show2EuqalPlayersWarning(playerList.get(1),playerList.get(2));
+            playerList.get(1).nextTischSet = false;
+            playerList.get(2).nextTischSet = false;
+            playerList.get(0).setSteigtAuf(false);
+            playerList.get(0).nextTischSet = true;
+            playerList.get(3).setSteigtAuf(true);
+            playerList.get(3).nextTischSet = true;
         }else if(playerList.get(1).nextTischSet){
             playerList.get(2).steigtAuf = !playerList.get(1).steigtAuf;
         }else if(playerList.get(2).nextTischSet){
             playerList.get(1).steigtAuf = !playerList.get(2).steigtAuf;
         }else{
-            playerList.get(2).nextTischSet = true;
+            playerList.get(0).setSteigtAuf(false);
+            playerList.get(0).nextTischSet = true;
             playerList.get(1).setSteigtAuf(false);
             playerList.get(1).nextTischSet = true;
             playerList.get(2).setSteigtAuf(true);
+            playerList.get(2).nextTischSet = true;
+            playerList.get(3).setSteigtAuf(true);
+            playerList.get(3).nextTischSet = true;
         }
+        System.out.print(playerList.get(0).getVorname());
+        System.out.println(" " + playerList.get(0).nextTischSet);
+        System.out.print(playerList.get(1).getVorname());
+        System.out.println(" " + playerList.get(1).nextTischSet);
+        System.out.print(playerList.get(2).getVorname());
+        System.out.println(" " + playerList.get(2).nextTischSet);
+        System.out.print(playerList.get(3).getVorname());
+        System.out.println(" " + playerList.get(3).nextTischSet);
     }
     public ArrayList<Player> getPlayerList(){
         return playerList;
