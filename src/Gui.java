@@ -347,7 +347,7 @@ public class Gui {
             @Override
             public void keyTyped(KeyEvent e) {
                 char c = e.getKeyChar();
-                if (!(Character.isDigit(c) || (c == KeyEvent.VK_BACK_SPACE) || (c == KeyEvent.VK_DELETE))) {
+                if (!(Character.isDigit(c) || (c == KeyEvent.VK_BACK_SPACE) || (c == KeyEvent.VK_DELETE) || (c == '-') || (c == '+'))) {
                     e.consume();
                 }
             }
@@ -584,6 +584,15 @@ public class Gui {
         });
         newTischTextField.addKeyListener(new KeyAdapter() {
             @Override
+            public void keyTyped(KeyEvent e) {
+                char c = e.getKeyChar();
+                if (!(Character.isDigit(c) || (c == KeyEvent.VK_BACK_SPACE) || (c == KeyEvent.VK_DELETE) )) {
+                    e.consume();
+                }
+            }
+        });
+        newTischTextField.addKeyListener(new KeyAdapter() {
+            @Override
             public void keyReleased(KeyEvent e) {
                 if((!newTischTextField.getText().isBlank()) && (Game.tischList.size() > Integer.parseInt(newTischTextField.getText()) - 1 ) && e.getKeyCode() == KeyEvent.VK_ENTER){
                     JDialog tischChangeFrame = new JDialog();
@@ -665,7 +674,7 @@ public class Gui {
                     });
                     confirmButton.requestFocus();
                     tischChangeFrame.setVisible(true);
-                }else if(! newTischTextField.getText().isEmpty()){
+                }else if(!newTischTextField.getText().isEmpty() && e.getKeyCode() == KeyEvent.VK_ENTER){
                     if(Integer.parseInt(newTischTextField.getText()) - 1 >= Game.tischList.size()) {
                         System.out.println(Game.RED + "tisch number is too big!" + Game.RESET);
                     }
@@ -678,6 +687,40 @@ public class Gui {
         changePlayerNextRoundPanel.add(new JLabel("nächster Tisch"),gbc);
         gbc.gridy ++;
         JTextField nextRoundTischTextField = new JTextField();
+        nextRoundTischTextField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                if(e.getKeyCode() == KeyEvent.VK_ENTER){
+                    if(!nextRoundTischTextField.getText().isEmpty()){
+                        if(Integer.parseInt(nextRoundTischTextField.getText()) < changePlayer.getTisch().number){
+                            Game.getPlayer(changePlayer.getVorname(), changePlayer.getNachname()).steigtAuf = false;
+                            Game.getPlayer(changePlayer.getVorname(), changePlayer.getNachname()).nextTischSet = true;
+                        }else if(Integer.parseInt(nextRoundTischTextField.getText()) > changePlayer.getTisch().number){
+                            Game.getPlayer(changePlayer.getVorname(), changePlayer.getNachname()).steigtAuf = true;
+                            Game.getPlayer(changePlayer.getVorname(), changePlayer.getNachname()).nextTischSet = true;
+                        }else{
+                            System.out.println(Game.RED + "Achtung, der Tisch muss sich in der nächsten Runde ändern! " + Game.RESET);
+                        }
+                    }
+                    if(changePlayer.steigtAuf && changePlayer.nextTischSet){
+                        if(changePlayer.tisch.number != Game.tischList.size()){
+                            nextRoundTischTextField.setText(String.valueOf(changePlayer.getTisch().getNumber() + 1));
+                        }else{
+                            nextRoundTischTextField.setText("1");
+                        }
+                    }else if(changePlayer.nextTischSet){
+                        if(changePlayer.tisch.number != 1){
+                            nextRoundTischTextField.setText(String.valueOf(changePlayer.getTisch().getNumber() - 1));
+                        }else{
+                            nextRoundTischTextField.setText(String.valueOf(Game.tischList.size()));
+                        }
+                    }else{
+                        nextRoundTischTextField.setText("N/A");
+                    }
+                    configFrame.requestFocusInWindow();
+                }
+            }
+        });
         changePlayerNextRoundPanel.add(nextRoundTischTextField,gbc);
         JButton updateNextRoundTischButton = new JButton("nächsten Tisch berechnen");
         gbc.gridx ++;

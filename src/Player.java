@@ -87,6 +87,7 @@ public class Player implements Comparable<Player> {
                 tisch = Game.tischList.get(Game.tischList.size() - 1);
             }
         }
+        nextTischSet = false;
     }
 
     @Override

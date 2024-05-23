@@ -28,7 +28,15 @@ public class Tisch{
         });
 
         if(playerList.get(1).getRoundPoints() == playerList.get(2).getRoundPoints()  && playerList.get(3).getRoundPoints() == playerList.get(2).getRoundPoints() && playerList.get(0).getRoundPoints() == playerList.get(2).getRoundPoints()) {
-            playerList.get(0).nextTischSet = false;
+            if(playerList.get(0).nextTischSet){
+                if(playerList.get(1).nextTischSet){
+                    if(playerList.get(2).nextTischSet){
+                        if(playerList.get(3).nextTischSet){
+
+                        }
+                    }
+                }
+            }
             playerList.get(1).nextTischSet = false;
             playerList.get(2).nextTischSet = false;
             playerList.get(3).nextTischSet = false;
