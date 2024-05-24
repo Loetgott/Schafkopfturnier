@@ -90,6 +90,38 @@ public class Player implements Comparable<Player> {
         nextTischSet = false;
     }
 
+    public void setNachname(String nachname) {
+        this.nachname = nachname;
+    }
+
+    public void setVorname(String vorname) {
+        this.vorname = vorname;
+    }
+
+    public void setRoundPoints(int roundPoints) {
+        this.roundPoints = roundPoints;
+    }
+
+    public boolean isHasRoundPoints() {
+        return hasRoundPoints;
+    }
+
+    public void setHasRoundPoints(boolean hasRoundPoints) {
+        this.hasRoundPoints = hasRoundPoints;
+    }
+
+    public boolean isSteigtAuf() {
+        return steigtAuf;
+    }
+
+    public boolean isNextTischSet() {
+        return nextTischSet;
+    }
+
+    public void setNextTischSet(boolean nextTischSet) {
+        this.nextTischSet = nextTischSet;
+    }
+
     @Override
     public int compareTo(Player other) {
         return Integer.compare(this.roundPoints, other.roundPoints);
