@@ -689,6 +689,15 @@ public class Gui {
         JTextField nextRoundTischTextField = new JTextField();
         nextRoundTischTextField.addKeyListener(new KeyAdapter() {
             @Override
+            public void keyTyped(KeyEvent e) {
+                char c = e.getKeyChar();
+                if (!(Character.isDigit(c) || (c == KeyEvent.VK_DELETE) )) {
+                    e.consume();
+                }
+            }
+        });
+        nextRoundTischTextField.addKeyListener(new KeyAdapter() {
+            @Override
             public void keyReleased(KeyEvent e) {
                 if(e.getKeyCode() == KeyEvent.VK_ENTER){
                     if(!nextRoundTischTextField.getText().isEmpty()){
@@ -731,6 +740,15 @@ public class Gui {
             }
         });
         changePlayerNextRoundPanel.add(updateNextRoundTischButton,gbc);
+        gbc.gridx ++;
+        JButton resetNextTischSelectionButton = new JButton("zurücksetzen");
+        changePlayerNextRoundPanel.add(resetNextTischSelectionButton,gbc);
+        changePlayerNextRoundPanel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                changePlayer.nextTischSet = false;
+            }
+        });
         changePlayerNextRoundPanel.setVisible(true);
         gbc.gridx = 0;
         gbc.gridy = 3;
@@ -895,15 +913,8 @@ public class Gui {
                     JMenuBar playerBar = new JMenuBar();
                     JMenu playerMenu = new JMenu("Spieler");
                     ArrayList<Player> changePlayerList = Game.nextRoundChangedPlayers();
-                    final Player[] changePlayer2 = new Player[1];
                     for (Player player : changePlayerList) {
-                        JMenuItem playerItem = new JMenuItem(player.getName()[0] + " " + player.getName()[1]);
-                        playerItem.addMouseListener(new MouseAdapter() {
-                            @Override
-                            public void mouseReleased(MouseEvent e){
-
-                            }
-                        });
+                        JMenuItem playerItem = new JMenuItem(player.tisch.number + " " + player.getName()[0] + " " + player.getName()[1]);
                         playerMenu.add(playerItem);
                     }
                     playerMenu.setVisible(true);

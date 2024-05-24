@@ -17,16 +17,13 @@ public class Tisch{
         if(playerList.get(0).roundPoints + playerList.get(1).roundPoints + playerList.get(2).roundPoints + playerList.get(3).roundPoints != 0){
             System.out.println(Game.RED + "Achtung! die Punkte der vier Spieler an Tisch " + number + " ergeben zusammen nicht 0!");
         }
-        playerList.sort(new Comparator<Player>() {
-            @Override
-            public int compare(Player o1, Player o2) {
-                if (o1.getRoundPoints() < o2.getRoundPoints()) {
-                    return -1;
-                } else if (o1.getRoundPoints() > o2.getRoundPoints()) {
-                    return 1;
-                } else {
-                    return 0;
-                }
+        playerList.sort((o1, o2) -> {
+            if (o1.getRoundPoints() < o2.getRoundPoints()) {
+                return -1;
+            } else if (o1.getRoundPoints() > o2.getRoundPoints()) {
+                return 1;
+            } else {
+                return 0;
             }
         });
 
@@ -45,16 +42,13 @@ public class Tisch{
                                 }
                             }
                             if(upPlayerAmount - downPlayerAmount == 0){
-                                playerList.sort(new Comparator<Player>() {
-                                    @Override
-                                    public int compare(Player o1, Player o2) {
-                                        if(o1.steigtAuf && o2.steigtAuf){
-                                            return 0;
-                                        }else if(o1.steigtAuf && !o2.steigtAuf){
-                                            return 1;
-                                        }else {
-                                            return -1;
-                                        }
+                                playerList.sort((o1, o2) -> {
+                                    if(o1.steigtAuf && o2.steigtAuf){
+                                        return 0;
+                                    }else if(o1.steigtAuf){
+                                        return 1;
+                                    }else {
+                                        return -1;
                                     }
                                 });
                             }else{
