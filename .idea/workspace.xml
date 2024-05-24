@@ -9,9 +9,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bdf4d30b-1150-4e01-8031-276c41c2ea01" name="Changes" comment="auf/absteigeordnungs methode">
+    <list default="true" id="bdf4d30b-1150-4e01-8031-276c41c2ea01" name="Changes" comment="automatische Tischverschiebung +Dialoge mit Bediener">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Player.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Tisch.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Tisch.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -163,14 +162,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1712598295900</updated>
-    </task>
-    <task id="LOCAL-00017" summary="finished the changePoints Method in GUi">
-      <option name="closed" value="true" />
-      <created>1713084680054</created>
-      <option name="number" value="00017" />
-      <option name="presentableId" value="LOCAL-00017" />
-      <option name="project" value="LOCAL" />
-      <updated>1713084680054</updated>
     </task>
     <task id="LOCAL-00018" summary="began the change Tisch panel + change Points fertig">
       <option name="closed" value="true" />
@@ -556,7 +547,15 @@
       <option name="project" value="LOCAL" />
       <updated>1716484442796</updated>
     </task>
-    <option name="localTasksCounter" value="66" />
+    <task id="LOCAL-00066" summary="automatische Tischverschiebung +Dialoge mit Bediener">
+      <option name="closed" value="true" />
+      <created>1716569400711</created>
+      <option name="number" value="00066" />
+      <option name="presentableId" value="LOCAL-00066" />
+      <option name="project" value="LOCAL" />
+      <updated>1716569400712</updated>
+    </task>
+    <option name="localTasksCounter" value="67" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -572,7 +571,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="tisch zuteilung auch im gui implementiert" />
     <MESSAGE value="Spieler können jetzt auch im Nachinein zugeordnet werden" />
     <MESSAGE value="tische im gui v1 fertig" />
     <MESSAGE value="terminal info update" />
@@ -597,6 +595,7 @@
     <MESSAGE value="anfänge der auf/absteigeordnungs methode" />
     <MESSAGE value="ende der auf/absteigeordnungs methode" />
     <MESSAGE value="auf/absteigeordnungs methode" />
-    <option name="LAST_COMMIT_MESSAGE" value="auf/absteigeordnungs methode" />
+    <MESSAGE value="automatische Tischverschiebung +Dialoge mit Bediener" />
+    <option name="LAST_COMMIT_MESSAGE" value="automatische Tischverschiebung +Dialoge mit Bediener" />
   </component>
 </project>
