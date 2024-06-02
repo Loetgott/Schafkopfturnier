@@ -32,7 +32,7 @@ public class JTisch extends JComponent {
         g.setColor(backgroundColor);
         g.fillRoundRect(0, 0, width, height,20,20);
         g.setColor(linesColor);
-        g.drawRoundRect(0,0,width - 1,height - 1,30,30);
+        g.drawRoundRect(0,0,width - 1,height - 1,20,20);
         g.setFont(g.getFont().deriveFont(Font.BOLD, 24));
         g.setColor(linesColor);
         if(!(name == null)){
@@ -46,9 +46,11 @@ public class JTisch extends JComponent {
         table.setBackground(backgroundColor);
         table.setForeground(linesColor);
         table.setFont(table.getFont().deriveFont(Font.BOLD, 26));
-        table.getColumnModel().getColumn(1).setPreferredWidth(210);
         table.getColumnModel().getColumn(0).setPreferredWidth(0);
+        table.getColumnModel().getColumn(1).setPreferredWidth(210);
         table.getColumnModel().getColumn(2).setPreferredWidth(45);
+        table.setFocusable(false);
+        table.setEnabled(false);
         DefaultTableCellRenderer rightRenderer = new DefaultTableCellRenderer();
         rightRenderer.setHorizontalAlignment(SwingConstants.RIGHT);
         table.getColumnModel().getColumn(2).setCellRenderer(rightRenderer);

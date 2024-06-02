@@ -111,6 +111,7 @@ public class Gui {
         pointsTable.setShowHorizontalLines(true);
         pointsTable.setShowVerticalLines(false);
         pointsTable.setGridColor(pointsTable.getForeground());
+        pointsTable.setEnabled(false);
         pointsPanel.add(pointsTable, BorderLayout.CENTER);
 
         leaderboardTable.setShowGrid(false);
@@ -126,6 +127,7 @@ public class Gui {
         leaderboardLabel.setVisible(false);
         leaderboardTable.setFont(tableFont.deriveFont(Font.BOLD, 22));
         leaderboardTable.setForeground(pointsTable.getForeground());
+        leaderboardTable.setEnabled(false);
         leaderboardPanel.add(leaderboardLabel, BorderLayout.NORTH);
         leaderboardPanel.add(leaderboardTable,BorderLayout.CENTER);
         pointsPanel.add(leaderboardPanel,BorderLayout.SOUTH);
@@ -494,7 +496,8 @@ public class Gui {
         });
         changePlayerTischButton.addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseClicked(MouseEvent e) {    if((!newTischTextField.getText().isBlank() && (Game.tischList.size() > Integer.parseInt(newTischTextField.getText()) - 1))){
+            public void mouseClicked(MouseEvent e) {
+                if(!newTischTextField.getText().isBlank() && (Game.tischList.size() > Integer.parseInt(newTischTextField.getText()) - 1) && Game.getTisch(newTischTextField.getText()).playerList.size() == 4) {
                     JDialog tischChangeFrame = new JDialog();
                     JMenuBar buttonBar = new JMenuBar();
                     JButton confirmButton = new JButton("ändern");
@@ -512,7 +515,7 @@ public class Gui {
                     gbc.gridx = 0;
                     gbc.gridy = 0;
                     gbc.anchor = GridBagConstraints.CENTER;
-                    textPanel.add(new JLabel("Bitte Wechselspieler auswählen"),gbc);
+                    textPanel.add(new JLabel("Bitte Wechselspieler auswählen"), gbc);
                     int number = Integer.parseInt(newTischTextField.getText()) - 1;
                     JMenuBar playerBar = new JMenuBar();
                     JMenu playerMenu = new JMenu("Tauschspieler");
@@ -523,7 +526,7 @@ public class Gui {
                         JMenuItem playerItem = new JMenuItem(player.getName()[0] + " " + player.getName()[1]);
                         playerItem.addMouseListener(new MouseAdapter() {
                             @Override
-                            public void mouseReleased(MouseEvent e){
+                            public void mouseReleased(MouseEvent e) {
                                 changePlayer2[0] = player;
                                 playerMenu.setText(player.getVorname() + " " + player.getNachname());
                             }
@@ -539,30 +542,53 @@ public class Gui {
                     confirmButton.addKeyListener(new KeyAdapter() {
                         @Override
                         public void keyReleased(KeyEvent e) {
-                            if(e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_TAB){
+                            if (e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_TAB) {
                                 denyButton.requestFocus();
-                            }else if(e.getKeyCode() == KeyEvent.VK_ENTER){
-                                Game.spielertausch(changePlayer1,changePlayer2[0]);
+                            } else if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                                Game.spielertausch(changePlayer1, changePlayer2[0]);
                                 tischChangeFrame.dispose();
                                 TischLabelNow.setText(changePlayer.getTisch().getName());
-
+                                if(!configTischList.isSelectionEmpty()){
+                                    configTischPlayerListModel.clear();
+                                    if(configTischPlayerListModel.size() == 3){
+                                        for(int i = 0; i < Game.getTisch(configTischList.getSelectedValue().split(" ")[1]).getPlayerList().size(); i ++){
+                                            configTischPlayerListModel.setElementAt(Game.getTisch(configTischList.getSelectedValue().split(" ")[1]).getPlayerList().get(i).getVorname() + " " + Game.getTisch(configTischList.getSelectedValue().split(" ")[1]).getPlayerList().get(i).getNachname(),i);
+                                        }
+                                    }else{
+                                        for(int i = 0; i < Game.getTisch(configTischList.getSelectedValue().split(" ")[1]).getPlayerList().size(); i ++){
+                                            configTischPlayerListModel.addElement(Game.getTisch(configTischList.getSelectedValue().split(" ")[1]).getPlayerList().get(i).getVorname() + " " + Game.getTisch(configTischList.getSelectedValue().split(" ")[1]).getPlayerList().get(i).getNachname());
+                                        }
+                                    }
+                                }
                             }
                         }
                     });
                     confirmButton.addMouseListener(new MouseAdapter() {
                         @Override
                         public void mouseClicked(MouseEvent e) {
-                            Game.spielertausch(changePlayer1,changePlayer2[0]);
+                            Game.spielertausch(changePlayer1, changePlayer2[0]);
                             tischChangeFrame.dispose();
                             TischLabelNow.setText(changePlayer.getTisch().getName());
+                            if(!configTischList.isSelectionEmpty()){
+                                configTischPlayerListModel.clear();
+                                if(configTischPlayerListModel.size() == 3){
+                                    for(int i = 0; i < Game.getTisch(configTischList.getSelectedValue().split(" ")[1]).getPlayerList().size(); i ++){
+                                        configTischPlayerListModel.setElementAt(Game.getTisch(configTischList.getSelectedValue().split(" ")[1]).getPlayerList().get(i).getVorname() + " " + Game.getTisch(configTischList.getSelectedValue().split(" ")[1]).getPlayerList().get(i).getNachname(),i);
+                                    }
+                                }else{
+                                    for(int i = 0; i < Game.getTisch(configTischList.getSelectedValue().split(" ")[1]).getPlayerList().size(); i ++){
+                                        configTischPlayerListModel.addElement(Game.getTisch(configTischList.getSelectedValue().split(" ")[1]).getPlayerList().get(i).getVorname() + " " + Game.getTisch(configTischList.getSelectedValue().split(" ")[1]).getPlayerList().get(i).getNachname());
+                                    }
+                                }
+                            }
                         }
                     });
                     denyButton.addKeyListener(new KeyAdapter() {
                         @Override
                         public void keyReleased(KeyEvent e) {
-                            if(e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_TAB){
+                            if (e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_TAB) {
                                 confirmButton.requestFocus();
-                            }else if(e.getKeyCode() == KeyEvent.VK_ENTER){
+                            } else if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                                 tischChangeFrame.dispose();
                             }
                         }
@@ -575,10 +601,25 @@ public class Gui {
                     });
                     confirmButton.requestFocus();
                     tischChangeFrame.setVisible(true);
-            }else if(! newTischTextField.getText().isEmpty()){
-                if(Integer.parseInt(newTischTextField.getText()) - 1 >= Game.tischList.size()) {
-                    System.out.println(Game.RED + "tisch number is too big!" + Game.RESET);
-                }
+                }else if (!newTischTextField.getText().isBlank() && (Game.tischList.size() > Integer.parseInt(newTischTextField.getText()) - 1)){
+                    Game.getTisch(newTischTextField.getText()).playerList.add(changePlayer);
+                    changePlayer.tisch = Game.getTisch(newTischTextField.getText());
+                    if(!configTischList.isSelectionEmpty()){
+                        configTischPlayerListModel.clear();
+                        if(configTischPlayerListModel.size() == 3){
+                            for(int i = 0; i < Game.getTisch(configTischList.getSelectedValue().split(" ")[1]).getPlayerList().size(); i ++){
+                                configTischPlayerListModel.setElementAt(Game.getTisch(configTischList.getSelectedValue().split(" ")[1]).getPlayerList().get(i).getVorname() + " " + Game.getTisch(configTischList.getSelectedValue().split(" ")[1]).getPlayerList().get(i).getNachname(),i);
+                            }
+                        }else{
+                            for(int i = 0; i < Game.getTisch(configTischList.getSelectedValue().split(" ")[1]).getPlayerList().size(); i ++){
+                                configTischPlayerListModel.addElement(Game.getTisch(configTischList.getSelectedValue().split(" ")[1]).getPlayerList().get(i).getVorname() + " " + Game.getTisch(configTischList.getSelectedValue().split(" ")[1]).getPlayerList().get(i).getNachname());
+                            }
+                        }
+                    }
+                }else if(! newTischTextField.getText().isEmpty()){
+                    if(Integer.parseInt(newTischTextField.getText()) - 1 >= Game.tischList.size()) {
+                        System.out.println(Game.RED + "Tisch Nummer ist zu groß!" + Game.RESET);
+                    }
             }
             }
         });
@@ -753,6 +794,104 @@ public class Gui {
         gbc.gridx = 0;
         gbc.gridy = 3;
         changePanel.add(changePlayerNextRoundPanel,gbc);
+
+        JPanel deletePlayerPanel = new JPanel();
+        JButton deletePlayerButton = new JButton("löschen");
+        deletePlayerPanel.add(deletePlayerButton);
+        deletePlayerButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                JDialog playerDeleteFrame = new JDialog();
+                JMenuBar buttonBar = new JMenuBar();
+                JButton confirmButton = new JButton("weiter");
+                JButton denyButton = new JButton("abbrechen");
+                buttonBar.add(confirmButton);
+                buttonBar.add(denyButton);
+                buttonBar.setBorderPainted(false);
+                buttonBar.setBackground(playerDeleteFrame.getBackground());
+                buttonBar.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
+                playerDeleteFrame.add(buttonBar, BorderLayout.SOUTH);
+                playerDeleteFrame.setSize(new Dimension(250, 150));
+                playerDeleteFrame.setLocation(configFrame.getLocationOnScreen());
+                JPanel textPanel = new JPanel(new GridBagLayout());
+                GridBagConstraints gbc = new GridBagConstraints();
+                gbc.gridx = 0;
+                gbc.gridy = 0;
+                gbc.anchor = GridBagConstraints.CENTER;
+                textPanel.add(new JLabel("Wirklich " + changePlayer.getVorname() + " " + changePlayer.getNachname() + " löschen? Dadurch werden alle Punkte dieses Spielers gelöscht!"),gbc);
+                playerDeleteFrame.add(textPanel, BorderLayout.CENTER);
+                confirmButton.addKeyListener(new KeyAdapter() {
+                    @Override
+                    public void keyReleased(KeyEvent e) {
+                        if(e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_TAB){
+                            denyButton.requestFocus();
+                        }else if(e.getKeyCode() == KeyEvent.VK_ENTER){
+                            Game.deletePlayer(changePlayer.getVorname(), changePlayer.getNachname());
+                            configPlayerListModel.clear();
+                            for(int i = 0; i < Game.playerList.size(); i++){
+                                configPlayerListModel.addElement(Game.playerList.get(i).getVorname() + " " + Game.playerList.get(i).getNachname());
+                            }
+                            if(!configTischList.isSelectionEmpty()){
+                                configTischPlayerListModel.clear();
+                                if(configTischPlayerListModel.size() == 3){
+                                    for(int i = 0; i < Game.getTisch(configTischList.getSelectedValue().split(" ")[1]).getPlayerList().size(); i ++){
+                                        configTischPlayerListModel.setElementAt(Game.getTisch(configTischList.getSelectedValue().split(" ")[1]).getPlayerList().get(i).getVorname() + " " + Game.getTisch(configTischList.getSelectedValue().split(" ")[1]).getPlayerList().get(i).getNachname(),i);
+                                    }
+                                }else{
+                                    for(int i = 0; i < Game.getTisch(configTischList.getSelectedValue().split(" ")[1]).getPlayerList().size(); i ++){
+                                        configTischPlayerListModel.addElement(Game.getTisch(configTischList.getSelectedValue().split(" ")[1]).getPlayerList().get(i).getVorname() + " " + Game.getTisch(configTischList.getSelectedValue().split(" ")[1]).getPlayerList().get(i).getNachname());
+                                    }
+                                }
+                            }
+                            playerDeleteFrame.dispose();
+                        }
+                    }
+                });
+                confirmButton.addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+                        Game.deletePlayer(changePlayer.getVorname(), changePlayer.getNachname());
+                        configPlayerListModel.clear();
+                        for(int i = 0; i < Game.playerList.size(); i++){
+                            configPlayerListModel.addElement(Game.playerList.get(i).getVorname() + " " + Game.playerList.get(i).getNachname());
+                        }
+                        if(!configTischList.isSelectionEmpty()){
+                            configTischPlayerListModel.clear();
+                            if(configTischPlayerListModel.size() == 3){
+                                for(int i = 0; i < Game.getTisch(configTischList.getSelectedValue().split(" ")[1]).getPlayerList().size(); i ++){
+                                    configTischPlayerListModel.setElementAt(Game.getTisch(configTischList.getSelectedValue().split(" ")[1]).getPlayerList().get(i).getVorname() + " " + Game.getTisch(configTischList.getSelectedValue().split(" ")[1]).getPlayerList().get(i).getNachname(),i);
+                                }
+                            }else{
+                                for(int i = 0; i < Game.getTisch(configTischList.getSelectedValue().split(" ")[1]).getPlayerList().size(); i ++){
+                                    configTischPlayerListModel.addElement(Game.getTisch(configTischList.getSelectedValue().split(" ")[1]).getPlayerList().get(i).getVorname() + " " + Game.getTisch(configTischList.getSelectedValue().split(" ")[1]).getPlayerList().get(i).getNachname());
+                                }
+                            }
+                        }
+                        playerDeleteFrame.dispose();
+                    }
+                });
+                denyButton.addKeyListener(new KeyAdapter() {
+                    @Override
+                    public void keyReleased(KeyEvent e) {
+                        if(e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_TAB){
+                            confirmButton.requestFocus();
+                        }else if(e.getKeyCode() == KeyEvent.VK_ENTER){
+                            playerDeleteFrame.dispose();
+                        }
+                    }
+                });
+                denyButton.addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+                        playerDeleteFrame.dispose();
+                    }
+                });
+                confirmButton.requestFocus();
+                playerDeleteFrame.setVisible(true);
+            }
+        });
+        gbc.gridy = 4;
+        changePanel.add(deletePlayerPanel,gbc);
 
         configPlayerList.addListSelectionListener(e -> {
             if(!configPlayerList.isSelectionEmpty()){
@@ -1048,11 +1187,11 @@ public class Gui {
             if(!configTischList.isSelectionEmpty()){
                 configTischPlayerListModel.clear();
                 if(configTischPlayerListModel.size() == 3){
-                    for(int i = 0; i < 4; i ++){
+                    for(int i = 0; i < Game.getTisch(configTischList.getSelectedValue().split(" ")[1]).getPlayerList().size(); i ++){
                         configTischPlayerListModel.setElementAt(Game.getTisch(configTischList.getSelectedValue().split(" ")[1]).getPlayerList().get(i).getVorname() + " " + Game.getTisch(configTischList.getSelectedValue().split(" ")[1]).getPlayerList().get(i).getNachname(),i);
                     }
                 }else{
-                    for(int i = 0; i < 4; i ++){
+                    for(int i = 0; i < Game.getTisch(configTischList.getSelectedValue().split(" ")[1]).getPlayerList().size(); i ++){
                         configTischPlayerListModel.addElement(Game.getTisch(configTischList.getSelectedValue().split(" ")[1]).getPlayerList().get(i).getVorname() + " " + Game.getTisch(configTischList.getSelectedValue().split(" ")[1]).getPlayerList().get(i).getNachname());
                     }
                 }

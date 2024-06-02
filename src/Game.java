@@ -114,7 +114,7 @@ public class Game {
         for(int i = 0; i < Gui.tischList.size(); i ++){
             Gui.tischList.get(i).repaint();
         }
-        System.out.println(GREEN + player1.getName()[0] + " " + player1.getName()[1] + player2.getName()[0] + " " + player2.getName()[1] + RESET);
+        System.out.println(GREEN + player1.getName()[0] + " " + player1.getName()[1] + " wurde mit " + player2.getName()[0] + " " + player2.getName()[1] + RESET);
     }
 
     public static Player sucheSpieler(String vorname, String nachname) {
@@ -177,6 +177,10 @@ public class Game {
             }
         }
         return null;
+    }
+    public static void deletePlayer(String vorname, String nachname){
+        tischList.get(getPlayer(vorname,nachname).tisch.number - 1).playerList.remove(getPlayer(vorname,nachname));
+        playerList.remove(getPlayer(vorname, nachname));
     }
 
     public static void nextRound() {

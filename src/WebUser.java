@@ -25,29 +25,37 @@ public class WebUser {
         Name = name;
     }
     public void addPlayerPoints(){
-        System.out.println("punkte verarbeiten...");
+        //System.out.println("punkte verarbeiten...");
         for(int i = 0; i < Game.tischList.get(tempTischNumber - 1).playerList.size(); i++){
             if(Objects.equals(Game.tischList.get(tempTischNumber - 1).playerList.get(i).getVorname(), tempPlayer1.getVorname()) && (Game.tischList.get(tempTischNumber - 1).playerList.get(i).getNachname().charAt(0) + ".").equals(tempPlayer1.getNachname())){
                 //System.out.println("spieler1 gefunden");
                 Game.tischList.get(tempTischNumber -1).playerList.get(i).addRoundPoints(tempPlayer1.points);
+                Game.tischList.get(tempTischNumber -1).playerList.get(i).steigtAuf = tempPlayer1.steigtAuf;
+                Game.tischList.get(tempTischNumber -1).playerList.get(i).nextTischSet = tempPlayer1.nextTischSet;
             }
         }
         for(int i = 0; i < Game.tischList.get(tempTischNumber - 1).playerList.size(); i++){
             if(Objects.equals(Game.tischList.get(tempTischNumber - 1).playerList.get(i).getVorname(), tempPlayer2.getVorname()) && (Game.tischList.get(tempTischNumber - 1).playerList.get(i).getNachname().charAt(0) + ".").equals(tempPlayer2.getNachname())){
                 //System.out.println("spieler2 gefunden");
                 Game.tischList.get(tempTischNumber -1).playerList.get(i).addRoundPoints(tempPlayer2.points);
+                Game.tischList.get(tempTischNumber -1).playerList.get(i).steigtAuf = tempPlayer2.steigtAuf;
+                Game.tischList.get(tempTischNumber -1).playerList.get(i).nextTischSet = tempPlayer2.nextTischSet;
             }
         }
         for(int i = 0; i < Game.tischList.get(tempTischNumber - 1).playerList.size(); i++){
             if(Objects.equals(Game.tischList.get(tempTischNumber - 1).playerList.get(i).getVorname(), tempPlayer3.getVorname()) && (Game.tischList.get(tempTischNumber - 1).playerList.get(i).getNachname().charAt(0) + ".").equals(tempPlayer3.getNachname())){
                 //System.out.println("spieler3 gefunden");
                 Game.tischList.get(tempTischNumber -1).playerList.get(i).addRoundPoints(tempPlayer3.points);
+                Game.tischList.get(tempTischNumber -1).playerList.get(i).steigtAuf = tempPlayer3.steigtAuf;
+                Game.tischList.get(tempTischNumber -1).playerList.get(i).nextTischSet = tempPlayer3.nextTischSet;
             }
         }
         for(int i = 0; i < Game.tischList.get(tempTischNumber - 1).playerList.size(); i++){
             if(Objects.equals(Game.tischList.get(tempTischNumber - 1).playerList.get(i).getVorname(), tempPlayer4.getVorname()) && (Game.tischList.get(tempTischNumber - 1).playerList.get(i).getNachname().charAt(0) + ".").equals(tempPlayer4.getNachname())){
                 //System.out.println("spieler4 gefunden");
                 Game.tischList.get(tempTischNumber -1).playerList.get(i).addRoundPoints(tempPlayer4.points);
+                Game.tischList.get(tempTischNumber -1).playerList.get(i).steigtAuf = tempPlayer4.steigtAuf;
+                Game.tischList.get(tempTischNumber -1).playerList.get(i).nextTischSet = tempPlayer4.nextTischSet;
             }
         }
     }
