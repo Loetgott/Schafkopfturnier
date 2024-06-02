@@ -18,6 +18,7 @@ public class Server {
             server = HttpServer.create(new java.net.InetSocketAddress(port), 0);
         } catch (IOException e) {
             System.out.println(Game.RED + "Fehler beim Erstellen des Servers!" + Game.RESET);
+            return;
         }
         server.createContext("/sendText", new SendTextHandler());
         server.createContext("/sendTextOnExit", new SendTextOnExitHandler());
@@ -29,131 +30,37 @@ public class Server {
     static class SendTextHandler implements HttpHandler {
         @Override
         public void handle(HttpExchange exchange) throws IOException {
+            // CORS-Header einmal hinzufügen
+            exchange.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
+            exchange.getResponseHeaders().add("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+            exchange.getResponseHeaders().add("Access-Control-Allow-Headers", "Content-Type");
+
             if ("OPTIONS".equals(exchange.getRequestMethod())) {
-                exchange.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
-                exchange.getResponseHeaders().add("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
-                exchange.getResponseHeaders().add("Access-Control-Allow-Headers", "Content-Type");
                 exchange.sendResponseHeaders(204, -1); // Kein Inhalt für OPTIONS-Antwort
                 return;
             } else if (exchange.getRequestMethod().equalsIgnoreCase("POST")) {
-                // Lese den Text aus dem Request-Body
                 InputStreamReader isr = new InputStreamReader(exchange.getRequestBody(), StandardCharsets.UTF_8);
                 BufferedReader br = new BufferedReader(isr);
                 String text = br.readLine();
                 String clientIP = exchange.getRemoteAddress().getAddress().getHostAddress();
                 ArrayList<String> input = new ArrayList<>(Arrays.asList(text.split(" ")));
-                switch(input.get(0)){
+
+                switch (input.get(0)) {
                     case "aufgerufen":
                         Game.connectNewUser(new WebUser(clientIP));
-                        input.clear();
                         break;
                     case "name":
-                        input.remove(0);
-                        if(!input.isEmpty()){
-                            String vorname = input.get(0);
-                            String nachname = " ";
-                            input.remove(0);
-                            if(!input.isEmpty()){
-                                nachname = input.get(0);
-                            }
+                        if (input.size() >= 2) {
+                            String vorname = input.get(1);
+                            String nachname = (input.size() > 2) ? input.get(2) : "";
                             Game.giveWebUserName(clientIP, vorname + " " + nachname);
                         }
                         break;
-                    case "ping":
-                        // Ping-Handling-Code hier
-                        break;
                     case "getTische":
-                        input.remove(0);
-                        if(!input.isEmpty()){
-                            int tischNumber = Integer.parseInt(input.get(0));
-                            StringBuilder response = new StringBuilder();
-                            response.append(Game.tischList.get(tischNumber - 1).playerList.get(0).getName()[0]).append(" ").append(Game.tischList.get(tischNumber - 1).playerList.get(0).getName()[1].charAt(0)).append(".");
-                            response.append(";");
-                            response.append(Game.tischList.get(tischNumber - 1).playerList.get(1).getName()[0]).append(" ").append(Game.tischList.get(tischNumber - 1).playerList.get(1).getName()[1].charAt(0)).append(".");
-                            response.append(";");
-                            response.append(Game.tischList.get(tischNumber - 1).playerList.get(2).getName()[0]).append(" ").append(Game.tischList.get(tischNumber - 1).playerList.get(2).getName()[1].charAt(0)).append(".");
-                            response.append(";");
-                            response.append(Game.tischList.get(tischNumber - 1).playerList.get(3).getName()[0]).append(" ").append(Game.tischList.get(tischNumber - 1).playerList.get(3).getName()[1].charAt(0)).append(".");
-                            response.append(";");
-                            response.append(Game.tischList.get(tischNumber - 1).playerList.get(0).getPoints());
-                            response.append(";");
-                            response.append(Game.tischList.get(tischNumber - 1).playerList.get(1).getPoints());
-                            response.append(";");
-                            response.append(Game.tischList.get(tischNumber - 1).playerList.get(2).getPoints());
-                            response.append(";");
-                            response.append(Game.tischList.get(tischNumber - 1).playerList.get(3).getPoints());
-                            response.append(";");
-                            exchange.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
-                            exchange.sendResponseHeaders(200, response.toString().getBytes().length);
-                            exchange.getResponseBody().write(response.toString().getBytes());
-                            exchange.getResponseBody().close();
-                        }
+                        handleGetTische(exchange, input, clientIP);
                         break;
                     case "setPoints":
-                        input.remove(0);
-                        Objects.requireNonNull(Game.getWebUser(clientIP)).tempTischNumber = Integer.parseInt(input.get(0));
-                        Objects.requireNonNull(Game.getWebUser(clientIP)).tempPlayer1 = new Player(input.get(1), input.get(2));
-                        Objects.requireNonNull(Game.getWebUser(clientIP)).tempPlayer1.setPoints(Integer.parseInt(input.get(3)));
-                        if(!Objects.equals(input.get(4), "n/a")){
-                            switch(input.get(4)){
-                                case "up":
-                                    Game.getWebUser(clientIP).tempPlayer1.steigtAuf = true;
-                                    Game.getWebUser(clientIP).tempPlayer1.nextTischSet = true;
-                                    break;
-                                case "down":
-                                    Game.getWebUser(clientIP).tempPlayer1.steigtAuf = false;
-                                    Game.getWebUser(clientIP).tempPlayer1.nextTischSet = true;
-                            }
-                        }
-                        Objects.requireNonNull(Game.getWebUser(clientIP)).tempPlayer2 = new Player(input.get(5), input.get(6));
-                        Objects.requireNonNull(Game.getWebUser(clientIP)).tempPlayer2.setPoints(Integer.parseInt(input.get(7)));
-                        if(!Objects.equals(input.get(8), "n/a")){
-                            switch(input.get(8)){
-                                case "up":
-                                    Game.getWebUser(clientIP).tempPlayer2.steigtAuf = true;
-                                    Game.getWebUser(clientIP).tempPlayer2.nextTischSet = true;
-                                    break;
-                                case "down":
-                                    Game.getWebUser(clientIP).tempPlayer2.steigtAuf = false;
-                                    Game.getWebUser(clientIP).tempPlayer2.nextTischSet = true;
-                            }
-                        }
-                        Objects.requireNonNull(Game.getWebUser(clientIP)).tempPlayer3 = new Player(input.get(9), input.get(10));
-                        Objects.requireNonNull(Game.getWebUser(clientIP)).tempPlayer3.setPoints(Integer.parseInt(input.get(11)));
-                        if(!Objects.equals(input.get(12), "n/a")){
-                            switch(input.get(12)){
-                                case "up":
-                                    Game.getWebUser(clientIP).tempPlayer3.steigtAuf = true;
-                                    Game.getWebUser(clientIP).tempPlayer3.nextTischSet = true;
-                                    break;
-                                case "down":
-                                    Game.getWebUser(clientIP).tempPlayer3.steigtAuf = false;
-                                    Game.getWebUser(clientIP).tempPlayer3.nextTischSet = true;
-                            }
-                        }
-                        Objects.requireNonNull(Game.getWebUser(clientIP)).tempPlayer4 = new Player(input.get(13), input.get(12));
-                        Objects.requireNonNull(Game.getWebUser(clientIP)).tempPlayer4.setPoints(Integer.parseInt(input.get(13)));
-                        if(!Objects.equals(input.get(14), "n/a")){
-                            switch(input.get(14)){
-                                case "up":
-                                    Game.getWebUser(clientIP).tempPlayer4.steigtAuf = true;
-                                    Game.getWebUser(clientIP).tempPlayer4.nextTischSet = true;
-                                    break;
-                                case "down":
-                                    Game.getWebUser(clientIP).tempPlayer4.steigtAuf = false;
-                                    Game.getWebUser(clientIP).tempPlayer4.nextTischSet = true;
-                            }
-                        }
-                        StringBuilder response = new StringBuilder();
-                        response.append(Game.getWebUser(clientIP).tempPlayer1.getVorname()).append(" ").append(Game.getWebUser(clientIP).tempPlayer1.getNachname()).append(";").append(Game.getWebUser(clientIP).tempPlayer1.getPoints());
-                        response.append(";").append(Game.getWebUser(clientIP).tempPlayer2.getVorname()).append(" ").append(Game.getWebUser(clientIP).tempPlayer2.getNachname()).append(";").append(Game.getWebUser(clientIP).tempPlayer2.getPoints());
-                        response.append(";").append(Game.getWebUser(clientIP).tempPlayer3.getVorname()).append(" ").append(Game.getWebUser(clientIP).tempPlayer3.getNachname()).append(";").append(Game.getWebUser(clientIP).tempPlayer3.getPoints());
-                        response.append(";").append(Game.getWebUser(clientIP).tempPlayer4.getVorname()).append(" ").append(Game.getWebUser(clientIP).tempPlayer4.getNachname()).append(";").append(Game.getWebUser(clientIP).tempPlayer4.getPoints());
-
-                        exchange.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
-                        exchange.sendResponseHeaders(200, response.toString().getBytes().length);
-                        exchange.getResponseBody().write(response.toString().getBytes());
-                        exchange.getResponseBody().close();
+                        handleSetPoints(exchange, input, clientIP);
                         break;
                     case "setPointsSucces":
                         System.out.println(Game.GREEN + "Punkte von " + Objects.requireNonNull(Game.getWebUser(clientIP)).getName() + " erfolgreich empfangen!" + Game.RESET);
@@ -161,21 +68,83 @@ public class Server {
                         break;
                     default:
                         System.out.println(Game.RED + "Unbekannte Anfrage vom Server! Bitte prüfen");
-                        System.out.println(input.get(0)  + Game.RESET);
+                        System.out.println(input.get(0) + Game.RESET);
                 }
             } else {
                 System.out.println("Ungültige Anfrage-Methode: " + exchange.getRequestMethod());
             }
+        }
+
+        private void handleGetTische(HttpExchange exchange, ArrayList<String> input, String clientIP) throws IOException {
+            if (input.size() > 1) {
+                int tischNumber = Integer.parseInt(input.get(1));
+                StringBuilder response = new StringBuilder();
+
+                for (int i = 0; i < 4; i++) {
+                    response.append(Game.tischList.get(tischNumber - 1).playerList.get(i).getName()[0])
+                            .append(" ")
+                            .append(Game.tischList.get(tischNumber - 1).playerList.get(i).getName()[1].charAt(0))
+                            .append(".;");
+                    response.append(Game.tischList.get(tischNumber - 1).playerList.get(i).getPoints()).append(";");
+                }
+
+                String responseStr = response.toString();
+                exchange.sendResponseHeaders(200, responseStr.getBytes().length);
+                exchange.getResponseBody().write(responseStr.getBytes());
+                exchange.getResponseBody().close();
+            }
+        }
+
+        private void handleSetPoints(HttpExchange exchange, ArrayList<String> input, String clientIP) throws IOException {
+            if (input.size() >= 15) {
+                WebUser user = Objects.requireNonNull(Game.getWebUser(clientIP));
+                user.tempTischNumber = Integer.parseInt(input.get(1));
+                user.tempPlayer1 = createPlayer(input, 2, 3, 4, 5);
+                user.tempPlayer2 = createPlayer(input, 6, 7, 8, 9);
+                user.tempPlayer3 = createPlayer(input, 10, 11, 12, 13);
+                user.tempPlayer4 = createPlayer(input, 14, 15, 16, 17);
+
+                StringBuilder response = new StringBuilder();
+                response.append(user.tempPlayer1.getVorname()).append(" ").append(user.tempPlayer1.getNachname()).append(";").append(user.tempPlayer1.getPoints()).append(";");
+                response.append(user.tempPlayer2.getVorname()).append(" ").append(user.tempPlayer2.getNachname()).append(";").append(user.tempPlayer2.getPoints()).append(";");
+                response.append(user.tempPlayer3.getVorname()).append(" ").append(user.tempPlayer3.getNachname()).append(";").append(user.tempPlayer3.getPoints()).append(";");
+                response.append(user.tempPlayer4.getVorname()).append(" ").append(user.tempPlayer4.getNachname()).append(";").append(user.tempPlayer4.getPoints());
+
+                String responseStr = response.toString();
+                exchange.sendResponseHeaders(200, responseStr.getBytes().length);
+                exchange.getResponseBody().write(responseStr.getBytes());
+                exchange.getResponseBody().close();
+            }
+        }
+
+        private Player createPlayer(ArrayList<String> input, int nameIndex, int vornameIndex, int pointsIndex, int statusIndex) {
+            Player player = new Player(input.get(nameIndex), input.get(vornameIndex));
+            player.setPoints(Integer.parseInt(input.get(pointsIndex)));
+            if (!Objects.equals(input.get(statusIndex), "n/a")) {
+                switch (input.get(statusIndex)) {
+                    case "up":
+                        player.steigtAuf = true;
+                        player.nextTischSet = true;
+                        break;
+                    case "down":
+                        player.steigtAuf = false;
+                        player.nextTischSet = true;
+                        break;
+                }
+            }
+            return player;
         }
     }
 
     static class SendTextOnExitHandler implements HttpHandler {
         @Override
         public void handle(HttpExchange exchange) throws IOException {
+            // CORS-Header einmal hinzufügen
+            exchange.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
+            exchange.getResponseHeaders().add("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+            exchange.getResponseHeaders().add("Access-Control-Allow-Headers", "Content-Type");
+
             if ("OPTIONS".equals(exchange.getRequestMethod())) {
-                exchange.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
-                exchange.getResponseHeaders().add("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
-                exchange.getResponseHeaders().add("Access-Control-Allow-Headers", "Content-Type");
                 exchange.sendResponseHeaders(204, -1);
                 return;
             } else if (exchange.getRequestMethod().equalsIgnoreCase("POST")) {
@@ -186,7 +155,6 @@ public class Server {
                 System.out.println(Game.getWebUser(clientIP).getName() + " hat die Seite verlassen!");
                 Gui.disconnectWebUser(clientIP);
 
-                exchange.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
                 exchange.sendResponseHeaders(200, -1); // Bestätigungsnachricht senden (kein Inhalt)
                 exchange.getResponseBody().close();
             } else {
