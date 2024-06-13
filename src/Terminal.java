@@ -41,7 +41,7 @@ public class Terminal{
                 break;
             case "updateleaderboard":
                 System.out.println("playerList vor Tausch" + Game.playerList.size());
-                Game.spielerZuordnen();
+                Game.spreadPlayers();
                 System.out.println(" Tisch list nach atsuch" + Game.tischList.size());
                 break;
 
@@ -50,7 +50,7 @@ public class Terminal{
                 break;
 
             case "tischezuteilen":
-                Game.spielerZuordnen();
+                Game.spreadPlayers();
                 break;
 
             case "spielertauschen":

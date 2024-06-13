@@ -1,4 +1,3 @@
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Collections;
@@ -75,8 +74,9 @@ public class Game {
         System.out.println(GREEN + "Tische wurden geupdated!" + RESET);
     }
 
-    public static void spielerZuordnen(){
+    public static void spreadPlayers(){
         tischList.clear();
+        Gui.configTischlistModel.clear();
         if(playerList.size() % 4 != 0){ //Überprüfe, ob genug Spieler vorhanden sind und Platzhalter einfügen
             int newPlayerCount = 4 - (playerList.size() % 4);
             for(int i = 0; i < playerList.size() % 4 ; i++){
@@ -90,9 +90,10 @@ public class Game {
             for(int ii = 0; ii < 4 ; ii++){
                 nTisch.playerList.add(playerList.get(i * 4 + ii));
                 playerList.get(i * 4 + ii).setTisch(nTisch);
+                playerList.get(i * 4 + ii).setNextTischSet(false);
             }
             tischList.add(nTisch);
-            equalPlayerlist.add(new ArrayList<>());
+            Gui.configTischlistModel.add(i,"Tisch " + nTisch.getNumber());
         }
     }
     public static void saveBackup(String path){
@@ -200,10 +201,10 @@ public class Game {
                         tempTischList.get(tempTischList.size() - 1).playerList.add(tischList.get(i).playerList.get(ii));
                     }
                 }
-            }else if(i == tischList.size() - 1){//TODO achtung bei tisch 20
+            }else if(i == tischList.size() - 1){
                 for(int ii = 0; ii < tischList.get(i).playerList.size(); ii++){
                     if(tischList.get(i).playerList.get(ii).steigtAuf){
-                        tempTischList.get(i + 1).playerList.add(tischList.get(i).playerList.get(ii));
+                        tempTischList.get(0).playerList.add(tischList.get(i).playerList.get(ii));
                     }else{
                         tempTischList.get(i - 1).playerList.add(tischList.get(i).playerList.get(ii));
                     }

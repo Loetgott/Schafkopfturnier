@@ -904,7 +904,8 @@ public class Gui {
                 pointsTextField.setText(String.valueOf(Objects.requireNonNull(changePlayer).getPoints()));
                 if(changePlayer.steigtAuf && changePlayer.nextTischSet){
                     if(changePlayer.tisch.number != Game.tischList.size()){
-                        nextRoundTischTextField.setText(String.valueOf(changePlayer.getTisch().getNumber() + 1));
+
+                        nextRoundTischTextField.setText(String.valueOf(changePlayer.tisch.number + 1));
                     }else{
                         nextRoundTischTextField.setText("1");
                     }
@@ -1009,7 +1010,7 @@ public class Gui {
         playerZuordnen.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseReleased(MouseEvent e) {
-                Game.spielerZuordnen();
+                Game.spreadPlayers();
             }
         });
         updateLeaderboard.addMouseListener(new MouseAdapter() {
@@ -1053,7 +1054,7 @@ public class Gui {
                     JMenu playerMenu = new JMenu("Spieler");
                     ArrayList<Player> changePlayerList = Game.nextRoundChangedPlayers();
                     for (Player player : changePlayerList) {
-                        JMenuItem playerItem = new JMenuItem(player.tisch.number + " " + player.getName()[0] + " " + player.getName()[1]);
+                        JMenuItem playerItem = new JMenuItem(player.tisch.number + ": " + player.getName()[0] + " " + player.getName()[1]);
                         playerMenu.add(playerItem);
                     }
                     playerMenu.setVisible(true);
@@ -1213,7 +1214,8 @@ public class Gui {
                 roundPointsTextField.setText(String.valueOf((Objects.requireNonNull(changePlayer).getRoundPoints())));
                 if(changePlayer.steigtAuf && changePlayer.nextTischSet){
                     if(changePlayer.tisch.number != Game.tischList.size()){
-                        nextRoundTischTextField.setText(String.valueOf(changePlayer.getTisch().getNumber() + 1));
+
+                        nextRoundTischTextField.setText(String.valueOf(changePlayer.tisch.number + 1));
                     }else{
                         nextRoundTischTextField.setText("1");
                     }
@@ -1226,6 +1228,7 @@ public class Gui {
                 }else{
                     nextRoundTischTextField.setText("N/A");
                 }
+                roundPointsTextField.setText(String.valueOf((Objects.requireNonNull(changePlayer).getRoundPoints())));
                 if(changePlayer.getTisch() != null){
                     TischLabelNow.setText(changePlayer.getTisch().getName());
                     newTischTextField.setText(changePlayer.getTisch().getName());
