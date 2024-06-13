@@ -338,7 +338,7 @@ public class Gui {
             public void keyReleased(KeyEvent e) {
                 if(e.getKeyCode() == KeyEvent.VK_ENTER || e.getKeyCode() == KeyEvent.VK_SPACE){
                     if(!pointsTextField.getText().isBlank()){
-                        Game.getPlayer(changePlayer.getVorname(), changePlayer.getNachname()).roundPoints = Integer.parseInt(roundPointsTextField.getText());
+                        Game.getPlayer(changePlayer.getVorname(), changePlayer.getNachname()).addRoundPoints(Integer.parseInt(roundPointsTextField.getText()));
                         pointsTextField.setText(String.valueOf(Objects.requireNonNull(changePlayer).getPoints()));
                         changePanel.requestFocusInWindow();
                     }
@@ -993,6 +993,14 @@ public class Gui {
         ImageIcon distributeIcon = new ImageIcon("C:\\Users\\nnaml\\IdeaProjects\\Schafkopfturnier\\src\\population.png");
         distributeIcon.setImage(distributeIcon.getImage().getScaledInstance(15,15, Image.SCALE_SMOOTH));
         playerZuordnen.setIcon(distributeIcon);
+        JMenuItem nextRoundTischItem = new JMenuItem("Tischtausch berechnen");
+        //ImageIcon nextRoundIcon = new ImageIcon("C:\\Users\\nnaml\\IdeaProjects\\Schafkopfturnier\\src\\next.png");
+        //nextRoundIcon.setImage(nextRoundIcon.getImage().getScaledInstance(15,15, Image.SCALE_SMOOTH));
+        //nextRoundItem.setIcon(nextRoundIcon);
+        JMenuItem nextRoundItem = new JMenuItem("nächste Runde");
+        ImageIcon nextRoundIcon = new ImageIcon("C:\\Users\\nnaml\\IdeaProjects\\Schafkopfturnier\\src\\next.png");
+        nextRoundIcon.setImage(nextRoundIcon.getImage().getScaledInstance(15,15, Image.SCALE_SMOOTH));
+        nextRoundItem.setIcon(nextRoundIcon);
         JMenuItem updateLeaderboard = new JMenuItem("update Leaderboard");
         ImageIcon listIcon = new ImageIcon("C:\\Users\\nnaml\\IdeaProjects\\Schafkopfturnier\\src\\list.png");
         listIcon.setImage(listIcon.getImage().getScaledInstance(15,15, Image.SCALE_SMOOTH));
@@ -1001,11 +1009,10 @@ public class Gui {
         ImageIcon tischIcon = new ImageIcon("C:\\Users\\nnaml\\IdeaProjects\\Schafkopfturnier\\src\\table.png");
         tischIcon.setImage(tischIcon.getImage().getScaledInstance(15,15, Image.SCALE_SMOOTH));
         updateTische.setIcon(tischIcon);
-        JMenuItem nextRoundItem = new JMenuItem("nächste Runde");
-        ImageIcon nextRoundIcon = new ImageIcon("C:\\Users\\nnaml\\IdeaProjects\\Schafkopfturnier\\src\\next.png");
-        nextRoundIcon.setImage(nextRoundIcon.getImage().getScaledInstance(15,15, Image.SCALE_SMOOTH));
-        nextRoundItem.setIcon(nextRoundIcon);
         updateMenu.add(playerZuordnen);
+        updateMenu.add(nextRoundTischItem);
+        updateMenu.add(nextRoundItem);
+        updateMenu.addSeparator();
         updateMenu.add(updateLeaderboard);
         playerZuordnen.addMouseListener(new MouseAdapter() {
             @Override
@@ -1102,7 +1109,6 @@ public class Gui {
                 }
             }
         });
-        updateMenu.add(nextRoundItem);
         menuBar.add(updateMenu);
         JMenu displayMenu = new JMenu("Anzeige");
         ImageIcon screenIcon = new ImageIcon("C:\\Users\\nnaml\\IdeaProjects\\Schafkopfturnier\\src\\screen.png");

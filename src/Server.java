@@ -84,10 +84,14 @@ public class Server {
                     response.append(Game.tischList.get(tischNumber - 1).playerList.get(i).getName()[0])
                             .append(" ")
                             .append(Game.tischList.get(tischNumber - 1).playerList.get(i).getName()[1].charAt(0))
-                            .append(".;");
-                    response.append(Game.tischList.get(tischNumber - 1).playerList.get(i).getPoints()).append(";");
+                            .append(".;")
+                            .append(Game.tischList.get(tischNumber - 1).playerList.get(i).getPoints())
+                            .append(";")
+                            .append(Game.tischList.get(tischNumber - 1).playerList.get(i).hasRoundPoints)
+                            .append(";")
+                            .append(Game.tischList.get(tischNumber - 1).playerList.get(i).roundPoints)
+                            .append(";");
                 }
-
                 String responseStr = response.toString();
                 exchange.sendResponseHeaders(200, responseStr.getBytes().length);
                 exchange.getResponseBody().write(responseStr.getBytes());
@@ -96,6 +100,7 @@ public class Server {
         }
 
         private void handleSetPoints(HttpExchange exchange, ArrayList<String> input, String clientIP) throws IOException {
+            System.out.println(input);
             if (input.size() >= 15) {
                 WebUser user = Objects.requireNonNull(Game.getWebUser(clientIP));
                 user.tempTischNumber = Integer.parseInt(input.get(1));

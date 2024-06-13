@@ -48,7 +48,7 @@ public class JTisch extends JComponent {
         table.setFont(table.getFont().deriveFont(Font.BOLD, 26));
         table.getColumnModel().getColumn(0).setPreferredWidth(0);
         table.getColumnModel().getColumn(1).setPreferredWidth(210);
-        table.getColumnModel().getColumn(2).setPreferredWidth(45);
+        table.getColumnModel().getColumn(2).setPreferredWidth(60);
         table.setFocusable(false);
         table.setEnabled(false);
         DefaultTableCellRenderer rightRenderer = new DefaultTableCellRenderer();
