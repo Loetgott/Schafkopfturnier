@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Schafkopfturnier</title>
+</head>
+  <style>
+    .hidden {
+      display: none;
+    }
+  </style>
+<body>
+  <div id="originalContent">
+    <h3>Bitte Namen eingeben</h3>
+    <textarea id="textInput" rows="1" cols="30"></textarea>
+    <button id="sendButton">senden</button>
+  </div>
+
+  <div class="configContent">
+    <div id="dropdownContent" class="container hidden">
+      <h3></h3>
+      <select id="tischDropdown">
+        <option value="option1" id="t1">Tisch 1</option>
+        <option value="option2" id="t2">Tisch 2</option>
+        <option value="option3" id="t3">Tisch 3</option>
+        <option value="option4" id="t4">Tisch 4</option>
+        <option value="option5" id="t5">Tisch 5</option>
+        <option value="option6" id="t6">Tisch 6</option>
+        <option value="option7" id="t7">Tisch 7</option>
+        <option value="option8" id="t8">Tisch 8</option>
+        <option value="option9" id="t9">Tisch 9</option>
+        <option value="option10" id="t10">Tisch 10</option>
+        <option value="option11" id="t11">Tisch 11</option>
+        <option value="option12" id="t12">Tisch 12</option>
+        <option value="option13" id="t13">Tisch 13</option>
+        <option value="option14" id="t14">Tisch 14</option>
+        <option value="option15" id="t15">Tisch 15</option>
+        <option value="option16" id="t16">Tisch 16</option>
+        <option value="option17" id="t17">Tisch 17</option>
+        <option value="option18" id="t18">Tisch 18</option>
+        <option value="option19" id="t19">Tisch 19</option>
+        <option value="option20" id="t20">Tisch 20</option>
+      </select>
+    </div>
+
+    <div id="playerTable" class="container hidden">
+      <table id="playerTable" border="0">
+        <tr>
+          <td id="nameCell" style="width: 130px;">Name</td>
+          <td id="pointsCell" >Punktzahl</td>
+          <td id="newPointsCell" style="text-align: right; width: 90px;">neue Punkte</td>
+          <td id="equalityChooser" </td>
+        </tr>
+        <tr>
+          <td id="nameCell1"></td>
+          <td id="pointsCell1" style="text-align: right;"></td>
+          <td><input type="number" id="newPointsCell1" style="text-align: right; width: 90px;"></td>
+          <td><select id="equalityChooser1" style="display: none">
+            <option disabled selected>Hoch/Runter</option>
+            <option value="up" id="up1">hoch</option>
+            <option value="down" id="down1">runter</option>
+          </select></td>
+        </tr>
+        <tr>
+          <td id="nameCell2"></td>
+          <td id="pointsCell2" style="text-align: right;"></td>
+          <td><input type="number" id="newPointsCell2" style="text-align: right; width: 90px;"></td>
+          <td><select id="equalityChooser2" style="display: none">
+            <option disabled selected>Hoch/Runter</option>
+            <option value="up" id="up2">hoch</option>
+            <option value="down" id="down2">runter</option>
+          </select></td>
+        </tr>
+        <tr>
+          <td id="nameCell3"></td>
+          <td id="pointsCell3" style="text-align: right;"></td>
+          <td><input type="number" id="newPointsCell3" style="text-align: right; width: 90px;"></td>
+          <td><select id="equalityChooser3" style="display: none">
+            <option disabled selected>Hoch/Runter</option>
+            <option value="up" id="up3">hoch</option>
+            <option value="down" id="down3">runter</option>
+          </select></td>
+        </tr>
+        <tr>
+          <td id="nameCell4"></td>
+          <td id="pointsCell4" style="text-align: right;"></td>
+          <td><input type="number" id="newPointsCell4" style="text-align: right; width: 90px;"></td>
+          <td><select id="equalityChooser4" style="display: none">
+            <option disabled selected>Hoch/Runter</option>
+            <option value="up" id="up4">hoch</option>
+            <option value="down" id="down4">runter</option>
+          </select></td>
+        </tr>
+      </table>
+      <textarea id="pointsErrorTextField" type="text" rows="2" readonly style=" width: 195px;"></textarea>
+      <button id="pointsSendButton" >senden</button>
+    </div>
+
+  </div>
+
+  <script>
+  var ipAdress = 'http://10.31.208.247:8000'
+  var selectedTischNumber = 1;
+  document.getElementById("textInput").addEventListener("keydown", function(event) {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      document.getElementById("sendButton").click();
+    }
+  });
+  window.onload = function() {
+    console.log(ipAdress + '/sendText')
+    var text = "aufgerufen";
+    fetch(ipAdress + '/sendText', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'text/plain', // Setze den Inhaltstyp auf einfachen Text
+      },
+      body: text // Text im body-Feld
+    })
+    .then(response => response.text())
+    .then(data => console.log(data))
+    .catch(error => console.error('Error:', error));
+  };
+  document.getElementById("sendButton").addEventListener("click", function() {
+    var text = "name " + document.getElementById("textInput").value;
+    // Hier wird eine POST-Anfrage an den Server gesendet
+    fetch(ipAdress + '/sendText', { // Ändere den Host und Port entsprechend
+      method: 'POST',
+      headers: {
+        'Content-Type': 'text/plain', // Setze den Inhaltstyp auf einfachen Text
+      },
+      body: text // Text im body-Feld
+    })
+    .then(response => response.text())
+    .then(data => {
+    })
+    .catch(error => console.error('Error:', error));
+    console.log("Tisch 1 wurde ausgewählt");
+    var text = "getTische 1";
+    fetch(ipAdress + '/sendText', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'text/plain',
+      },
+      body: text
+    })
+    .then(response => response.text())
+    .then(data => {
+      console.log("Antwort vom Server:", data);
+      document.getElementById("nameCell1").innerText = data.split(";")[0];
+      document.getElementById("nameCell2").innerText = data.split(";")[2];
+      document.getElementById("nameCell3").innerText = data.split(";")[4];
+      document.getElementById("nameCell4").innerText = data.split(";")[6];
+      document.getElementById("pointsCell1").innerText = data.split(";")[1];
+      document.getElementById("pointsCell2").innerText = data.split(";")[3];
+      document.getElementById("pointsCell3").innerText = data.split(";")[5];
+      document.getElementById("pointsCell4").innerText = data.split(";")[7];
+    })
+    .catch(error => console.error('Error:', error));
+    document.getElementById("originalContent").classList.add("hidden");
+    document.getElementById("dropdownContent").classList.remove("hidden");
+    document.getElementById("playerTable").classList.remove("hidden");
+  });
+  window.addEventListener("beforeunload", function(event) {
+    var text = "verlassen";
+    // Hier wird eine POST-Anfrage an den Server gesendet
+    fetch(ipAdress + '/sendTextOnExit', { // Ändere den Host und Port entsprechend
+      method: 'POST',
+      headers: {
+        'Content-Type': 'text/plain', // Setze den Inhaltstyp auf einfachen Text
+      },
+      body: text // Text im body-Feld
+    })
+    .then(response => console.log('Text erfolgreich gesendet.'))
+    .catch(error => console.error('Error:', error));
+  });
+  function tischOptionSelected(){
+      newPointsCell1.value = "";
+      newPointsCell2.value = "";
+      newPointsCell3.value = "";
+      newPointsCell4.value = "";
+      equalityChooser1.style.display = "none";
+      equalityChooser2.style.display = "none";
+      equalityChooser3.style.display = "none";
+      equalityChooser4.style.display = "none";
+      var dropdown = document.getElementById("tischDropdown");
+      var ausgewählteOption = dropdown.options[dropdown.selectedIndex].value;
+      // Hier kannst du für jede Option die entsprechende Aktion definieren
+      switch(ausgewählteOption) {
+        case "option1":
+        selectedTischNumber = 1;
+        document.getElementById("pointsErrorTextField").style.color = "black";
+        document.getElementById("pointsErrorTextField").value = "";
+        console.log("Tisch 1 wurde ausgewählt");
+        var text = "getTische 1";
+        fetch(ipAdress + '/sendText', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'text/plain',
+          },
+          body: text
+        })
+        .then(response => response.text())
+        .then(data => {
+          document.getElementById("nameCell1").innerText = data.split(";")[0];
+          document.getElementById("nameCell2").innerText = data.split(";")[2];
+          document.getElementById("nameCell3").innerText = data.split(";")[4];
+          document.getElementById("nameCell4").innerText = data.split(";")[6];
+          document.getElementById("pointsCell1").innerText = data.split(";")[1];
+          document.getElementById("pointsCell2").innerText = data.split(";")[3];
+          document.getElementById("pointsCell3").innerText = data.split(";")[5];
+          document.getElementById("pointsCell4").innerText = data.split(";")[7];
+        })
+        .catch(error => console.error('Error:', error));
+        break;
+        case "option2":
+        selectedTischNumber = 2;
+        document.getElementById("pointsErrorTextField").style.color = "black";
+        document.getElementById("pointsErrorTextField").value = "";
+          console.log("Tisch 2 wurde ausgewählt");
+          var text = "getTische 2";
+          fetch(ipAdress + '/sendText', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'text/plain',
+            },
+            body: text
+          })
+          .then(response => response.text())
+          .then(data => {
+            document.getElementById("nameCell1").innerText = data.split(";")[0];
+            document.getElementById("nameCell2").innerText = data.split(";")[2];
+            document.getElementById("nameCell3").innerText = data.split(";")[4];
+            document.getElementById("nameCell4").innerText = data.split(";")[6];
+            document.getElementById("pointsCell1").innerText = data.split(";")[1];
+            document.getElementById("pointsCell2").innerText = data.split(";")[3];
+            document.getElementById("pointsCell3").innerText = data.split(";")[5];
+            document.getElementById("pointsCell4").innerText = data.split(";")[7];
+          })
+          .catch(error => console.error('Error:', error));
+        break;
+        case "option3":
+        selectedTischNumber = 3;
+        document.getElementById("pointsErrorTextField").style.color = "black";
+        document.getElementById("pointsErrorTextField").value = "";
+        console.log("Tisch 3 wurde ausgewählt");
+        var text = "getTische 3";
+        fetch(ipAdress + '/sendText', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'text/plain',
+          },
+          body: text
+        })
+        .then(response => response.text())
+        .then(data => {
+          console.log("Antwort vom Server:", data);
+          document.getElementById("nameCell1").innerText = data.split(";")[0];
+          document.getElementById("nameCell2").innerText = data.split(";")[2];
+          document.getElementById("nameCell3").innerText = data.split(";")[4];
+          document.getElementById("nameCell4").innerText = data.split(";")[6];
+          document.getElementById("pointsCell1").innerText = data.split(";")[1];
+          document.getElementById("pointsCell2").innerText = data.split(";")[3];
+          document.getElementById("pointsCell3").innerText = data.split(";")[5];
+          document.getElementById("pointsCell4").innerText = data.split(";")[7];
+        })
+        .catch(error => console.error('Error:', error));
+        break;
+        case "option4":
+        selectedTischNumber = 4;
+        document.getElementById("pointsErrorTextField").style.color = "black";
+        document.getElementById("pointsErrorTextField").value = "";
+        console.log("Tisch 4 wurde ausgewählt");
+        var text = "getTische 4";
+        fetch(ipAdress + '/sendText', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'text/plain',
+          },
+          body: text
+        })
+        .then(response => response.text())
+        .then(data => {
+          document.getElementById("nameCell1").innerText = data.split(";")[0];
+          document.getElementById("nameCell2").innerText = data.split(";")[2];
+          document.getElementById("nameCell3").innerText = data.split(";")[4];
+          document.getElementById("nameCell4").innerText = data.split(";")[6];
+          document.getElementById("pointsCell1").innerText = data.split(";")[1];
+          document.getElementById("pointsCell2").innerText = data.split(";")[3];
+          document.getElementById("pointsCell3").innerText = data.split(";")[5];
+          document.getElementById("pointsCell4").innerText = data.split(";")[7];
+        })
+        .catch(error => console.error('Error:', error));
+        break;
+        case "option5":
+        selectedTischNumber = 5;
+        document.getElementById("pointsErrorTextField").style.color = "black";
+        document.getElementById("pointsErrorTextField").value = "";
+        console.log("Tisch 5 wurde ausgewählt");
+        var text = "getTische 5";
+        fetch(ipAdress + '/sendText', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'text/plain',
+          },
+          body: text
+        })
+        .then(response => response.text())
+        .then(data => {
+          console.log("Antwort vom Server:", data);
+          document.getElementById("nameCell1").innerText = data.split(";")[0];
+          document.getElementById("nameCell2").innerText = data.split(";")[2];
+          document.getElementById("nameCell3").innerText = data.split(";")[4];
+          document.getElementById("nameCell4").innerText = data.split(";")[6];
+          document.getElementById("pointsCell1").innerText = data.split(";")[1];
+          document.getElementById("pointsCell2").innerText = data.split(";")[3];
+          document.getElementById("pointsCell3").innerText = data.split(";")[5];
+          document.getElementById("pointsCell4").innerText = data.split(";")[7];
+        })
+        .catch(error => console.error('Error:', error));
+        break;
+        case "option6":
+        selectedTischNumber = 6;
+        document.getElementById("pointsErrorTextField").style.color = "black";
+        document.getElementById("pointsErrorTextField").value = "";
+        console.log("Tisch 6 wurde ausgewählt");
+        var text = "getTische 6";
+        fetch(ipAdress + '/sendText', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'text/plain',
+          },
+          body: text
+        })
+        .then(response => response.text())
+        .then(data => {
+          console.log("Antwort vom Server:", data);
+          document.getElementById("nameCell1").innerText = data.split(";")[0];
+          document.getElementById("nameCell2").innerText = data.split(";")[2];
+          document.getElementById("nameCell3").innerText = data.split(";")[4];
+          document.getElementById("nameCell4").innerText = data.split(";")[6];
+          document.getElementById("pointsCell1").innerText = data.split(";")[1];
+          document.getElementById("pointsCell2").innerText = data.split(";")[3];
+          document.getElementById("pointsCell3").innerText = data.split(";")[5];
+          document.getElementById("pointsCell4").innerText = data.split(";")[7];
+        })
+        .catch(error => console.error('Error:', error));
+        break;
+        case "option7":
+        selectedTischNumber = 7;
+        document.getElementById("pointsErrorTextField").style.color = "black";
+        document.getElementById("pointsErrorTextField").value = "";
+        console.log("Tisch 7 wurde ausgewählt");
+        var text = "getTische 7";
+        fetch(ipAdress + '/sendText', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'text/plain',
+          },
+          body: text
+        })
+        .then(response => response.text())
+        .then(data => {
+          console.log("Antwort vom Server:", data);
+          document.getElementById("nameCell1").innerText = data.split(";")[0];
+          document.getElementById("nameCell2").innerText = data.split(";")[2];
+          document.getElementById("nameCell3").innerText = data.split(";")[4];
+          document.getElementById("nameCell4").innerText = data.split(";")[6];
+          document.getElementById("pointsCell1").innerText = data.split(";")[1];
+          document.getElementById("pointsCell2").innerText = data.split(";")[3];
+          document.getElementById("pointsCell3").innerText = data.split(";")[5];
+          document.getElementById("pointsCell4").innerText = data.split(";")[7];
+        })
+        .catch(error => console.error('Error:', error));
+        break;
+        case "option8":
+        selectedTischNumber = 8;
+        document.getElementById("pointsErrorTextField").style.color = "black";
+        document.getElementById("pointsErrorTextField").value = "";
+        console.log("Tisch 8 wurde ausgewählt");
+        var text = "getTische 8";
+        fetch(ipAdress + '/sendText', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'text/plain',
+          },
+          body: text
+        })
+        .then(response => response.text())
+        .then(data => {
+          console.log("Antwort vom Server:", data);
+          document.getElementById("nameCell1").innerText = data.split(";")[0];
+          document.getElementById("nameCell2").innerText = data.split(";")[2];
+          document.getElementById("nameCell3").innerText = data.split(";")[4];
+          document.getElementById("nameCell4").innerText = data.split(";")[6];
+          document.getElementById("pointsCell1").innerText = data.split(";")[1];
+          document.getElementById("pointsCell2").innerText = data.split(";")[3];
+          document.getElementById("pointsCell3").innerText = data.split(";")[5];
+          document.getElementById("pointsCell4").innerText = data.split(";")[7];
+        })
+        .catch(error => console.error('Error:', error));
+        break;
+        case "option9":
+        selectedTischNumber = 9;
+        document.getElementById("pointsErrorTextField").style.color = "black";
+        document.getElementById("pointsErrorTextField").value = "";
+        console.log("Tisch 9 wurde ausgewählt");
+        var text = "getTische 9";
+        fetch(ipAdress + '/sendText', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'text/plain',
+          },
+          body: text
+        })
+        .then(response => response.text())
+        .then(data => {
+          console.log("Antwort vom Server:", data);
+          document.getElementById("nameCell1").innerText = data.split(";")[0];
+          document.getElementById("nameCell2").innerText = data.split(";")[2];
+          document.getElementById("nameCell3").innerText = data.split(";")[4];
+          document.getElementById("nameCell4").innerText = data.split(";")[6];
+          document.getElementById("pointsCell1").innerText = data.split(";")[1];
+          document.getElementById("pointsCell2").innerText = data.split(";")[3];
+          document.getElementById("pointsCell3").innerText = data.split(";")[5];
+          document.getElementById("pointsCell4").innerText = data.split(";")[7];
+        })
+        .catch(error => console.error('Error:', error));
+        break;
+        case "option10":
+        selectedTischNumber = 10;
+        document.getElementById("pointsErrorTextField").style.color = "black";
+        document.getElementById("pointsErrorTextField").value = "";
+        console.log("Tisch 10 wurde ausgewählt");
+        var text = "getTische 10";
+        fetch(ipAdress + '/sendText', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'text/plain',
+          },
+          body: text
+        })
+        .then(response => response.text())
+        .then(data => {
+          console.log("Antwort vom Server:", data);
+          document.getElementById("nameCell1").innerText = data.split(";")[0];
+          document.getElementById("nameCell2").innerText = data.split(";")[2];
+          document.getElementById("nameCell3").innerText = data.split(";")[4];
+          document.getElementById("nameCell4").innerText = data.split(";")[6];
+          document.getElementById("pointsCell1").innerText = data.split(";")[1];
+          document.getElementById("pointsCell2").innerText = data.split(";")[3];
+          document.getElementById("pointsCell3").innerText = data.split(";")[5];
+          document.getElementById("pointsCell4").innerText = data.split(";")[7];
+        })
+        .catch(error => console.error('Error:', error));
+        break;
+        case "option11":
+        selectedTischNumber = 11;
+        document.getElementById("pointsErrorTextField").style.color = "black";
+        document.getElementById("pointsErrorTextField").value = "";
+        console.log("Tisch 11 wurde ausgewählt");
+        var text = "getTische 11";
+        fetch(ipAdress + '/sendText', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'text/plain',
+          },
+          body: text
+        })
+        .then(response => response.text())
+        .then(data => {
+          console.log("Antwort vom Server:", data);
+          document.getElementById("nameCell1").innerText = data.split(";")[0];
+          document.getElementById("nameCell2").innerText = data.split(";")[2];
+          document.getElementById("nameCell3").innerText = data.split(";")[4];
+          document.getElementById("nameCell4").innerText = data.split(";")[6];
+          document.getElementById("pointsCell1").innerText = data.split(";")[1];
+          document.getElementById("pointsCell2").innerText = data.split(";")[3];
+          document.getElementById("pointsCell3").innerText = data.split(";")[5];
+          document.getElementById("pointsCell4").innerText = data.split(";")[7];
+        })
+        .catch(error => console.error('Error:', error));
+        break;
+        case "option12":
+        selectedTischNumber = 12;
+        document.getElementById("pointsErrorTextField").style.color = "black";
+        document.getElementById("pointsErrorTextField").value = "";
+        console.log("Tisch 12 wurde ausgewählt");
+        var text = "getTische 12";
+        fetch(ipAdress + '/sendText', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'text/plain',
+          },
+          body: text
+        })
+        .then(response => response.text())
+        .then(data => {
+          console.log("Antwort vom Server:", data);
+          document.getElementById("nameCell1").innerText = data.split(";")[0];
+          document.getElementById("nameCell2").innerText = data.split(";")[2];
+          document.getElementById("nameCell3").innerText = data.split(";")[4];
+          document.getElementById("nameCell4").innerText = data.split(";")[6];
+          document.getElementById("pointsCell1").innerText = data.split(";")[1];
+          document.getElementById("pointsCell2").innerText = data.split(";")[3];
+          document.getElementById("pointsCell3").innerText = data.split(";")[5];
+          document.getElementById("pointsCell4").innerText = data.split(";")[7];
+        })
+        .catch(error => console.error('Error:', error));
+        break;
+        case "option13":
+        selectedTischNumber = 13;
+        document.getElementById("pointsErrorTextField").style.color = "black";
+        document.getElementById("pointsErrorTextField").value = "";
+        console.log("Tisch 13 wurde ausgewählt");
+        var text = "getTische 13";
+        fetch(ipAdress + '/sendText', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'text/plain',
+          },
+          body: text
+        })
+        .then(response => response.text())
+        .then(data => {
+          console.log("Antwort vom Server:", data);
+          document.getElementById("nameCell1").innerText = data.split(";")[0];
+          document.getElementById("nameCell2").innerText = data.split(";")[2];
+          document.getElementById("nameCell3").innerText = data.split(";")[4];
+          document.getElementById("nameCell4").innerText = data.split(";")[6];
+          document.getElementById("pointsCell1").innerText = data.split(";")[1];
+          document.getElementById("pointsCell2").innerText = data.split(";")[3];
+          document.getElementById("pointsCell3").innerText = data.split(";")[5];
+          document.getElementById("pointsCell4").innerText = data.split(";")[7];
+        })
+        .catch(error => console.error('Error:', error));
+        break;
+        case "option14":
+        selectedTischNumber = 14;
+        document.getElementById("pointsErrorTextField").style.color = "black";
+        document.getElementById("pointsErrorTextField").value = "";
+        console.log("Tisch 14 wurde ausgewählt");
+        var text = "getTische 14";
+        fetch(ipAdress + '/sendText', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'text/plain',
+          },
+          body: text
+        })
+        .then(response => response.text())
+        .then(data => {
+          console.log("Antwort vom Server:", data);
+          document.getElementById("nameCell1").innerText = data.split(";")[0];
+          document.getElementById("nameCell2").innerText = data.split(";")[2];
+          document.getElementById("nameCell3").innerText = data.split(";")[4];
+          document.getElementById("nameCell4").innerText = data.split(";")[6];
+          document.getElementById("pointsCell1").innerText = data.split(";")[1];
+          document.getElementById("pointsCell2").innerText = data.split(";")[3];
+          document.getElementById("pointsCell3").innerText = data.split(";")[5];
+          document.getElementById("pointsCell4").innerText = data.split(";")[7];
+        })
+        .catch(error => console.error('Error:', error));
+        break;
+        case "option15":
+        selectedTischNumber = 15;
+        document.getElementById("pointsErrorTextField").style.color = "black";
+        document.getElementById("pointsErrorTextField").value = "";
+        console.log("Tisch 15 wurde ausgewählt");
+        var text = "getTische 15";
+        fetch(ipAdress + '/sendText', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'text/plain',
+          },
+          body: text
+        })
+        .then(response => response.text())
+        .then(data => {
+          console.log("Antwort vom Server:", data);
+          document.getElementById("nameCell1").innerText = data.split(";")[0];
+          document.getElementById("nameCell2").innerText = data.split(";")[2];
+          document.getElementById("nameCell3").innerText = data.split(";")[4];
+          document.getElementById("nameCell4").innerText = data.split(";")[6];
+          document.getElementById("pointsCell1").innerText = data.split(";")[1];
+          document.getElementById("pointsCell2").innerText = data.split(";")[3];
+          document.getElementById("pointsCell3").innerText = data.split(";")[5];
+          document.getElementById("pointsCell4").innerText = data.split(";")[7];
+        })
+        .catch(error => console.error('Error:', error));
+        break;
+        case "option16":
+        selectedTischNumber = 16;
+        document.getElementById("pointsErrorTextField").style.color = "black";
+        document.getElementById("pointsErrorTextField").value = "";
+        console.log("Tisch 16 wurde ausgewählt");
+        var text = "getTische 16";
+        fetch(ipAdress + '/sendText', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'text/plain',
+          },
+          body: text
+        })
+        .then(response => response.text())
+        .then(data => {
+          console.log("Antwort vom Server:", data);
+          document.getElementById("nameCell1").innerText = data.split(";")[0];
+          document.getElementById("nameCell2").innerText = data.split(";")[2];
+          document.getElementById("nameCell3").innerText = data.split(";")[4];
+          document.getElementById("nameCell4").innerText = data.split(";")[6];
+          document.getElementById("pointsCell1").innerText = data.split(";")[1];
+          document.getElementById("pointsCell2").innerText = data.split(";")[3];
+          document.getElementById("pointsCell3").innerText = data.split(";")[5];
+          document.getElementById("pointsCell4").innerText = data.split(";")[7];
+        })
+        .catch(error => console.error('Error:', error));
+        break;
+        case "option17":
+        selectedTischNumber = 17;
+        document.getElementById("pointsErrorTextField").style.color = "black";
+        document.getElementById("pointsErrorTextField").value = "";
+        console.log("Tisch 17 wurde ausgewählt");
+        var text = "getTische 17";
+        fetch(ipAdress + '/sendText', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'text/plain',
+          },
+          body: text
+        })
+        .then(response => response.text())
+        .then(data => {
+          console.log("Antwort vom Server:", data);
+          document.getElementById("nameCell1").innerText = data.split(";")[0];
+          document.getElementById("nameCell2").innerText = data.split(";")[2];
+          document.getElementById("nameCell3").innerText = data.split(";")[4];
+          document.getElementById("nameCell4").innerText = data.split(";")[6];
+          document.getElementById("pointsCell1").innerText = data.split(";")[1];
+          document.getElementById("pointsCell2").innerText = data.split(";")[3];
+          document.getElementById("pointsCell3").innerText = data.split(";")[5];
+          document.getElementById("pointsCell4").innerText = data.split(";")[7];
+        })
+        .catch(error => console.error('Error:', error));
+        break;
+        case "option18":
+        selectedTischNumber = 18;
+        document.getElementById("pointsErrorTextField").style.color = "black";
+        document.getElementById("pointsErrorTextField").value = "";
+        console.log("Tisch 18 wurde ausgewählt");
+        var text = "getTische 18";
+        fetch(ipAdress + '/sendText', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'text/plain',
+          },
+          body: text
+        })
+        .then(response => response.text())
+        .then(data => {
+          console.log("Antwort vom Server:", data);
+          document.getElementById("nameCell1").innerText = data.split(";")[0];
+          document.getElementById("nameCell2").innerText = data.split(";")[2];
+          document.getElementById("nameCell3").innerText = data.split(";")[4];
+          document.getElementById("nameCell4").innerText = data.split(";")[6];
+          document.getElementById("pointsCell1").innerText = data.split(";")[1];
+          document.getElementById("pointsCell2").innerText = data.split(";")[3];
+          document.getElementById("pointsCell3").innerText = data.split(";")[5];
+          document.getElementById("pointsCell4").innerText = data.split(";")[7];
+        })
+        .catch(error => console.error('Error:', error));
+        break;
+        case "option19":
+        selectedTischNumber = 19;
+        document.getElementById("pointsErrorTextField").style.color = "black";
+        document.getElementById("pointsErrorTextField").value = "";
+        console.log("Tisch 19 wurde ausgewählt");
+        var text = "getTische 19";
+        fetch(ipAdress + '/sendText', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'text/plain',
+          },
+          body: text
+        })
+        .then(response => response.text())
+        .then(data => {
+          console.log("Antwort vom Server:", data);
+          document.getElementById("nameCell1").innerText = data.split(";")[0];
+          document.getElementById("nameCell2").innerText = data.split(";")[2];
+          document.getElementById("nameCell3").innerText = data.split(";")[4];
+          document.getElementById("nameCell4").innerText = data.split(";")[6];
+          document.getElementById("pointsCell1").innerText = data.split(";")[1];
+          document.getElementById("pointsCell2").innerText = data.split(";")[3];
+          document.getElementById("pointsCell3").innerText = data.split(";")[5];
+          document.getElementById("pointsCell4").innerText = data.split(";")[7];
+        })
+        .catch(error => console.error('Error:', error));
+        break;
+        case "option20":
+        selectedTischNumber = 20;
+        document.getElementById("pointsErrorTextField").style.color = "black";
+        document.getElementById("pointsErrorTextField").value = "";
+        console.log("Tisch 20 wurde ausgewählt");
+        var text = "getTische 20";
+        fetch(ipAdress + '/sendText', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'text/plain',
+          },
+          body: text
+        })
+        .then(response => response.text())
+        .then(data => {
+          console.log("Antwort vom Server:", data);
+          document.getElementById("nameCell1").innerText = data.split(";")[0];
+          document.getElementById("nameCell2").innerText = data.split(";")[2];
+          document.getElementById("nameCell3").innerText = data.split(";")[4];
+          document.getElementById("nameCell4").innerText = data.split(";")[6];
+          document.getElementById("pointsCell1").innerText = data.split(";")[1];
+          document.getElementById("pointsCell2").innerText = data.split(";")[3];
+          document.getElementById("pointsCell3").innerText = data.split(";")[5];
+          document.getElementById("pointsCell4").innerText = data.split(";")[7];
+        })
+        .catch(error => console.error('Error:', error));
+        break;
+        default:
+        console.log("Keine gültige Option ausgewählt");
+      }
+  }
+  document.getElementById("tischDropdown").addEventListener("change",tischOptionSelected);
+  document.getElementById("pointsSendButton").addEventListener("click",function(){
+    var pointTransmissionSuccesful = false;
+    console.log("punkte button geklicked");
+    if(parseInt(newPointsCell1.value) + parseInt(newPointsCell2.value) + parseInt(newPointsCell3.value) + parseInt(newPointsCell4.value) == 0){
+      var text = "setPoints";
+      text += " " + selectedTischNumber;
+      text += " " + nameCell1.innerText + " " + newPointsCell1.value;
+      if(equalityChooser1.style.display == "block"){
+        text += " " + equalityChooser1.value;
+      }else{
+        text += " " + "n/a";
+      }
+      text += " " + nameCell2.innerText + " " + newPointsCell2.value;
+      if(equalityChooser2.style.display == "block"){
+        text += " " + equalityChooser2.value;
+      }else{
+        text += " " + "n/a";
+      }
+      text += " " + nameCell3.innerText + " " + newPointsCell3.value;
+      if(equalityChooser3.style.display == "block"){
+        text += " " + equalityChooser3.value;
+      }else{
+        text += " " + "n/a";
+      }
+      text += " " + nameCell4.innerText + " " + newPointsCell4.value;
+      if(equalityChooser4.style.display == "block"){
+        text += " " + equalityChooser4.value;
+      }else{
+        text += " " + "n/a";
+      }
+      // Hier wird eine POST-Anfrage an den Server gesendet
+      fetch(ipAdress + '/sendText', { // Ändere den Host und Port entsprechend
+        method: 'POST',
+        headers: {
+          'Content-Type': 'text/plain', // Setze den Inhaltstyp auf einfachen Text
+        },
+        body: text // Text im body-Feld
+      })
+      .then(response => response.text())
+      .then(data => {
+        console.log(data);
+        if(data.split(";")[0] == nameCell1.innerText && data.split(";")[1] == newPointsCell1.value && data.split(";")[2] == nameCell2.innerText && data.split(";")[3] == newPointsCell2.value && data.split(";")[4] == nameCell3.innerText && data.split(";")[5] == newPointsCell3.value && data.split(";")[6] == nameCell4.innerText && data.split(";")[7] == newPointsCell4.value){
+          pointTransmissionSuccesful = true;
+          pointsErrorTextField.style.color = "green";
+          pointsErrorTextField.value = "Punkte erfolgreich hinzugefügt"
+        }else{
+          pointTransmissionSuccesful = false;
+          pointsErrorTextField.style.color = "red";
+          pointsErrorTextField.value = "Achtung Fehler beim senden! punkte nicht hinzugefügt"
+        }
+        if(pointTransmissionSuccesful == true){
+          console.log("Bestätigung senden...")
+          fetch(ipAdress + '/sendText', {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'text/plain',
+                  },
+                  body: "setPointsSucces"
+          })
+          .then(response => response.text())
+          .catch(error => console.error('Error:', error));
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        pointTransmissionSuccesful = false;
+        pointsErrorTextField.style.color = "red";
+        pointsErrorTextField.value = "Achtung Fehler beim senden! punkte nicht hinzugefügt"
+      });
+    }else{
+      pointTransmissionSuccesful = false;
+      pointsErrorTextField.style.color = "red";
+      pointsErrorTextField.value = "Achtung, Punkte ergeben zusammen nicht 0! punkte nicht hinzugefügt"
+    }
+  });
+  document.getElementById("newPointsCell1").addEventListener("keydown" , function(event){
+    if(event.key === "ArrowUp"){
+      event.preventDefault();
+      newPointsCell4.focus();
+    }
+    if(event.key === "ArrowDown"){
+      event.preventDefault();
+      newPointsCell2.focus();
+    }
+  });
+  document.getElementById("newPointsCell1").addEventListener("input", function(event){
+    if(parseInt(newPointsCell1.value) == parseInt(newPointsCell2.value)){
+      equalityChooser1.style.display = "block";
+      equalityChooser2.style.display = "block";
+    }
+    if(parseInt(newPointsCell1.value) == parseInt(newPointsCell3.value)){
+      equalityChooser1.style.display = "block";
+      equalityChooser3.style.display = "block";
+    }
+    if(parseInt(newPointsCell1.value) == parseInt(newPointsCell4.value)){
+      equalityChooser1.style.display = "block";
+      equalityChooser3.style.display = "block";
+    }
+  });
+  document.getElementById("newPointsCell2").addEventListener("keydown" , function(event){
+    if(event.key === "ArrowUp"){
+      event.preventDefault();
+      newPointsCell1.focus();
+    }
+    if(event.key === "ArrowDown"){
+      event.preventDefault();
+      newPointsCell3.focus();
+    }
+  });
+  document.getElementById("newPointsCell2").addEventListener("input", function(event){
+    if(parseInt(newPointsCell2.value) == parseInt(newPointsCell3.value)){
+      equalityChooser2.style.display = "block";
+      equalityChooser3.style.display = "block";
+    }
+    if(parseInt(newPointsCell2.value) == parseInt(newPointsCell4.value)){
+      equalityChooser2.style.display = "block";
+      equalityChooser4.style.display = "block";
+    }
+    if(parseInt(newPointsCell2.value) == parseInt(newPointsCell1.value)){
+      equalityChooser2.style.display = "block";
+      equalityChooser1.style.display = "block";
+    }
+  })
+  document.getElementById("newPointsCell3").addEventListener("keydown" , function(event){
+    if(event.key === "ArrowUp"){
+      event.preventDefault();
+      newPointsCell2.focus();
+    }
+    if(event.key === "ArrowDown"){
+      event.preventDefault();
+      newPointsCell4.focus();
+    }
+  });
+  document.getElementById("newPointsCell3").addEventListener("input", function(event){
+    if(parseInt(newPointsCell3.value) == parseInt(newPointsCell1.value)){
+      equalityChooser1.style.display = "block";
+      equalityChooser3.style.display = "block";
+    }
+    if(parseInt(newPointsCell3.value) == parseInt(newPointsCell2.value)){
+      equalityChooser1.style.display = "block";
+      equalityChooser2.style.display = "block";
+    }
+    if(parseInt(newPointsCell3.value) == parseInt(newPointsCell4.value)){
+      equalityChooser3.style.display = "block";
+      equalityChooser4.style.display = "block";
+    }
+  })
+  document.getElementById("newPointsCell4").addEventListener("keydown", function(event){
+    if (event.key === "Enter") {
+      event.preventDefault();
+
+    }
+    if(event.key === "ArrowUp"){
+      event.preventDefault();
+      newPointsCell3.focus();
+    }
+    if(event.key === "ArrowDown"){
+      event.preventDefault();
+      newPointsCell1.focus();
+    }
+  });
+  document.getElementById("newPointsCell4").addEventListener("input", function(event){
+    if(parseInt(newPointsCell1.value) == parseInt(newPointsCell4.value)){
+      equalityChooser1.style.display = "block";
+      equalityChooser4.style.display = "block";
+    }
+    if(parseInt(newPointsCell4.value) == parseInt(newPointsCell3.value)){
+      equalityChooser4.style.display = "block";
+      equalityChooser3.style.display = "block";
+    }
+    if(parseInt(newPointsCell2.value) == parseInt(newPointsCell4.value)){
+      equalityChooser2.style.display = "block";
+      equalityChooser4.style.display = "block";
+    }
+  })
+</script>
+</body>
+</html>

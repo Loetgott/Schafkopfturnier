@@ -12,7 +12,7 @@ import com.sun.net.httpserver.HttpExchange;
 
 public class Server {
     public Server(){
-        int port = 8000; // Portnummer für den Server
+        int port = 8000;
         HttpServer server = null;
         try {
             server = HttpServer.create(new java.net.InetSocketAddress(port), 0);

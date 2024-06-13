@@ -200,7 +200,7 @@ public class Game {
                         tempTischList.get(tempTischList.size() - 1).playerList.add(tischList.get(i).playerList.get(ii));
                     }
                 }
-            }else if(i == tischList.size() - 1){
+            }else if(i == tischList.size() - 1){//TODO achtung bei tisch 20
                 for(int ii = 0; ii < tischList.get(i).playerList.size(); ii++){
                     if(tischList.get(i).playerList.get(ii).steigtAuf){
                         tempTischList.get(i + 1).playerList.add(tischList.get(i).playerList.get(ii));
