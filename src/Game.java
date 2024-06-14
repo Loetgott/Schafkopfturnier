@@ -185,6 +185,12 @@ public class Game {
     }
 
     public static void nextRound() {
+        for(Player player : playerList){
+            if(!player.nextTischSet){
+                System.out.println(RED + "Achtung: der Spieler " + player.getVorname() + " " + player.getNachname() + " hat noch keinen nächsten Tisch!" + RESET);
+                return;
+            }
+        }
         for (Player player : playerList) {
             player.nextRound();
         }
