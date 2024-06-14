@@ -9,12 +9,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bdf4d30b-1150-4e01-8031-276c41c2ea01" name="Changes" comment="kleine Gui verbesserungen">
+    <list default="true" id="bdf4d30b-1150-4e01-8031-276c41c2ea01" name="Changes" comment="mehrfach Punkteänderung über Server verhindert">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Gui.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Gui.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/JTisch.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/JTisch.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Server.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -164,14 +161,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1712598295900</updated>
-    </task>
-    <task id="LOCAL-00025" summary="tisch taushc anfang">
-      <option name="closed" value="true" />
-      <created>1713207056988</created>
-      <option name="number" value="00025" />
-      <option name="presentableId" value="LOCAL-00025" />
-      <option name="project" value="LOCAL" />
-      <updated>1713207056988</updated>
     </task>
     <task id="LOCAL-00026" summary="tisch tauschen geht jetzt">
       <option name="closed" value="true" />
@@ -557,7 +546,15 @@
       <option name="project" value="LOCAL" />
       <updated>1718290026678</updated>
     </task>
-    <option name="localTasksCounter" value="74" />
+    <task id="LOCAL-00074" summary="mehrfach Punkteänderung über Server verhindert">
+      <option name="closed" value="true" />
+      <created>1718305345835</created>
+      <option name="number" value="00074" />
+      <option name="presentableId" value="LOCAL-00074" />
+      <option name="project" value="LOCAL" />
+      <updated>1718305345835</updated>
+    </task>
+    <option name="localTasksCounter" value="75" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -573,7 +570,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Importfunktion von Backups funktioniert" />
     <MESSAGE value="erts eversuche tisch tab" />
     <MESSAGE value="tisch panel geupdated" />
     <MESSAGE value="cugfix bei tischTab" />
@@ -598,7 +594,8 @@
     <MESSAGE value="html dokument hinzugefügt" />
     <MESSAGE value="Bugfix: Tischerstellung" />
     <MESSAGE value="kleine Gui verbesserungen" />
-    <option name="LAST_COMMIT_MESSAGE" value="kleine Gui verbesserungen" />
+    <MESSAGE value="mehrfach Punkteänderung über Server verhindert" />
+    <option name="LAST_COMMIT_MESSAGE" value="mehrfach Punkteänderung über Server verhindert" />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>

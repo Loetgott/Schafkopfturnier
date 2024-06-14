@@ -338,7 +338,8 @@ public class Gui {
             public void keyReleased(KeyEvent e) {
                 if(e.getKeyCode() == KeyEvent.VK_ENTER || e.getKeyCode() == KeyEvent.VK_SPACE){
                     if(!pointsTextField.getText().isBlank()){
-                        Game.getPlayer(changePlayer.getVorname(), changePlayer.getNachname()).addRoundPoints(Integer.parseInt(roundPointsTextField.getText()));
+                        Game.getPlayer(changePlayer.getVorname(), changePlayer.getNachname()).setRoundPoints(Integer.parseInt(roundPointsTextField.getText()));
+                        Game.getPlayer(changePlayer.getVorname(), changePlayer.getNachname()).hasRoundPoints = true;
                         pointsTextField.setText(String.valueOf(Objects.requireNonNull(changePlayer).getPoints()));
                         changePanel.requestFocusInWindow();
                     }
@@ -994,9 +995,9 @@ public class Gui {
         distributeIcon.setImage(distributeIcon.getImage().getScaledInstance(15,15, Image.SCALE_SMOOTH));
         playerZuordnen.setIcon(distributeIcon);
         JMenuItem nextRoundTischItem = new JMenuItem("Tischtausch berechnen");
-        //ImageIcon nextRoundIcon = new ImageIcon("C:\\Users\\nnaml\\IdeaProjects\\Schafkopfturnier\\src\\next.png");
-        //nextRoundIcon.setImage(nextRoundIcon.getImage().getScaledInstance(15,15, Image.SCALE_SMOOTH));
-        //nextRoundItem.setIcon(nextRoundIcon);
+        //ImageIcon nextRoundTischIcon = new ImageIcon("C:\\Users\\nnaml\\IdeaProjects\\Schafkopfturnier\\src\\next.png");
+        //nextRoundTischIcon.setImage(nextRoundIcon.getImage().getScaledInstance(15,15, Image.SCALE_SMOOTH));
+        //nextRoundTischItem.setIcon(nextRoundIcon);
         JMenuItem nextRoundItem = new JMenuItem("nächste Runde");
         ImageIcon nextRoundIcon = new ImageIcon("C:\\Users\\nnaml\\IdeaProjects\\Schafkopfturnier\\src\\next.png");
         nextRoundIcon.setImage(nextRoundIcon.getImage().getScaledInstance(15,15, Image.SCALE_SMOOTH));
@@ -1014,6 +1015,7 @@ public class Gui {
         updateMenu.add(nextRoundItem);
         updateMenu.addSeparator();
         updateMenu.add(updateLeaderboard);
+        updateMenu.add(updateTische);
         playerZuordnen.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseReleased(MouseEvent e) {
@@ -1026,13 +1028,20 @@ public class Gui {
                 Game.updateLeaderboard();
             }
         });
+        nextRoundTischItem.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                for(int i = 0; i < Game.tischList.size(); i++){
+                    Game.tischList.get(i).sortPlayers();
+                }
+            }
+        });
         updateTische.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseReleased(MouseEvent e) {
                 Game.updateTisch();
             }
         });
-        updateMenu.add(updateTische);
         nextRoundItem.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseReleased(MouseEvent e) {
@@ -1363,7 +1372,7 @@ public class Gui {
         buttonBar.setBackground(playerEqualityFrame.getBackground());
         buttonBar.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
         playerEqualityFrame.add(buttonBar, BorderLayout.SOUTH);
-        playerEqualityFrame.setSize(new Dimension(250, 150));
+        playerEqualityFrame.setTitle("Tisch " + p1.getTisch().getName());
         JPanel textPanel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
@@ -1421,7 +1430,7 @@ public class Gui {
         textPanel.add(playerBar, gbc);
         playerEqualityFrame.add(textPanel, BorderLayout.CENTER);
         playerEqualityFrame.setLocationRelativeTo(null);
-        playerEqualityFrame.setSize(500,250);
+        playerEqualityFrame.setSize(400,175);
         playerEqualityFrame.setVisible(true);
     }
     public static void show3EqualPlayersDownWarning(Player p1, Player p2, Player p3){
@@ -1565,7 +1574,8 @@ public class Gui {
         buttonBar.setBackground(playerEqualityFrame.getBackground());
         buttonBar.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
         playerEqualityFrame.add(buttonBar, BorderLayout.SOUTH);
-        playerEqualityFrame.setSize(new Dimension(250, 150));
+        playerEqualityFrame.setSize(new Dimension(175, 110));
+        playerEqualityFrame.setTitle(p1.getTisch().getName());
         JPanel textPanel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
@@ -1695,7 +1705,8 @@ public class Gui {
         buttonBar.setBackground(playerEqualityFrame.getBackground());
         buttonBar.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
         playerEqualityFrame.add(buttonBar, BorderLayout.SOUTH);
-        playerEqualityFrame.setSize(new Dimension(250, 150));
+        playerEqualityFrame.setSize(new Dimension(240, 125));
+        playerEqualityFrame.setTitle(p1.getTisch().getName());
         JPanel textPanel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
