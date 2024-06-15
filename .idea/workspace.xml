@@ -9,9 +9,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bdf4d30b-1150-4e01-8031-276c41c2ea01" name="Changes" comment="mehrfahc berechnung für alle Tische">
+    <list default="true" id="bdf4d30b-1150-4e01-8031-276c41c2ea01" name="Changes" comment="nächste Runed wird nur begonnen, wenn alle Spieler einen nächsten Tisch haben">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Game.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/PlayerView.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -161,14 +161,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1712598295900</updated>
-    </task>
-    <task id="LOCAL-00027" summary="tisch tauschen geht jetzt">
-      <option name="closed" value="true" />
-      <created>1713276981810</created>
-      <option name="number" value="00027" />
-      <option name="presentableId" value="LOCAL-00027" />
-      <option name="project" value="LOCAL" />
-      <updated>1713276981810</updated>
     </task>
     <task id="LOCAL-00028" summary="frame bei Tischtausch upgedated">
       <option name="closed" value="true" />
@@ -554,7 +546,15 @@
       <option name="project" value="LOCAL" />
       <updated>1718379403762</updated>
     </task>
-    <option name="localTasksCounter" value="76" />
+    <task id="LOCAL-00076" summary="nächste Runed wird nur begonnen, wenn alle Spieler einen nächsten Tisch haben">
+      <option name="closed" value="true" />
+      <created>1718381847012</created>
+      <option name="number" value="00076" />
+      <option name="presentableId" value="LOCAL-00076" />
+      <option name="project" value="LOCAL" />
+      <updated>1718381847012</updated>
+    </task>
+    <option name="localTasksCounter" value="77" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -570,7 +570,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="tisch panel geupdated" />
     <MESSAGE value="cugfix bei tischTab" />
     <MESSAGE value="v 1.2" />
     <MESSAGE value="anfang der nextRound Methode" />
@@ -595,7 +594,8 @@
     <MESSAGE value="kleine Gui verbesserungen" />
     <MESSAGE value="mehrfach Punkteänderung über Server verhindert" />
     <MESSAGE value="mehrfahc berechnung für alle Tische" />
-    <option name="LAST_COMMIT_MESSAGE" value="mehrfahc berechnung für alle Tische" />
+    <MESSAGE value="nächste Runed wird nur begonnen, wenn alle Spieler einen nächsten Tisch haben" />
+    <option name="LAST_COMMIT_MESSAGE" value="nächste Runed wird nur begonnen, wenn alle Spieler einen nächsten Tisch haben" />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>

@@ -117,15 +117,6 @@ public class Game {
         }
         System.out.println(GREEN + player1.getName()[0] + " " + player1.getName()[1] + " wurde mit " + player2.getName()[0] + " " + player2.getName()[1] + RESET);
     }
-
-    public static Player sucheSpieler(String vorname, String nachname) {
-        for (Player player : playerList) {
-            if (player.getVorname().equals(vorname) && player.getNachname().equals(nachname)) {
-                return player;
-            }
-        }
-        return null;
-    }
     public static ArrayList<Player> nextRoundChangedPlayers(){
         ArrayList<Player> notChangedPlayersList = new ArrayList<>();
         for(Player player : playerList){

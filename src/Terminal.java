@@ -22,13 +22,13 @@ public class Terminal{
         ArrayList<String> input = new ArrayList<>(Arrays.asList(input1));//machen zu einer arraylist
         switch(input.get(0)){
             case "info":
-                System.out.println("spielerhinzufügen <name> \n" +
+                System.out.println("addplayer <name> \n" +
                                     "updateleaderboard <> \n" +
                                     "updatetisch <> \n" +
-                                    "tischezuteilen <> \n" +
-                                    "spielertauschen <player1> <player2>");
+                                    "spreadplayers <> \n" +
+                                    "swapplayers <player1> <player2>");
                 break;
-            case "spielerhinzufügen":
+            case "addplayer":
                 input.remove(0);
                 if(!input.isEmpty()){
                     String vorname = input.get(0);
@@ -40,7 +40,7 @@ public class Terminal{
                 }
                 break;
             case "updateleaderboard":
-                System.out.println("playerList vor Tausch" + Game.playerList.size());
+                System.out.println(" playerList vor Tausch" + Game.playerList.size());
                 Game.spreadPlayers();
                 System.out.println(" Tisch list nach atsuch" + Game.tischList.size());
                 break;
@@ -49,18 +49,38 @@ public class Terminal{
                 Game.updateTisch();
                 break;
 
-            case "tischezuteilen":
+            case "spreadplayers":
                 Game.spreadPlayers();
                 break;
 
-            case "spielertauschen":
+            case "swapplayers":
                 input.remove(0);
-                if(Game.sucheSpieler( input.get(0) , input.get(1))==null || Game.sucheSpieler( input.get(2) , input.get(3))==null){
+                if(Game.getPlayer( input.get(0) , input.get(1))==null || Game.getPlayer( input.get(2) , input.get(3))==null){
                     System.out.println("Ein Name wird nicht gefunden. Bitte auf Rechtschreibung achten!");
                 }else{
-                    Game.spielertausch(Objects.requireNonNull(Game.sucheSpieler(input.get(0), input.get(1))), Objects.requireNonNull(Game.sucheSpieler(input.get(2), input.get(3))));
+                    Game.spielertausch(Objects.requireNonNull(Game.getPlayer(input.get(0), input.get(1))), Objects.requireNonNull(Game.getPlayer(input.get(2), input.get(3))));
                 }
                 break;
+            case "addplayerpoints":
+                input.remove(0);
+                if(!input.isEmpty()){
+                    String vorname = input.get(0);
+                    String nachname;
+                    input.remove(0);
+                    if(!input.isEmpty()){
+                        nachname = input.get(0);
+                        input.remove(0);
+                        if(Game.getPlayer(vorname,nachname) != null){
+                            if(!input.get(0).isEmpty()){
+                                Game.getPlayer(vorname,nachname).addRoundPoints(Integer.parseInt(input.get(0)));
+                            }else{
+                                System.out.println(Game.RED + "Bitte Punktzahl eingeben!");
+                            }
+                        }else{
+                            System.out.println(Game.RED + "Spieler konnte nicht gefunden werden! Bitte auch Rechtschreibung achten." + Game.RESET);
+                        }
+                    }
+                }
             default:
                 System.out.println("unbekannter befehl! bitte auf Rechtschreibung achten");
         }

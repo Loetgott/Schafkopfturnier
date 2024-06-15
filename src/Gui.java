@@ -161,7 +161,7 @@ public class Gui {
         JPanel playerAddPanel = new JPanel(new BorderLayout());
         playerAddPanel.setVisible(false);
         JPanel addPanel = new JPanel(new GridBagLayout());
-        JPanel listPanel = new JPanel(new FlowLayout()); // Use BorderLayout
+        JPanel listPanel = new JPanel(new FlowLayout());
         JPanel changePanel = new JPanel(new GridBagLayout());
         JPanel changePlayerNamePanel = new JPanel(new GridBagLayout());
         JPanel changePlayerPointsPanel = new JPanel(new GridBagLayout());
