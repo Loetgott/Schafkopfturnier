@@ -16,8 +16,10 @@ public class Tisch{
     public void sortPlayers(){
         System.out.println("Spieler werden geordnet...");
         if(playerList.get(0).roundPoints + playerList.get(1).roundPoints + playerList.get(2).roundPoints + playerList.get(3).roundPoints != 0){
+            System.out.println(playerList.get(0).roundPoints + " | " + playerList.get(1).roundPoints + " | " +  playerList.get(2).roundPoints + " | " +  playerList.get(3).roundPoints);
             System.out.println(Game.RED + "Achtung! die Punkte der vier Spieler an Tisch " + number + " ergeben zusammen nicht 0!" + Game.RESET);
-        }else {
+        }
+        else {
             playerList.sort((o1, o2) -> {
                 if (o1.getRoundPoints() < o2.getRoundPoints()) {
                     return -1;
@@ -27,7 +29,7 @@ public class Tisch{
                     return 0;
                 }
             });
-
+            //Gleichstand von 4 Spielern
             if (playerList.get(1).getRoundPoints() == playerList.get(2).getRoundPoints() && playerList.get(3).getRoundPoints() == playerList.get(2).getRoundPoints() && playerList.get(0).getRoundPoints() == playerList.get(2).getRoundPoints()) {
                 if (playerList.get(0).nextTischSet) {
                     if (playerList.get(1).nextTischSet) {
@@ -108,7 +110,7 @@ public class Tisch{
                             }
                         }
                     } else {
-                        if (playerList.get(0).steigtAuf) {
+                        if (playerList.get(3).steigtAuf) {
                             System.out.println(Game.RED + "Achtung: drei Spieler an Tisch " + number + " haben gleich viele Punkte" + Game.RESET);
                             Gui.show3EqualPlayersDownWarning(playerList.get(1), playerList.get(2), playerList.get(3));
                         } else if (!playerList.get(0).steigtAuf) {
@@ -320,7 +322,8 @@ public class Tisch{
                     playerList.get(3).nextTischSet = true;
                     Gui.show3EqualPlayersDownWarning(playerList.get(0), playerList.get(1), playerList.get(2));
                 }
-            } else if (playerList.get(1).getRoundPoints() == playerList.get(2).getRoundPoints() && playerList.get(3).getRoundPoints() == playerList.get(2).getRoundPoints()) {
+            //Gleichstand von 3 oberen Spielern
+            }else if(playerList.get(1).getRoundPoints() == playerList.get(2).getRoundPoints() && playerList.get(3).getRoundPoints() == playerList.get(2).getRoundPoints()){
                 if (playerList.get(1).nextTischSet) {
                     if (playerList.get(2).nextTischSet) {
                         if (playerList.get(3).nextTischSet) {
@@ -423,9 +426,9 @@ public class Tisch{
                         Gui.show3EqualPlayersUpWarning(playerList.get(0), playerList.get(1), playerList.get(2));
                     }
                 } else {
-                    playerList.get(0).steigtAuf = true;
+                    playerList.get(0).steigtAuf = false;
                     playerList.get(0).nextTischSet = true;
-                    Gui.show3EqualPlayersDownWarning(playerList.get(1), playerList.get(2), playerList.get(3));
+                    Gui.show3EqualPlayersUpWarning(playerList.get(1), playerList.get(2), playerList.get(3));
                 }
             } else if (playerList.get(1).getRoundPoints() == playerList.get(2).getRoundPoints()) {
                 playerList.get(0).setSteigtAuf(false);
